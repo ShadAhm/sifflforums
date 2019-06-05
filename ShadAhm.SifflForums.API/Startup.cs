@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ShadAhm.SifflForums.Api.Services;
+using ShadAhm.SifflForums.Data;
 
 namespace ShadAhm.SifflForums.Api
 {
@@ -28,6 +29,7 @@ namespace ShadAhm.SifflForums.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddTransient<SifflContext>(); 
             services.AddScoped<ICommentsService, CommentsService>(); 
         }
 

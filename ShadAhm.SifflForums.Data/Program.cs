@@ -6,7 +6,6 @@ namespace ShadAhm.SifflForums.Data
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
         }
     }
 }
