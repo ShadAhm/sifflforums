@@ -1,4 +1,5 @@
-﻿using ShadAhm.SifflForums.Api.Models;
+﻿using AutoMapper;
+using ShadAhm.SifflForums.Api.Models;
 using ShadAhm.SifflForums.Data;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,22 @@ namespace ShadAhm.SifflForums.Api.Services
 
     public class CommentsService : ICommentsService 
     {
-        private SifflContext _dbContext; 
+        private SifflContext _dbContext;
+        private IMapper _mapper; 
 
-        public CommentsService(SifflContext dbContext)
+        public CommentsService(SifflContext dbContext, IMapper mapper)
         {
-            _dbContext = dbContext; 
+            _dbContext = dbContext;
+            _mapper = mapper; 
         }
 
         public List<CommentViewModel> GetCommentsBySubmissionId(int submissionId)
         {
-            var comments = _dbContext.Comments.ToList(); 
+            var comments = _dbContext.Comments.ToList();
 
-            return new List<CommentViewModel> { new CommentViewModel() { Username = "dsako", Text = "this is the first comment" } }; 
+            List<CommentViewModel> commentsVm = _mapper.Map<List<CommentViewModel>>(comments);
+
+            return commentsVm; 
         }
     }
 }

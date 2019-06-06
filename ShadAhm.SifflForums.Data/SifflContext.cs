@@ -8,7 +8,10 @@ namespace ShadAhm.SifflForums.Data
 {
     public class SifflContext : DbContext
     {
+        public DbSet<User> Users { get; set; }
+        public DbSet<CommentThread> CommentThreads { get; set; }
         public DbSet<Comment> Comments { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,7 +23,6 @@ namespace ShadAhm.SifflForums.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 1, Text = "http://sample.com" });
         }
     }
 }

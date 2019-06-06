@@ -9,7 +9,7 @@ namespace ShadAhm.SifflForums.Data.Entities
     {
         public DateTime CreatedAtUtc { get; set; }
         public int CreatedBy { get; set; }
-        public DateTime ModifiedAt { get; set; }
+        public DateTime ModifiedAtUtc { get; set; }
         public int ModifiedBy { get; set; }
         [ForeignKey("CreatedBy")]
         public User Creator { get; set; }

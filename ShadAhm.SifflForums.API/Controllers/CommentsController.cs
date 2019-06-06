@@ -10,7 +10,7 @@ namespace ShadAhm.SifflForums.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentsController : ControllerBase
+    public class CommentsController : SifflControllerBase
     {
         ICommentsService _service; 
 
