@@ -23,7 +23,7 @@ namespace ShadAhm.SifflForums.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<CommentViewModel>> Get()
         {
-            return _service.GetCommentsBySubmissionId(0); 
+            return _service.GetCommentsByCommentThreadId(0); 
         }
 
         // GET api/values/5

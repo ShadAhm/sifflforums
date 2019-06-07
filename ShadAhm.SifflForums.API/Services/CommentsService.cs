@@ -10,7 +10,7 @@ namespace ShadAhm.SifflForums.Api.Services
 {
     public interface ICommentsService
     {
-        List<CommentViewModel> GetCommentsBySubmissionId(int submissionId);
+        List<CommentViewModel> GetCommentsByCommentThreadId(int submissionId);
     }
 
     public class CommentsService : ICommentsService 
@@ -24,9 +24,11 @@ namespace ShadAhm.SifflForums.Api.Services
             _mapper = mapper; 
         }
 
-        public List<CommentViewModel> GetCommentsBySubmissionId(int submissionId)
+        public List<CommentViewModel> GetCommentsByCommentThreadId(int commentThreadId)
         {
-            var comments = _dbContext.Comments.ToList();
+            var comments = _dbContext.Comments
+                .Where(c => c.CommentThreadId == commentThreadId)
+                .ToList();
 
             List<CommentViewModel> commentsVm = _mapper.Map<List<CommentViewModel>>(comments);
 
