@@ -12,7 +12,6 @@ namespace ShadAhm.SifflForums.Data
         public DbSet<CommentThread> CommentThreads { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

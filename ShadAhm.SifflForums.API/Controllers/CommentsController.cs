@@ -28,8 +28,9 @@ namespace ShadAhm.SifflForums.Api.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody]CommentViewModel value)
         {
+            _service.Insert(value); 
         }
 
         // PUT api/values/5

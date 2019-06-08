@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ShadAhm.SifflForums.Api.Models;
 using ShadAhm.SifflForums.Data;
+using ShadAhm.SifflForums.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace ShadAhm.SifflForums.Api.Services
 {
     public interface ICommentsService
     {
+        void Insert(CommentViewModel input); 
         List<CommentViewModel> GetCommentsByCommentThreadId(int submissionId);
     }
 
@@ -31,6 +33,22 @@ namespace ShadAhm.SifflForums.Api.Services
                 .ToList();
 
             return _mapper.Map<List<CommentViewModel>>(comments);
+        }
+
+        public void Insert(CommentViewModel input)
+        {
+            Comment comment = new Comment();
+            comment.CommentThreadId = input.CommentThreadId;
+            comment.Text = input.Text;
+
+            comment.UserId = 1;
+            comment.CreatedAtUtc = DateTime.UtcNow;
+            comment.CreatedBy = 1;
+            comment.ModifiedAtUtc = DateTime.UtcNow;
+            comment.ModifiedBy = 1;
+
+            _dbContext.Comments.Add(comment);
+            _dbContext.SaveChanges(); 
         }
     }
 }
