@@ -30,9 +30,7 @@ namespace ShadAhm.SifflForums.Api.Services
                 .Where(c => c.CommentThreadId == commentThreadId)
                 .ToList();
 
-            List<CommentViewModel> commentsVm = _mapper.Map<List<CommentViewModel>>(comments);
-
-            return commentsVm; 
+            return _mapper.Map<List<CommentViewModel>>(comments);
         }
     }
 }

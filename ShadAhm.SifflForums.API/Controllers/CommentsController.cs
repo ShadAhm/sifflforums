@@ -21,16 +21,9 @@ namespace ShadAhm.SifflForums.Api.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<CommentViewModel>> Get()
+        public ActionResult<IEnumerable<CommentViewModel>> Get(int commentThreadId)
         {
-            return _service.GetCommentsByCommentThreadId(0); 
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
+            return _service.GetCommentsByCommentThreadId(commentThreadId); 
         }
 
         // POST api/values
