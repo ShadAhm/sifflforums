@@ -24,11 +24,20 @@ namespace SifflForums.Api
         }
 
         public IConfiguration Configuration { get; }
+        private readonly string _devCorsPolicy = "_devCorsPolicy";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
+            services.AddCors(options =>
+            {
+                options.AddPolicy(_devCorsPolicy,
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:44370").AllowAnyHeader().AllowAnyMethod();
+                });
+            }); 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddTransient<SifflContext>(); 
@@ -41,6 +50,7 @@ namespace SifflForums.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(_devCorsPolicy);
             }
             else
             {

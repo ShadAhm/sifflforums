@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SifflForums.Api", "SifflForums.API\SifflForums.Api.csproj", "{66F49396-8529-44A4-9DA0-F51C25F39D08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SifflForums.Api", "SifflForums.API\SifflForums.Api.csproj", "{66F49396-8529-44A4-9DA0-F51C25F39D08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SifflForums.Data", "SifflForums.Data\SifflForums.Data.csproj", "{4BBB9CF7-AD58-4CA2-B54C-CCDC6A3858C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SifflForums.Data", "SifflForums.Data\SifflForums.Data.csproj", "{4BBB9CF7-AD58-4CA2-B54C-CCDC6A3858C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SifflForums.Web", "SifflForums.Web\SifflForums.Web.csproj", "{4DB65515-B407-4731-965A-C62DC790BDAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4BBB9CF7-AD58-4CA2-B54C-CCDC6A3858C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BBB9CF7-AD58-4CA2-B54C-CCDC6A3858C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BBB9CF7-AD58-4CA2-B54C-CCDC6A3858C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DB65515-B407-4731-965A-C62DC790BDAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB65515-B407-4731-965A-C62DC790BDAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB65515-B407-4731-965A-C62DC790BDAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB65515-B407-4731-965A-C62DC790BDAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
