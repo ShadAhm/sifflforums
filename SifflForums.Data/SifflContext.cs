@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShadAhm.SifflForums.Data.Entities;
+using SifflForums.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShadAhm.SifflForums.Data
+namespace SifflForums.Data
 {
     public class SifflContext : DbContext
     {

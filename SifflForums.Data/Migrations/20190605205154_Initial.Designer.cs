@@ -2,21 +2,23 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShadAhm.SifflForums.Data;
+using SifflForums.Data;
 
-namespace ShadAhm.SifflForums.Data.Migrations
+namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    partial class SifflContextModelSnapshot : ModelSnapshot
+    [Migration("20190605205154_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
-            modelBuilder.Entity("ShadAhm.SifflForums.Data.Entities.Comment", b =>
+            modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
                 {
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd();
@@ -48,7 +50,7 @@ namespace ShadAhm.SifflForums.Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("ShadAhm.SifflForums.Data.Entities.CommentThread", b =>
+            modelBuilder.Entity("SifflForums.Data.Entities.CommentThread", b =>
                 {
                     b.Property<int>("CommentThreadId")
                         .ValueGeneratedOnAdd();
@@ -78,7 +80,7 @@ namespace ShadAhm.SifflForums.Data.Migrations
                     b.ToTable("CommentThreads");
                 });
 
-            modelBuilder.Entity("ShadAhm.SifflForums.Data.Entities.User", b =>
+            modelBuilder.Entity("SifflForums.Data.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
@@ -94,42 +96,42 @@ namespace ShadAhm.SifflForums.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ShadAhm.SifflForums.Data.Entities.Comment", b =>
+            modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
                 {
-                    b.HasOne("ShadAhm.SifflForums.Data.Entities.CommentThread", "CommentThread")
+                    b.HasOne("SifflForums.Data.Entities.CommentThread", "CommentThread")
                         .WithMany()
                         .HasForeignKey("CommentThreadId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ShadAhm.SifflForums.Data.Entities.User", "Creator")
+                    b.HasOne("SifflForums.Data.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ShadAhm.SifflForums.Data.Entities.User", "Modifier")
+                    b.HasOne("SifflForums.Data.Entities.User", "Modifier")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ShadAhm.SifflForums.Data.Entities.User", "User")
+                    b.HasOne("SifflForums.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ShadAhm.SifflForums.Data.Entities.CommentThread", b =>
+            modelBuilder.Entity("SifflForums.Data.Entities.CommentThread", b =>
                 {
-                    b.HasOne("ShadAhm.SifflForums.Data.Entities.User", "Creator")
+                    b.HasOne("SifflForums.Data.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ShadAhm.SifflForums.Data.Entities.User", "Modifier")
+                    b.HasOne("SifflForums.Data.Entities.User", "Modifier")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ShadAhm.SifflForums.Data.Entities.User", "User")
+                    b.HasOne("SifflForums.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ShadAhm.SifflForums.Api.Models;
-using ShadAhm.SifflForums.Api.Services;
+using SifflForums.Api.Models;
+using SifflForums.Api.Services;
 
-namespace ShadAhm.SifflForums.Api.Controllers
+namespace SifflForums.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

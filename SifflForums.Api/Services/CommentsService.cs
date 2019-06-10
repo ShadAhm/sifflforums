@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using ShadAhm.SifflForums.Api.Models;
-using ShadAhm.SifflForums.Data;
-using ShadAhm.SifflForums.Data.Entities;
+using SifflForums.Api.Models;
+using SifflForums.Data;
+using SifflForums.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShadAhm.SifflForums.Api.Services
+namespace SifflForums.Api.Services
 {
     public interface ICommentsService
     {

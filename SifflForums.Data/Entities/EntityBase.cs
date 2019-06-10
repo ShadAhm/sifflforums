@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace ShadAhm.SifflForums.Data.Entities
+namespace SifflForums.Data.Entities
 {
     public abstract class EntityBase
     {

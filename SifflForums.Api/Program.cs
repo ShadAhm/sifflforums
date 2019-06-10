@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace ShadAhm.SifflForums.Api
+namespace SifflForums.Api
 {
     public class Program
     {

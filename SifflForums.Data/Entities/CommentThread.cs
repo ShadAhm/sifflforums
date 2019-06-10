@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShadAhm.SifflForums.Data.Entities
+namespace SifflForums.Data.Entities
 {
     public class CommentThread : EntityBase
     {

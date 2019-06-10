@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShadAhm.SifflForums.Data\ShadAhm.SifflForums.Data.csproj" />
+    <ProjectReference Include="..\SifflForums.Data\SifflForums.Data.csproj" />
   </ItemGroup>
 
 </Project>

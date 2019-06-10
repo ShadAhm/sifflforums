@@ -11,10 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ShadAhm.SifflForums.Api.Services;
-using ShadAhm.SifflForums.Data;
+using SifflForums.Api.Services;
+using SifflForums.Data;
 
-namespace ShadAhm.SifflForums.Api
+namespace SifflForums.Api
 {
     public class Startup
     {

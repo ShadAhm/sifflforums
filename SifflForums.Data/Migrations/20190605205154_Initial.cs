@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ShadAhm.SifflForums.Data.Migrations
+namespace SifflForums.Data.Migrations
 {
     public partial class Initial : Migration
     {

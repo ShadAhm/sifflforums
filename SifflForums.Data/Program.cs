@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShadAhm.SifflForums.Data
+namespace SifflForums.Data
 {
     class Program
     {

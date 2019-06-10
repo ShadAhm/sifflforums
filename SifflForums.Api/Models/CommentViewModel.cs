@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShadAhm.SifflForums.Api.Models
+namespace SifflForums.Api.Models
 {
     public class CommentViewModel
     {
