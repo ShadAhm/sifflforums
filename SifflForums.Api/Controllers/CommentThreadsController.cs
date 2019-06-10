@@ -10,27 +10,26 @@ namespace SifflForums.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentsController : SifflControllerBase
+    public class CommentThreadsController : SifflControllerBase
     {
-        ICommentsService _service; 
+        ICommentThreadsService _service; 
 
-        public CommentsController(ICommentsService service)
+        public CommentThreadsController(ICommentThreadsService service)
         {
             _service = service; 
         }
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<CommentViewModel>> Get(int commentThreadId)
+        public ActionResult<IEnumerable<CommentThreadViewModel>> Get()
         {
-            return _service.GetByCommentThreadId(commentThreadId); 
+            return _service.GetAll(); 
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody]CommentViewModel value)
         {
-            _service.Insert(value); 
         }
 
         // PUT api/values/5

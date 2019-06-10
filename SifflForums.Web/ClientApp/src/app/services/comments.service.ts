@@ -8,9 +8,9 @@ import { CommentPost } from '../models/comments';
   providedIn: 'root'
 })
 export class CommentsService {
-  apiRoot = 'http://localhost:60993/'; 
+  private apiRoot = 'http://localhost:60993/'; 
 
-  httpOptions = {
+  private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })

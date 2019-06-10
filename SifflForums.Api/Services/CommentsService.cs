@@ -12,7 +12,7 @@ namespace SifflForums.Api.Services
     public interface ICommentsService
     {
         void Insert(CommentViewModel input); 
-        List<CommentViewModel> GetCommentsByCommentThreadId(int submissionId);
+        List<CommentViewModel> GetByCommentThreadId(int submissionId);
     }
 
     public class CommentsService : ICommentsService 
@@ -26,7 +26,7 @@ namespace SifflForums.Api.Services
             _mapper = mapper; 
         }
 
-        public List<CommentViewModel> GetCommentsByCommentThreadId(int commentThreadId)
+        public List<CommentViewModel> GetByCommentThreadId(int commentThreadId)
         {
             var comments = _dbContext.Comments
                 .Where(c => c.CommentThreadId == commentThreadId)

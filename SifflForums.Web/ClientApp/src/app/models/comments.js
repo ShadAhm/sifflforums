@@ -6,4 +6,10 @@ var CommentPost = /** @class */ (function () {
     return CommentPost;
 }());
 exports.CommentPost = CommentPost;
+var CommentThread = /** @class */ (function () {
+    function CommentThread() {
+    }
+    return CommentThread;
+}());
+exports.CommentThread = CommentThread;
 //# sourceMappingURL=comments.js.map
