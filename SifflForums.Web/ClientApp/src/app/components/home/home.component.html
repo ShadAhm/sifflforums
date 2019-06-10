@@ -1,4 +1,5 @@
 <div *ngFor="let commentThread of commentThreads">
   <h4><a [routerLink]="['/comments', commentThread.commentThreadId]">{{commentThread.title}}</a></h4>
   <p>{{commentThread.text}}</p>
+  <p>Posted by {{commentThread.username}}</p>
 </div>

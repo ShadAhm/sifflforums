@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SifflForums.Api.Models;
 using SifflForums.Data;
 using System;
@@ -27,6 +28,7 @@ namespace SifflForums.Api.Services
         public List<CommentThreadViewModel> GetAll()
         {
             var comments = _dbContext.CommentThreads
+                .Include(o => o.User)
                 .ToList();
 
             return _mapper.Map<List<CommentThreadViewModel>>(comments);
