@@ -1,0 +1,14 @@
+<form [formGroup]="commentThreadForm" (ngSubmit)="onSubmit()">
+
+  <label>
+    Title:
+    <input type="text" formControlName="title">
+  </label>
+
+  <label>
+    Text:
+    <input type="text" formControlName="text">
+  </label>
+
+  <input type="submit" value="Submit" />
+</form>
