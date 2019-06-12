@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CommentThreadService } from '../../services/comment-thread.service';
 import { CommentThread } from '../../models/comments';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment-thread-create',
@@ -14,7 +15,7 @@ export class CommentThreadCreateComponent implements OnInit {
     text: new FormControl(''),
   });
 
-  constructor(private commentThreadService: CommentThreadService) { }
+  constructor(private router: Router, private commentThreadService: CommentThreadService) { }
 
   ngOnInit() {
   }
@@ -25,7 +26,9 @@ export class CommentThreadCreateComponent implements OnInit {
     input.title = this.commentThreadForm.value.title;
 
     this.commentThreadService.postThread(input).subscribe(
-      (response) => { console.log('OK', response); },
+      (response: CommentThread) => {
+        this.router.navigateByUrl(`/comments/${response.commentThreadId}`);
+      },
       (error) => { console.error("Error happened", error) }
     );
   }
