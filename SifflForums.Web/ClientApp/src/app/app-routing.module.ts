@@ -17,7 +17,7 @@ const routes: Routes = [
     data: { title: 'Comments' }
   },
   {
-    path: 'submission/new',
+    path: 'new-submission',
     component: SubmissionCreateComponent,
     data: { title: 'New Submission' }
   }];

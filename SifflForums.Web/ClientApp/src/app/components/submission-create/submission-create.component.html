@@ -1,10 +1,10 @@
 <form [formGroup]="submissionForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <input type="text" class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="title" placeholder="title"/>
+    <input type="text" class="form-control" id="titleText" formControlName="title" placeholder="title"/>
   </div>
 
   <div class="form-group">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" formControlName="text" placeholder="text"></textarea>
+    <textarea class="form-control" id="textText" rows="5" formControlName="text" placeholder="text"></textarea>
   </div>
 
   <input type="submit" class="btn btn-primary" value="Submit" />

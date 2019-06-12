@@ -27,7 +27,7 @@ export class SubmissionCreateComponent implements OnInit {
 
     this.submissionService.postThread(input).subscribe(
       (response: Submission) => {
-        this.router.navigateByUrl(`/comments/${response.submissionId}`);
+        this.router.navigateByUrl(`/submission/${response.submissionId}`);
       },
       (error) => { console.error("Error happened", error) }
     );
