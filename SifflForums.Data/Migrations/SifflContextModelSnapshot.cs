@@ -21,8 +21,6 @@ namespace SifflForums.Data.Migrations
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CommentThreadId");
-
                     b.Property<DateTime>("CreatedAtUtc");
 
                     b.Property<int>("CreatedBy");
@@ -31,26 +29,28 @@ namespace SifflForums.Data.Migrations
 
                     b.Property<int>("ModifiedBy");
 
+                    b.Property<int>("SubmissionId");
+
                     b.Property<string>("Text");
 
                     b.Property<int>("UserId");
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("CommentThreadId");
-
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("ModifiedBy");
+
+                    b.HasIndex("SubmissionId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("SifflForums.Data.Entities.CommentThread", b =>
+            modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
                 {
-                    b.Property<int>("CommentThreadId")
+                    b.Property<int>("SubmissionId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAtUtc");
@@ -67,7 +67,7 @@ namespace SifflForums.Data.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.HasKey("CommentThreadId");
+                    b.HasKey("SubmissionId");
 
                     b.HasIndex("CreatedBy");
 
@@ -75,7 +75,7 @@ namespace SifflForums.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CommentThreads");
+                    b.ToTable("Submissions");
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.User", b =>
@@ -96,11 +96,6 @@ namespace SifflForums.Data.Migrations
 
             modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
                 {
-                    b.HasOne("SifflForums.Data.Entities.CommentThread", "CommentThread")
-                        .WithMany()
-                        .HasForeignKey("CommentThreadId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("SifflForums.Data.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
@@ -111,13 +106,18 @@ namespace SifflForums.Data.Migrations
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("SifflForums.Data.Entities.Submission", "Submission")
+                        .WithMany("Comments")
+                        .HasForeignKey("SubmissionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("SifflForums.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SifflForums.Data.Entities.CommentThread", b =>
+            modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
                 {
                     b.HasOne("SifflForums.Data.Entities.User", "Creator")
                         .WithMany()

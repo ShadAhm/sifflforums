@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SifflForums.Api.Models.AutoMapperProfiles
 {
-    public class CommentThreadsProfile : Profile
+    public class SubmissionsProfile : Profile
     {
-        public CommentThreadsProfile()
+        public SubmissionsProfile()
         {
-            CreateMap<CommentThread, CommentThreadViewModel>()
+            CreateMap<Submission, SubmissionViewModel>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.DisplayName));
         }
     }

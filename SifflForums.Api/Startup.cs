@@ -42,7 +42,7 @@ namespace SifflForums.Api
 
             services.AddTransient<SifflContext>(); 
             services.AddScoped<ICommentsService, CommentsService>(); 
-            services.AddScoped<ICommentThreadsService, CommentThreadsService>(); 
+            services.AddScoped<ISubmissionsService, SubmissionsService>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

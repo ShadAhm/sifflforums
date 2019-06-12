@@ -10,25 +10,25 @@ namespace SifflForums.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentThreadsController : SifflControllerBase
+    public class SubmissionsController : SifflControllerBase
     {
-        ICommentThreadsService _service; 
+        ISubmissionsService _service; 
 
-        public CommentThreadsController(ICommentThreadsService service)
+        public SubmissionsController(ISubmissionsService service)
         {
             _service = service; 
         }
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<CommentThreadViewModel>> Get()
+        public ActionResult<IEnumerable<SubmissionViewModel>> Get()
         {
             return _service.GetAll(); 
         }
 
         // POST api/values
         [HttpPost]
-        public ActionResult<CommentThreadViewModel> Post([FromBody]CommentThreadViewModel value)
+        public ActionResult<SubmissionViewModel> Post([FromBody]SubmissionViewModel value)
         {
             return _service.Insert(value);
         }

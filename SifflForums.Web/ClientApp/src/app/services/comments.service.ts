@@ -18,8 +18,8 @@ export class CommentsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getComments(commentThreadId: number): Observable<CommentPost[]> {
-    return this.httpClient.get<CommentPost[]>(`${this.apiRoot}api/comments?commentThreadId=${commentThreadId}`)
+  getComments(submissionId: number): Observable<CommentPost[]> {
+    return this.httpClient.get<CommentPost[]>(`${this.apiRoot}api/comments?submissionId=${submissionId}`)
       .pipe(map(res => res));
   }
 

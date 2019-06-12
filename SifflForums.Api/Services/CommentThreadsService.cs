@@ -10,47 +10,47 @@ using System.Threading.Tasks;
 
 namespace SifflForums.Api.Services
 {
-    public interface ICommentThreadsService
+    public interface ISubmissionsService
     {
-        List<CommentThreadViewModel> GetAll();
-        CommentThreadViewModel Insert(CommentThreadViewModel value);
+        List<SubmissionViewModel> GetAll();
+        SubmissionViewModel Insert(SubmissionViewModel value);
     }
 
-    public class CommentThreadsService : ICommentThreadsService
+    public class SubmissionsService : ISubmissionsService
     {
         private SifflContext _dbContext;
         private IMapper _mapper;
 
-        public CommentThreadsService(SifflContext dbContext, IMapper mapper)
+        public SubmissionsService(SifflContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
 
-        public List<CommentThreadViewModel> GetAll()
+        public List<SubmissionViewModel> GetAll()
         {
-            var comments = _dbContext.CommentThreads
+            var comments = _dbContext.Submissions
                 .Include(o => o.User)
                 .ToList();
 
-            return _mapper.Map<List<CommentThreadViewModel>>(comments);
+            return _mapper.Map<List<SubmissionViewModel>>(comments);
         }
 
-        public CommentThreadViewModel Insert(CommentThreadViewModel input)
+        public SubmissionViewModel Insert(SubmissionViewModel input)
         {
-            CommentThread thread = new CommentThread();
-            thread.Title = input.Title;
-            thread.Text = input.Text;
-            thread.UserId = 1;
-            thread.CreatedAtUtc = DateTime.UtcNow;
-            thread.CreatedBy = 1;
-            thread.ModifiedAtUtc = DateTime.UtcNow;
-            thread.ModifiedBy = 1;
+            Submission o = new Submission();
+            o.Title = input.Title;
+            o.Text = input.Text;
+            o.UserId = 1;
+            o.CreatedAtUtc = DateTime.UtcNow;
+            o.CreatedBy = 1;
+            o.ModifiedAtUtc = DateTime.UtcNow;
+            o.ModifiedBy = 1;
 
-            _dbContext.CommentThreads.Add(thread);
+            _dbContext.Submissions.Add(o);
             _dbContext.SaveChanges();
 
-            return _mapper.Map<CommentThreadViewModel>(thread);
+            return _mapper.Map<SubmissionViewModel>(o);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace SifflForums.Data
     public class SifflContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<CommentThread> CommentThreads { get; set; }
+        public DbSet<Submission> Submissions { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

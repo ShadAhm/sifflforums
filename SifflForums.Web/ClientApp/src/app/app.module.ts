@@ -7,14 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HomeComponent } from './components/home/home.component';
 import { CommentComponent } from './components/comment/comment.component';
-import { CommentThreadCreateComponent } from './components/comment-thread-create/comment-thread-create.component';
+import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CommentComponent,
-    CommentThreadCreateComponent
+    SubmissionCreateComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ namespace SifflForums.Api.Services
     public interface ICommentsService
     {
         void Insert(CommentViewModel input); 
-        List<CommentViewModel> GetByCommentThreadId(int submissionId);
+        List<CommentViewModel> GetBySubmissionId(int submissionId);
     }
 
     public class CommentsService : ICommentsService 
@@ -26,10 +26,10 @@ namespace SifflForums.Api.Services
             _mapper = mapper; 
         }
 
-        public List<CommentViewModel> GetByCommentThreadId(int commentThreadId)
+        public List<CommentViewModel> GetBySubmissionId(int submissionId)
         {
             var comments = _dbContext.Comments
-                .Where(c => c.CommentThreadId == commentThreadId)
+                .Where(c => c.SubmissionId == submissionId)
                 .ToList();
 
             return _mapper.Map<List<CommentViewModel>>(comments);
@@ -38,7 +38,7 @@ namespace SifflForums.Api.Services
         public void Insert(CommentViewModel input)
         {
             Comment comment = new Comment();
-            comment.CommentThreadId = input.CommentThreadId;
+            comment.SubmissionId = input.SubmissionId;
             comment.Text = input.Text;
 
             comment.UserId = 1;

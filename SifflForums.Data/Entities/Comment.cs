@@ -10,7 +10,7 @@ namespace SifflForums.Data.Entities
         public string Text { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public int CommentThreadId { get; set; }
-        public CommentThread CommentThread { get; set; }
+        public int SubmissionId { get; set; }
+        public Submission Submission { get; set; }
     }
 }

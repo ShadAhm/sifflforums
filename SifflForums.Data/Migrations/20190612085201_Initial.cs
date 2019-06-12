@@ -23,10 +23,10 @@ namespace SifflForums.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CommentThreads",
+                name: "Submissions",
                 columns: table => new
                 {
-                    CommentThreadId = table.Column<int>(nullable: false)
+                    SubmissionId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CreatedAtUtc = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
@@ -38,21 +38,21 @@ namespace SifflForums.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommentThreads", x => x.CommentThreadId);
+                    table.PrimaryKey("PK_Submissions", x => x.SubmissionId);
                     table.ForeignKey(
-                        name: "FK_CommentThreads_Users_CreatedBy",
+                        name: "FK_Submissions_Users_CreatedBy",
                         column: x => x.CreatedBy,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CommentThreads_Users_ModifiedBy",
+                        name: "FK_Submissions_Users_ModifiedBy",
                         column: x => x.ModifiedBy,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CommentThreads_Users_UserId",
+                        name: "FK_Submissions_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -71,17 +71,11 @@ namespace SifflForums.Data.Migrations
                     ModifiedBy = table.Column<int>(nullable: false),
                     Text = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
-                    CommentThreadId = table.Column<int>(nullable: false)
+                    SubmissionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.CommentId);
-                    table.ForeignKey(
-                        name: "FK_Comments_CommentThreads_CommentThreadId",
-                        column: x => x.CommentThreadId,
-                        principalTable: "CommentThreads",
-                        principalColumn: "CommentThreadId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Comments_Users_CreatedBy",
                         column: x => x.CreatedBy,
@@ -95,17 +89,18 @@ namespace SifflForums.Data.Migrations
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Comments_Submissions_SubmissionId",
+                        column: x => x.SubmissionId,
+                        principalTable: "Submissions",
+                        principalColumn: "SubmissionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_CommentThreadId",
-                table: "Comments",
-                column: "CommentThreadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_CreatedBy",
@@ -118,23 +113,28 @@ namespace SifflForums.Data.Migrations
                 column: "ModifiedBy");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_SubmissionId",
+                table: "Comments",
+                column: "SubmissionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_UserId",
                 table: "Comments",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentThreads_CreatedBy",
-                table: "CommentThreads",
+                name: "IX_Submissions_CreatedBy",
+                table: "Submissions",
                 column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentThreads_ModifiedBy",
-                table: "CommentThreads",
+                name: "IX_Submissions_ModifiedBy",
+                table: "Submissions",
                 column: "ModifiedBy");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentThreads_UserId",
-                table: "CommentThreads",
+                name: "IX_Submissions_UserId",
+                table: "Submissions",
                 column: "UserId");
         }
 
@@ -144,7 +144,7 @@ namespace SifflForums.Data.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "CommentThreads");
+                name: "Submissions");
 
             migrationBuilder.DropTable(
                 name: "Users");

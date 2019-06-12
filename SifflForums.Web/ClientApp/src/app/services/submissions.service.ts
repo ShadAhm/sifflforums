@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CommentThread } from '../models/comments';
+import { Submission } from '../models/comments';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommentThreadService {
+export class SubmissionsService {
   private apiRoot = 'http://localhost:60993/'; 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -17,13 +17,13 @@ export class CommentThreadService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getThreads(): Observable<CommentThread[]> {
-    return this.httpClient.get<CommentThread[]>(`${this.apiRoot}api/commentThreads`)
+  getThreads(): Observable<Submission[]> {
+    return this.httpClient.get<Submission[]>(`${this.apiRoot}api/submissions`)
       .pipe(map(res => res));
   }
 
-  postThread(input: CommentThread): Observable<any> {
-    return this.httpClient.post<CommentThread>(`${this.apiRoot}api/commentThreads`, input, this.httpOptions)
+  postThread(input: Submission): Observable<any> {
+    return this.httpClient.post<Submission>(`${this.apiRoot}api/submissions`, input, this.httpOptions)
       .pipe(map(res => res));
   }
 }

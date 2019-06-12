@@ -21,9 +21,9 @@ namespace SifflForums.Api.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<CommentViewModel>> Get(int commentThreadId)
+        public ActionResult<IEnumerable<CommentViewModel>> Get(int submissionId)
         {
-            return _service.GetByCommentThreadId(commentThreadId); 
+            return _service.GetBySubmissionId(submissionId); 
         }
 
         // POST api/values

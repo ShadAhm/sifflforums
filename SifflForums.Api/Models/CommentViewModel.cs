@@ -7,7 +7,7 @@ namespace SifflForums.Api.Models
 {
     public class CommentViewModel
     {
-        public int CommentThreadId { get; set; }
+        public int SubmissionId { get; set; }
         public string Username { get; set; }
         public string Text { get; set; }
         public string CreatedAtUtc { get; set; }

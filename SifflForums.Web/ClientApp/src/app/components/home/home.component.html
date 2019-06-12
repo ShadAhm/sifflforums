@@ -1,5 +1,5 @@
-<div *ngFor="let commentThread of commentThreads">
-  <h4><a [routerLink]="['/comments', commentThread.commentThreadId]">{{commentThread.title}}</a></h4>
-  <p>{{commentThread.text}}</p>
-  <p>Posted by {{commentThread.username}}</p>
+<div *ngFor="let submission of submissions">
+  <h4><a [routerLink]="['/comments', submission.submissionId]">{{submission.title}}</a></h4>
+  <p>{{submission.text}}</p>
+  <p>Posted by {{submission.username}}</p>
 </div>
