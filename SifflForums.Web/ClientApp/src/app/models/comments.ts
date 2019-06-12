@@ -8,5 +8,6 @@ export class Submission {
   public submissionId: number;
   public title: string; 
   public text: string;
-  public username: string; 
+  public username: string;
+  public comments: CommentPost[]; 
 }

@@ -17,7 +17,12 @@ export class SubmissionsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getThreads(): Observable<Submission[]> {
+  getSubmission(submissionId: number): Observable<Submission> {
+    return this.httpClient.get<Submission>(`${this.apiRoot}api/submissions/${submissionId}`)
+      .pipe(map(res => res));
+  }
+
+  getSubmissions(): Observable<Submission[]> {
     return this.httpClient.get<Submission[]>(`${this.apiRoot}api/submissions`)
       .pipe(map(res => res));
   }

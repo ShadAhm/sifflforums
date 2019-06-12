@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SifflForums.Api.Models;
 using SifflForums.Data;
@@ -14,6 +15,7 @@ namespace SifflForums.Api.Services
     {
         List<SubmissionViewModel> GetAll();
         SubmissionViewModel Insert(SubmissionViewModel value);
+        SubmissionViewModel GetById(int id);
     }
 
     public class SubmissionsService : ISubmissionsService
@@ -36,21 +38,31 @@ namespace SifflForums.Api.Services
             return _mapper.Map<List<SubmissionViewModel>>(comments);
         }
 
+        public SubmissionViewModel GetById(int id)
+        {
+            var entity = _dbContext.Submissions
+                .Include(o => o.User)
+                .Include(o => o.Comments)
+                .FirstOrDefault();
+
+            return _mapper.Map<SubmissionViewModel>(entity);
+        }
+
         public SubmissionViewModel Insert(SubmissionViewModel input)
         {
-            Submission o = new Submission();
-            o.Title = input.Title;
-            o.Text = input.Text;
-            o.UserId = 1;
-            o.CreatedAtUtc = DateTime.UtcNow;
-            o.CreatedBy = 1;
-            o.ModifiedAtUtc = DateTime.UtcNow;
-            o.ModifiedBy = 1;
+            Submission entity = new Submission();
+            entity.Title = input.Title;
+            entity.Text = input.Text;
+            entity.UserId = 1;
+            entity.CreatedAtUtc = DateTime.UtcNow;
+            entity.CreatedBy = 1;
+            entity.ModifiedAtUtc = DateTime.UtcNow;
+            entity.ModifiedBy = 1;
 
-            _dbContext.Submissions.Add(o);
+            _dbContext.Submissions.Add(entity);
             _dbContext.SaveChanges();
 
-            return _mapper.Map<SubmissionViewModel>(o);
+            return _mapper.Map<SubmissionViewModel>(entity);
         }
     }
 }

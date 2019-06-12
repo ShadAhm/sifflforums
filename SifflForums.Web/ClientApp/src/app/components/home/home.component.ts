@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   }
 
   getSubmissions(): void {
-    this.submissionsService.getThreads().subscribe(
+    this.submissionsService.getSubmissions().subscribe(
       (response: Submission[]) => { this.submissions = response },
       (error) => { console.error("Error happened", error) }
     );

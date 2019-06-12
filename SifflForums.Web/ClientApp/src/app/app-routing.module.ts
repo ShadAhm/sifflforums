@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { CommentComponent } from './components/comment/comment.component';
+import { SubmissionComponent } from './components/submission/submission.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
 
 const routes: Routes = [
@@ -12,8 +12,8 @@ const routes: Routes = [
     data: { title: 'Home' }
   },
   {
-    path: 'comments/:submissionId',
-    component: CommentComponent,
+    path: 'submission/:submissionId',
+    component: SubmissionComponent,
     data: { title: 'Comments' }
   },
   {

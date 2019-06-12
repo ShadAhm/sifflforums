@@ -6,14 +6,14 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 
 import { HomeComponent } from './components/home/home.component';
-import { CommentComponent } from './components/comment/comment.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
+import { SubmissionComponent } from './components/submission/submission.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CommentComponent,
+    SubmissionComponent,
     SubmissionCreateComponent
   ],
   imports: [

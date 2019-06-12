@@ -12,6 +12,6 @@ namespace SifflForums.Api.Models
         public string Text { get; set; }
         public int UserId { get; set; }
         public string Username { get; set; }
-
+        public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }

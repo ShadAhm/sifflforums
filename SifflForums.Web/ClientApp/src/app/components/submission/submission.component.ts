@@ -1,31 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SubmissionsService } from '../../services/submissions.service';
+import { Submission, CommentPost } from '../../models/comments';
 import { CommentsService } from '../../services/comments.service';
-import { CommentPost } from '../../models/comments';
 
 
 @Component({
-  selector: 'app-comment',
-  templateUrl: './comment.component.html',
+  selector: 'app-submission',
+  templateUrl: './submission.component.html',
   styles: []
 })
-export class CommentComponent implements OnInit {
+export class SubmissionComponent implements OnInit {
   submissionId: number;
-  comments: CommentPost[];
+  submission: Submission;
   commentInput: string; 
 
-  constructor(private route: ActivatedRoute, private commentsService: CommentsService) { }
+  constructor(private route: ActivatedRoute, private commentsService: CommentsService, private submissionsService: SubmissionsService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.submissionId = params['submissionId'];
-      this.getComments(); 
+      this.getsubmissions(); 
     });
   }
 
-  getComments(): void {
-    this.commentsService.getComments(this.submissionId).subscribe(
-      (response: CommentPost[]) => { this.comments = response },
+  getsubmissions(): void {
+    this.submissionsService.getSubmission(this.submissionId).subscribe(
+      (response: Submission) => { this.submission = response },
       (error) => { console.error("Error happened", error) }
     );
   }

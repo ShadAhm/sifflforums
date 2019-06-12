@@ -26,6 +26,13 @@ namespace SifflForums.Api.Controllers
             return _service.GetAll(); 
         }
 
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public ActionResult<SubmissionViewModel> Get(int id)
+        {
+            return _service.GetById(id);
+        }
+
         // POST api/values
         [HttpPost]
         public ActionResult<SubmissionViewModel> Post([FromBody]SubmissionViewModel value)

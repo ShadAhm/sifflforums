@@ -20,7 +20,7 @@ namespace SifflForums.Api.Controllers
         }
 
         // GET api/values
-        [HttpGet]
+        [HttpGet()]
         public ActionResult<IEnumerable<CommentViewModel>> Get(int submissionId)
         {
             return _service.GetBySubmissionId(submissionId); 
