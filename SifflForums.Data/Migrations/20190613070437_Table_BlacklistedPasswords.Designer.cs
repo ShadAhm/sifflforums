@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SifflForums.Data;
 
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    partial class SifflContextModelSnapshot : ModelSnapshot
+    [Migration("20190613070437_Table_BlacklistedPasswords")]
+    partial class Table_BlacklistedPasswords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

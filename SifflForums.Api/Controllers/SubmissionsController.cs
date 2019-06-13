@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SifflForums.Api.Models;
 using SifflForums.Api.Services;
@@ -34,20 +35,20 @@ namespace SifflForums.Api.Controllers
         }
 
         // POST api/values
-        [HttpPost]
+        [HttpPost,Authorize]
         public ActionResult<SubmissionViewModel> Post([FromBody]SubmissionViewModel value)
         {
             return _service.Insert(value);
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public void Delete(int id)
         {
         }

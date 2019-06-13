@@ -8,13 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
 import { SubmissionComponent } from './components/submission/submission.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SubmissionComponent,
-    SubmissionCreateComponent
+    SubmissionCreateComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

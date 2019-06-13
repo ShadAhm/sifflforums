@@ -12,6 +12,9 @@ namespace SifflForums.Data
         public DbSet<Submission> Submissions { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        // Reference data below this line (to be added to Redis cache down the road)
+        public DbSet<BlacklistedPassword> BlacklistedPasswords { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
