@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SifflForums.Api.Models;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
@@ -29,6 +30,7 @@ namespace SifflForums.Api.Services
         public List<CommentViewModel> GetBySubmissionId(int submissionId)
         {
             var comments = _dbContext.Comments
+                .Include(c => c.User)
                 .Where(c => c.SubmissionId == submissionId)
                 .ToList();
 

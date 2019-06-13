@@ -42,8 +42,7 @@ namespace SifflForums.Api.Services
         {
             var entity = _dbContext.Submissions
                 .Include(o => o.User)
-                .Include(o => o.Comments)
-                .FirstOrDefault();
+                .SingleOrDefault(o => o.SubmissionId == id);
 
             return _mapper.Map<SubmissionViewModel>(entity);
         }

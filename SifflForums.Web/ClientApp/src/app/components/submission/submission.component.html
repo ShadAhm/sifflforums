@@ -1,13 +1,22 @@
-<h2>{{submission.title}}</h2>
-<p>{{submission.text}}</p>
+<ng-container *ngIf="submission">
+  <h2>
+    {{submission.title}}
+  </h2>
+    <small class="text-muted">Posted by {{submission.username}}</small>
+  <p>{{submission.text}}</p>
 
-<hr />
-<div *ngFor="let comment of submission.comments">
-  <p>{{comment.text}}</p>
-  <span>{{comment.username}}</span>
-</div>
+  <hr />
+  <h6>Comments</h6>
+  <div class="comment" *ngFor="let comment of comments">
+    <p class="comment-header">
+      <span class="comment-username">{{comment.username}} </span>
+      <span class="comment-date">commented on {{comment.createdAtUtc}}</span>
+    </p>
+    <div class="comment-content" [innerHTML]="comment.text"></div>
+  </div>
 
-<div class="mt-4">
-  <div class="form-group"><input class="form-control" [(ngModel)]="commentInput" type="text" placeholder="Comment"></div>
-  <button class="btn btn-primary" (click)="postComment()">Submit</button>
-</div>
+  <div class="mt-4">
+    <div class="form-group"><textarea class="form-control" [(ngModel)]="commentInput" placeholder="Comment"></textarea></div>
+    <button class="btn btn-primary" (click)="postComment()">Submit</button>
+  </div>
+</ng-container>
