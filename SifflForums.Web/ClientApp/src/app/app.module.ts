@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
 import { SubmissionComponent } from './components/submission/submission.component';
 import { HeaderComponent } from './components/header/header.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HeaderComponent } from './components/header/header.component';
     HomeComponent,
     SubmissionComponent,
     SubmissionCreateComponent,
-    HeaderComponent
+    HeaderComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

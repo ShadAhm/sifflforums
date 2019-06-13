@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -25,10 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\auth.ts" />
     <None Remove="ClientApp\src\app\models\comments.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\auth.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\comments.ts" />
   </ItemGroup>
 

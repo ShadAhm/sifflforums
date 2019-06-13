@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SifflForums.Data;
 
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    partial class SifflContextModelSnapshot : ModelSnapshot
+    [Migration("20190613070739_User_Password")]
+    partial class User_Password
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,13 +101,9 @@ namespace SifflForums.Data.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<DateTime>("LastPasswordResetUtc");
-
                     b.Property<string>("Password");
 
                     b.Property<DateTime>("RegisteredAtUtc");
-
-                    b.Property<string>("Salt");
 
                     b.HasKey("UserId");
 

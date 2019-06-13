@@ -9,6 +9,9 @@ namespace SifflForums.Data.Entities
         public int UserId { get; set; }
         public string DisplayName { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
+        public string Salt { get; set; }
+        public DateTime LastPasswordResetUtc { get; set; }
         public DateTime RegisteredAtUtc { get; set; }
     }
 }

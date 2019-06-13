@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { SubmissionComponent } from './components/submission/submission.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +21,10 @@ const routes: Routes = [
     path: 'new-submission',
     component: SubmissionCreateComponent,
     data: { title: 'New Submission' }
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   }];
 
 @NgModule({

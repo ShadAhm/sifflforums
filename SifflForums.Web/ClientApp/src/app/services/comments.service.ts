@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CommentPost } from '../models/comments';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommentsService {
-  private apiRoot = 'http://localhost:60993/'; 
-
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
-  constructor(private httpClient: HttpClient) { }
+export class CommentsService extends BaseService {
+  constructor(private httpClient: HttpClient) { super(); }
 
   getComments(submissionId: number): Observable<CommentPost[]> {
     return this.httpClient.get<CommentPost[]>(`${this.apiRoot}api/comments?submissionId=${submissionId}`)
