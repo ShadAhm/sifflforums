@@ -6,4 +6,10 @@ var SignupModel = /** @class */ (function () {
     return SignupModel;
 }());
 exports.SignupModel = SignupModel;
+var TokenModel = /** @class */ (function () {
+    function TokenModel() {
+    }
+    return TokenModel;
+}());
+exports.TokenModel = TokenModel;
 //# sourceMappingURL=auth.js.map

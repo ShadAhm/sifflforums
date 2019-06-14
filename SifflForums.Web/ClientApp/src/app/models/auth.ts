@@ -3,3 +3,7 @@ export class SignupModel {
   public password: string;
   public email: string; 
 }
+
+export class TokenModel {
+  public token: string; 
+}
