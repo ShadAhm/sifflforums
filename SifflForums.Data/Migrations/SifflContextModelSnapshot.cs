@@ -95,8 +95,6 @@ namespace SifflForums.Data.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DisplayName");
-
                     b.Property<string>("Email");
 
                     b.Property<DateTime>("LastPasswordResetUtc");
@@ -106,6 +104,8 @@ namespace SifflForums.Data.Migrations
                     b.Property<DateTime>("RegisteredAtUtc");
 
                     b.Property<string>("Salt");
+
+                    b.Property<string>("Username");
 
                     b.HasKey("UserId");
 

@@ -36,6 +36,8 @@ namespace SifflForums.Api.Controllers
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]LoginViewModel user)
         {
+            _authService.Login(user); 
+
             if (user == null)
             {
                 return BadRequest("Invalid client request");

@@ -12,7 +12,7 @@ namespace SifflForums.Api.Models.AutoMapperProfiles
         public CommentsProfile()
         {
             CreateMap<Comment, CommentViewModel>()
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.DisplayName));
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
         }
     }
 }

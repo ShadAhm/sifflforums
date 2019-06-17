@@ -8,13 +8,29 @@ namespace SifflForums.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "BlacklistedPasswords",
+                columns: table => new
+                {
+                    BlacklistedPasswordId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Password = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlacklistedPasswords", x => x.BlacklistedPasswordId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DisplayName = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Salt = table.Column<string>(nullable: true),
+                    LastPasswordResetUtc = table.Column<DateTime>(nullable: false),
                     RegisteredAtUtc = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -140,6 +156,9 @@ namespace SifflForums.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "BlacklistedPasswords");
+
             migrationBuilder.DropTable(
                 name: "Comments");
 

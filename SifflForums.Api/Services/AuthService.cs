@@ -17,6 +17,7 @@ namespace SifflForums.Api.Services
     public interface IAuthService
     {
         TokenModel SignUp(SignUpViewModel user);
+        TokenModel Login(LoginViewModel user);
     }
 
     public class AuthService : IAuthService
@@ -30,6 +31,21 @@ namespace SifflForums.Api.Services
             _mapper = mapper;
         }
 
+        public TokenModel Login(LoginViewModel input)
+        {
+            User user = _dbContext.Users.Where(o => o.Username == input.Username).SingleOrDefault();
+
+            byte[] salt = Convert.FromBase64String(user.Salt);
+            string hash = HashPasswordIntoBase64(input.Password, salt);
+
+            if(hash != user.Password)
+            {
+                // reject user
+            }
+
+            return IssueToken();
+        }
+
         public TokenModel SignUp(SignUpViewModel user)
         {
             bool passwordDisallowed = _dbContext.BlacklistedPasswords.Any(o => o.Password == user.Password);
@@ -37,18 +53,16 @@ namespace SifflForums.Api.Services
             if(passwordDisallowed)
             {
                 // rejectuser
+                return null; 
             }
 
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
 
-            var pbkdf2 = new Rfc2898DeriveBytes(user.Password, salt, 10000);
-            byte[] hash = pbkdf2.GetBytes(20);
-
             User userEntity = new User();
-            userEntity.DisplayName = user.Username;
+            userEntity.Username = user.Username;
             userEntity.Email = user.Email;
-            userEntity.Password = Convert.ToBase64String(hash);
+            userEntity.Password = HashPasswordIntoBase64(user.Password, salt); 
             userEntity.Salt = Convert.ToBase64String(salt);
             userEntity.RegisteredAtUtc = DateTime.UtcNow;
             userEntity.LastPasswordResetUtc = DateTime.UtcNow;
@@ -57,6 +71,14 @@ namespace SifflForums.Api.Services
             _dbContext.SaveChanges();
 
             return IssueToken();
+        }
+
+        public string HashPasswordIntoBase64(string password, byte[] salt)
+        {
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            return Convert.ToBase64String(hash);
         }
 
         private TokenModel IssueToken()
@@ -68,7 +90,7 @@ namespace SifflForums.Api.Services
                 issuer: "http://localhost:5000",
                 audience: "http://localhost:5000",
                 claims: new List<Claim>(),
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddDays(2),
                 signingCredentials: signinCredentials
             ); ;
 

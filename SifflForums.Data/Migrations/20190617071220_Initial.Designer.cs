@@ -9,7 +9,7 @@ using SifflForums.Data;
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    [Migration("20190612085201_Initial")]
+    [Migration("20190617071220_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,18 @@ namespace SifflForums.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+
+            modelBuilder.Entity("SifflForums.Data.Entities.BlacklistedPassword", b =>
+                {
+                    b.Property<int>("BlacklistedPasswordId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Password");
+
+                    b.HasKey("BlacklistedPasswordId");
+
+                    b.ToTable("BlacklistedPasswords");
+                });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
                 {
@@ -85,11 +97,17 @@ namespace SifflForums.Data.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DisplayName");
-
                     b.Property<string>("Email");
 
+                    b.Property<DateTime>("LastPasswordResetUtc");
+
+                    b.Property<string>("Password");
+
                     b.Property<DateTime>("RegisteredAtUtc");
+
+                    b.Property<string>("Salt");
+
+                    b.Property<string>("Username");
 
                     b.HasKey("UserId");
 
