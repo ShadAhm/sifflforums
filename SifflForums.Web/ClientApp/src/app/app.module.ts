@@ -10,6 +10,7 @@ import { SubmissionCreateComponent } from './components/submission-create/submis
 import { SubmissionComponent } from './components/submission/submission.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SignupComponent } from './components/signup/signup.component';
     SubmissionComponent,
     SubmissionCreateComponent,
     HeaderComponent,
-    SignupComponent
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

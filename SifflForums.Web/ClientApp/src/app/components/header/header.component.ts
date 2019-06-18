@@ -6,11 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated: false; 
+  isAuthenticated: boolean; 
 
   constructor() { }
 
   ngOnInit() {
+    this.isAuthenticated = false; 
   }
 
 }
