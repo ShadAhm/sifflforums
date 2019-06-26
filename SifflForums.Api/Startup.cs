@@ -56,10 +56,8 @@ namespace SifflForums.Api
             }); 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddTransient<SifflContext>(); 
-            services.AddScoped<ICommentsService, CommentsService>(); 
-            services.AddScoped<ISubmissionsService, SubmissionsService>();
-            services.AddScoped<IAuthService, AuthService>(); 
+            services.AddDataAccessServices(); 
+            services.AddInfrastructureServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
