@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { SignupModel } from '../../models/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,8 @@ export class SignupComponent implements OnInit {
     email: new FormControl('')
   });
 
-  constructor(private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {
+  }
 
   ngOnInit() {
   }
@@ -23,7 +25,7 @@ export class SignupComponent implements OnInit {
   onSubmit(): void {
     this.authService.signUp(<SignupModel>this.signupForm.value).subscribe(
       (response: any) => {
-        console.log(response);
+        this.router.navigate(['/home']); 
       },
       (error) => { console.error("Error happened", error) }
     );

@@ -16,7 +16,10 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   });
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {
+    this.onLoginSuccessful = this.onLoginSuccessful.bind(this);
+    this.onLoginFailed = this.onLoginFailed.bind(this);
+  }
 
   ngOnInit() {
   }
@@ -26,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginSuccessful(): void {
-    this.router.navigateByUrl('/'); 
+    this.router.navigate(['/home']); 
   }
 
   onLoginFailed(error: HttpErrorResponse) {
