@@ -41,7 +41,7 @@ namespace SifflForums.Api.Services
 
             if(hash != user.Password)
             {
-                // reject user
+                return false; 
             }
 
             token = IssueToken(input.Username);

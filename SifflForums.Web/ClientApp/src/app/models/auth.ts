@@ -4,6 +4,11 @@ export class SignupModel {
   public email: string; 
 }
 
+export class SigninModel {
+  public username: string;
+  public password: string;
+}
+
 export class TokenModel {
   public token: string; 
 }

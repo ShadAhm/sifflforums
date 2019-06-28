@@ -6,6 +6,12 @@ var SignupModel = /** @class */ (function () {
     return SignupModel;
 }());
 exports.SignupModel = SignupModel;
+var SigninModel = /** @class */ (function () {
+    function SigninModel() {
+    }
+    return SigninModel;
+}());
+exports.SigninModel = SigninModel;
 var TokenModel = /** @class */ (function () {
     function TokenModel() {
     }

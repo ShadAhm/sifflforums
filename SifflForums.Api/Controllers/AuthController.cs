@@ -45,10 +45,8 @@ namespace SifflForums.Api.Controllers
             {
                 return Ok(token);
             }
-            else
-            {
-                return Unauthorized(); 
-            }
+
+            return StatusCode(StatusCodes.Status403Forbidden);
         }
 
         [HttpPost, Route("validatetoken")]
