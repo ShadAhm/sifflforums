@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { Submission } from '../models/comments';
-import { BaseService } from './base.service';
 import { HttpClientService } from '../util-services/http-client.service';
-import { HttpEvent } from '@angular/common/http';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,7 @@ export class SubmissionsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  postThread(input: Submission): Observable<HttpEvent<Submission>> {
+  postThread(input: Submission): Observable<Submission> {
     return this.httpClient.post<Submission>(`${this.apiRoot}api/submissions`, input, this.httpOptions)
       .pipe(map(res => res));
   }

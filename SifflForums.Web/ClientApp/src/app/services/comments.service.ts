@@ -17,7 +17,7 @@ export class CommentsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  postComment(input: CommentPost): Observable<HttpEvent<CommentPost>> {
+  postComment(input: CommentPost): Observable<CommentPost> {
     return this.httpClient.post<CommentPost>(`${this.apiRoot}api/comments`, input, this.httpOptions)
       .pipe(map(res => res));
   }

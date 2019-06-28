@@ -12,7 +12,7 @@ import { BaseService } from './base.service';
 export class AuthService extends BaseService {
   constructor(private httpClient: HttpClientService) { super(); }
 
-  signUp(input: SignupModel): Observable<HttpEvent<TokenModel>> {
+  signUp(input: SignupModel): Observable<TokenModel> {
     return this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/signup`, input, this.httpOptions)
       .pipe(map(res => res));
   }
@@ -38,11 +38,5 @@ export class AuthService extends BaseService {
     }
 
     return false;
-  }
-
-  getAuthorizationHeader(): string {
-    let token = localStorage.getItem('id_token');
-
-    return `Bearer ${token}`;
   }
 }
