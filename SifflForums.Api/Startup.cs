@@ -36,9 +36,6 @@ namespace SifflForums.Api
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = "http://localhost:5000",
                         ValidAudience = "http://localhost:5000",

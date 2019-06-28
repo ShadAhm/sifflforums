@@ -1,17 +1,18 @@
+import { HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SignupModel, SigninModel, TokenModel } from '../models/auth';
-import { HttpClient } from '@angular/common/http';
-import { BaseService } from './base.service';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SigninModel, SignupModel, TokenModel } from '../models/auth';
+import { HttpClientService } from '../util-services/http-client.service';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends BaseService {
-  constructor(private httpClient: HttpClient) { super(); }
+  constructor(private httpClient: HttpClientService) { super(); }
 
-  signUp(input: SignupModel): Observable<TokenModel> {
+  signUp(input: SignupModel): Observable<HttpEvent<TokenModel>> {
     return this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/signup`, input, this.httpOptions)
       .pipe(map(res => res));
   }
@@ -37,5 +38,11 @@ export class AuthService extends BaseService {
     }
 
     return false;
+  }
+
+  getAuthorizationHeader(): string {
+    let token = localStorage.getItem('id_token');
+
+    return `Bearer ${token}`;
   }
 }
