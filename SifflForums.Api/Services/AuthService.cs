@@ -17,7 +17,7 @@ namespace SifflForums.Api.Services
     public interface IAuthService
     {
         TokenModel SignUp(SignUpViewModel user);
-        TokenModel Login(LoginViewModel user);
+        bool Login(LoginViewModel input, out TokenModel token);
     }
 
     public class AuthService : IAuthService
@@ -31,8 +31,9 @@ namespace SifflForums.Api.Services
             _mapper = mapper;
         }
 
-        public TokenModel Login(LoginViewModel input)
+        public bool Login(LoginViewModel input, out TokenModel token)
         {
+            token = null; 
             User user = _dbContext.Users.Where(o => o.Username == input.Username).SingleOrDefault();
 
             byte[] salt = Convert.FromBase64String(user.Salt);
@@ -43,7 +44,9 @@ namespace SifflForums.Api.Services
                 // reject user
             }
 
-            return IssueToken();
+            token = IssueToken(input.Username);
+
+            return true; 
         }
 
         public TokenModel SignUp(SignUpViewModel user)
@@ -70,7 +73,7 @@ namespace SifflForums.Api.Services
             _dbContext.Add(userEntity);
             _dbContext.SaveChanges();
 
-            return IssueToken();
+            return IssueToken(userEntity.Username);
         }
 
         public string HashPasswordIntoBase64(string password, byte[] salt)
@@ -81,21 +84,31 @@ namespace SifflForums.Api.Services
             return Convert.ToBase64String(hash);
         }
 
-        private TokenModel IssueToken()
+        public bool ValidateToken(TokenModel token)
+        {
+            return true; 
+        }
+
+        private TokenModel IssueToken(string username)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
+            var claims = new List<Claim> {
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Role, "user")
+            };
+
             var tokeOptions = new JwtSecurityToken(
-                issuer: "http://localhost:5000",
-                audience: "http://localhost:5000",
-                claims: new List<Claim>(),
+                claims: claims,
                 expires: DateTime.Now.AddDays(2),
                 signingCredentials: signinCredentials
-            ); ;
+            );
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
             return new TokenModel { Token = tokenString };
         }
+
+        
     }
 }

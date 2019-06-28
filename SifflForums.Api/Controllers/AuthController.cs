@@ -18,11 +18,11 @@ namespace SifflForums.Api.Controllers
     [ApiController]
     public class AuthController : SifflControllerBase
     {
-        IAuthService _authService; 
+        IAuthService _authService;
 
         public AuthController(IAuthService authService)
         {
-            this._authService = authService; 
+            this._authService = authService;
         }
 
         [HttpPost, Route("signup")]
@@ -30,39 +30,31 @@ namespace SifflForums.Api.Controllers
         {
             var token = _authService.SignUp(user);
 
-            return Ok(token); 
+            return Ok(token);
         }
 
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]LoginViewModel user)
         {
-            _authService.Login(user); 
-
             if (user == null)
             {
                 return BadRequest("Invalid client request");
             }
 
-            if (user.Username == "johndoe" && user.Password == "def@123")
+            if(_authService.Login(user, out TokenModel token))
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:5000",
-                    audience: "http://localhost:5000",
-                    claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                ); ;
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
+                return Ok(token);
             }
             else
             {
-                return Unauthorized();
+                return Unauthorized(); 
             }
+        }
+
+        [HttpPost, Route("validatetoken")]
+        public IActionResult ValidateToken([FromBody]TokenModel user)
+        {
+            return Ok();
         }
     }
 }
