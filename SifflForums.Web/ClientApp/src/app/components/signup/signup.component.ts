@@ -34,6 +34,6 @@ export class SignupComponent implements OnInit {
   }
 
   onSingupFailed(error: HttpErrorResponse): void {
-    alert('Sign in failed'); 
+    alert('Sign up failed'); 
   }
 }
