@@ -12,12 +12,17 @@ import { BaseService } from './base.service';
 export class AuthService extends BaseService {
   constructor(private httpClient: HttpClientService) { super(); }
 
-  signUp(input: SignupModel): Observable<TokenModel> {
-    return this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/signup`, input, this.httpOptions)
-      .pipe(map(res => res));
+  signUp(input: SignupModel, successCallback: Function, errorCallback: Function): void {
+    this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/signup`, input, this.httpOptions)
+      .pipe(map(res => res))
+      .subscribe((response: any) => {
+        localStorage.setItem('id_token', response.token);
+        successCallback();
+      },
+        (error) => { errorCallback(error) }); 
   }
 
-  signIn(input: SigninModel, successCallback: Function, errorCallback: Function): void { //Observable<TokenModel> {
+  signIn(input: SigninModel, successCallback: Function, errorCallback: Function): void {
     this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/login`, input, this.httpOptions).pipe(map(res => res))
       .subscribe((response: any) => {
         localStorage.setItem('id_token', response.token);
