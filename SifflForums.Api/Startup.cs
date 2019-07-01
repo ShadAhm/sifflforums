@@ -37,8 +37,8 @@ namespace SifflForums.Api
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "http://localhost:5000",
-                        ValidAudience = "http://localhost:5000",
+                        ValidateIssuer = false,
+                        ValidateAudience = false, 
                         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("superSecretKey@345"))
                     };
                 });

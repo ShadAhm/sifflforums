@@ -13,7 +13,7 @@ export class AuthService extends BaseService {
   constructor(private httpClient: HttpClientService) { super(); }
 
   signUp(input: SignupModel, successCallback: Function, errorCallback: Function): void {
-    this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/signup`, input, this.httpOptions)
+    this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/signup`, input, this.httpHeaders)
       .pipe(map(res => res))
       .subscribe((response: any) => {
         localStorage.setItem('id_token', response.token);
@@ -23,7 +23,7 @@ export class AuthService extends BaseService {
   }
 
   signIn(input: SigninModel, successCallback: Function, errorCallback: Function): void {
-    this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/login`, input, this.httpOptions).pipe(map(res => res))
+    this.httpClient.post<TokenModel>(`${this.apiRoot}api/auth/login`, input, this.httpHeaders).pipe(map(res => res))
       .subscribe((response: any) => {
         localStorage.setItem('id_token', response.token);
         successCallback();

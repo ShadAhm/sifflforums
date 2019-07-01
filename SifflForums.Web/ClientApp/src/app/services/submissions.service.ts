@@ -22,7 +22,7 @@ export class SubmissionsService extends BaseService {
   }
 
   postThread(input: Submission): Observable<Submission> {
-    return this.httpClient.post<Submission>(`${this.apiRoot}api/submissions`, input, this.httpOptions)
+    return this.httpClient.post<Submission>(`${this.apiRoot}api/submissions`, input, this.httpHeaders)
       .pipe(map(res => res));
   }
 }

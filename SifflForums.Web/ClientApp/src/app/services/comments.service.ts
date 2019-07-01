@@ -18,7 +18,7 @@ export class CommentsService extends BaseService {
   }
 
   postComment(input: CommentPost): Observable<CommentPost> {
-    return this.httpClient.post<CommentPost>(`${this.apiRoot}api/comments`, input, this.httpOptions)
+    return this.httpClient.post<CommentPost>(`${this.apiRoot}api/comments`, input, this.httpHeaders)
       .pipe(map(res => res));
   }
 }

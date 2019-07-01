@@ -10,11 +10,18 @@ import { Observable } from 'rxjs';
 export class HttpClientService {
   constructor(private http: HttpClient) { }
 
-  createAuthorizationHeader(headers: HttpHeaders): void {
+  createAuthorizationHeader(headers: HttpHeaders): HttpHeaders {
     let token = localStorage.getItem('id_token');
 
     if (token) {
-      headers.append('Authorization', `Bearer ${token}`);
+      return headers.append('Authorization', `Bearer ${token}`);
+    }
+    return headers; 
+  }
+
+  createHttpOptions(headers: HttpHeaders): object {
+    return {
+      headers: headers
     }
   }
 
@@ -24,19 +31,19 @@ export class HttpClientService {
     return this.http.get<T>(url, { headers: headers });
   }
 
-  post<T>(url: string, data: any, options: any): Observable<T> {
-    this.createAuthorizationHeader(options.headers);
-    return this.http.post<T>(url, data, <Object>options);
+  post<T>(url: string, data: any, headers: HttpHeaders): Observable<T> {
+    headers = this.createAuthorizationHeader(headers);
+    return this.http.post<T>(url, data, this.createHttpOptions(headers));
   }
 
-  put<T>(url: string, data: any, options: any): Observable<T> {
-    this.createAuthorizationHeader(options.headers);
-    return this.http.put<T>(url, data, <Object>options);
+  put<T>(url: string, data: any, headers: HttpHeaders): Observable<T> {
+    headers = this.createAuthorizationHeader(headers);
+    return this.http.put<T>(url, data, this.createHttpOptions(headers));
   }
 
-  delete<T>(url: string, options: any): Observable<T> {
-    this.createAuthorizationHeader(options.headers);
-    return this.http.delete<T>(url, <Object>options);
+  delete<T>(url: string, headers: HttpHeaders): Observable<T> {
+    headers = this.createAuthorizationHeader(headers);
+    return this.http.delete<T>(url, this.createHttpOptions(headers));
   }
 }
 

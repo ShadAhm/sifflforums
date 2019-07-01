@@ -7,14 +7,14 @@ import { HttpHeaders } from '@angular/common/http';
 export class BaseService {
   protected apiRoot = 'http://localhost:60993/';
 
-  protected httpOptions: HttpHeaders;
+  protected httpHeaders: HttpHeaders;
 
   constructor() {
     this.initHttpHeaders();
   }
 
   initHttpHeaders() {
-    this.httpOptions = new HttpHeaders({
+    this.httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
   }
