@@ -12,19 +12,21 @@ namespace SifflForums.Api.Services
 {
     public interface ICommentsService
     {
-        void Insert(CommentViewModel input); 
         List<CommentViewModel> GetBySubmissionId(int submissionId);
+        void Insert(string username, CommentViewModel input); 
     }
 
     public class CommentsService : ICommentsService 
     {
         private SifflContext _dbContext;
-        private IMapper _mapper; 
+        private IMapper _mapper;
+        private IUsersService _usersService;
 
-        public CommentsService(SifflContext dbContext, IMapper mapper)
+        public CommentsService(SifflContext dbContext, IMapper mapper, IUsersService usersService)
         {
             _dbContext = dbContext;
-            _mapper = mapper; 
+            _mapper = mapper;
+            _usersService = usersService;
         }
 
         public List<CommentViewModel> GetBySubmissionId(int submissionId)
@@ -37,17 +39,19 @@ namespace SifflForums.Api.Services
             return _mapper.Map<List<CommentViewModel>>(comments);
         }
 
-        public void Insert(CommentViewModel input)
+        public void Insert(string username, CommentViewModel input)
         {
+            var user = _usersService.GetByUsername(username);
+
             Comment comment = new Comment();
             comment.SubmissionId = input.SubmissionId;
             comment.Text = input.Text;
 
-            comment.UserId = 1;
+            comment.UserId = user.UserId;
             comment.CreatedAtUtc = DateTime.UtcNow;
-            comment.CreatedBy = 1;
+            comment.CreatedBy = user.UserId;
             comment.ModifiedAtUtc = DateTime.UtcNow;
-            comment.ModifiedBy = 1;
+            comment.ModifiedBy = user.UserId;
 
             _dbContext.Comments.Add(comment);
             _dbContext.SaveChanges(); 
