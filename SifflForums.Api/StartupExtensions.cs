@@ -11,6 +11,7 @@ namespace SifflForums.Api
             services.AddTransient<SifflContext>();
             services.AddScoped<ICommentsService, CommentsService>();
             services.AddScoped<ISubmissionsService, SubmissionsService>();
+            services.AddScoped<IUsersService, UsersService>();
         }
 
         public static void AddInfrastructureServices(this IServiceCollection services)

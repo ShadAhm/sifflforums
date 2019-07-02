@@ -38,9 +38,7 @@ namespace SifflForums.Api.Controllers
         [HttpPost,Authorize]
         public ActionResult<SubmissionViewModel> Post([FromBody]SubmissionViewModel value)
         {
-            string username = HttpContext.User.Identity.Name;
-
-            return _service.Insert(value);
+            return _service.Insert(HttpContext.User.Identity.Name, value);
         }
 
         // PUT api/values/5

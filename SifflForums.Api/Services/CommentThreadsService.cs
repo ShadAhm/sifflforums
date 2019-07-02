@@ -14,7 +14,7 @@ namespace SifflForums.Api.Services
     public interface ISubmissionsService
     {
         List<SubmissionViewModel> GetAll();
-        SubmissionViewModel Insert(SubmissionViewModel value);
+        SubmissionViewModel Insert(string username, SubmissionViewModel value);
         SubmissionViewModel GetById(int id);
     }
 
@@ -22,11 +22,13 @@ namespace SifflForums.Api.Services
     {
         private SifflContext _dbContext;
         private IMapper _mapper;
+        private IUsersService _usersService; 
 
-        public SubmissionsService(SifflContext dbContext, IMapper mapper)
+        public SubmissionsService(SifflContext dbContext, IMapper mapper, IUsersService usersService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _usersService = usersService;
         }
 
         public List<SubmissionViewModel> GetAll()
@@ -47,16 +49,18 @@ namespace SifflForums.Api.Services
             return _mapper.Map<SubmissionViewModel>(entity);
         }
 
-        public SubmissionViewModel Insert(SubmissionViewModel input)
+        public SubmissionViewModel Insert(string username, SubmissionViewModel input)
         {
+            var user = _usersService.GetByUsername(username); 
+
             Submission entity = new Submission();
             entity.Title = input.Title;
             entity.Text = input.Text;
-            entity.UserId = 1;
+            entity.UserId = user.UserId;
             entity.CreatedAtUtc = DateTime.UtcNow;
-            entity.CreatedBy = 1;
+            entity.CreatedBy = user.UserId;
             entity.ModifiedAtUtc = DateTime.UtcNow;
-            entity.ModifiedBy = 1;
+            entity.ModifiedBy = user.UserId;
 
             _dbContext.Submissions.Add(entity);
             _dbContext.SaveChanges();

@@ -1,11 +1,17 @@
-﻿using System;
+﻿using AutoMapper;
+using SifflForums.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SifflForums.Api.Models.AutoMapperProfiles
 {
-    public class UsersProfile
+    public class UsersProfile : Profile
     {
+        public UsersProfile()
+        {
+            CreateMap<User, UserViewModel>();
+        }
     }
 }
