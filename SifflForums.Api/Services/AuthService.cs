@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SifflForums.Api.Models.Auth;
 using SifflForums.Data;
@@ -22,13 +23,15 @@ namespace SifflForums.Api.Services
 
     public class AuthService : IAuthService
     {
+        IConfiguration _appConfig;
         SifflContext _dbContext;
         IMapper _mapper; 
 
-        public AuthService(SifflContext dbContext, IMapper mapper)
+        public AuthService(IConfiguration configuration, SifflContext dbContext, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _mapper = mapper;
+            this._appConfig = configuration;
+            this._dbContext = dbContext;
+            this._mapper = mapper;
         }
 
         public bool Login(LoginViewModel input, out TokenModel token)
@@ -91,7 +94,7 @@ namespace SifflForums.Api.Services
 
         private TokenModel IssueToken(string username)
         {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._appConfig["ServiceApiKey"]));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim> {
