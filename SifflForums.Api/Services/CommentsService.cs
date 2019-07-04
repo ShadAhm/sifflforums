@@ -13,7 +13,7 @@ namespace SifflForums.Api.Services
     public interface ICommentsService
     {
         List<CommentViewModel> GetBySubmissionId(int submissionId);
-        void Insert(string username, CommentViewModel input); 
+        CommentViewModel Insert(string username, CommentViewModel input); 
     }
 
     public class CommentsService : ICommentsService 
@@ -39,7 +39,7 @@ namespace SifflForums.Api.Services
             return _mapper.Map<List<CommentViewModel>>(comments);
         }
 
-        public void Insert(string username, CommentViewModel input)
+        public CommentViewModel Insert(string username, CommentViewModel input)
         {
             var user = _usersService.GetByUsername(username);
 
@@ -54,7 +54,11 @@ namespace SifflForums.Api.Services
             comment.ModifiedBy = user.UserId;
 
             _dbContext.Comments.Add(comment);
-            _dbContext.SaveChanges(); 
+            _dbContext.SaveChanges();
+
+            _dbContext.Entry(comment).Reference(c => c.User).Load(); 
+
+            return _mapper.Map<CommentViewModel>(comment); 
         }
     }
 }

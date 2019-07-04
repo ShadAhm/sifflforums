@@ -50,7 +50,9 @@ export class SubmissionComponent implements OnInit {
     input.submissionId = this.submissionId;
 
     this.commentsService.postComment(input).subscribe(
-      (response) => { console.log('OK', response); },
+      (response) => {
+        this.comments.push(response); 
+      },
       (error) => { console.error("Error happened", error) }
     );
   }

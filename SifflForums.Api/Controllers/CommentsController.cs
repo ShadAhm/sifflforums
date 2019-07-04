@@ -29,9 +29,9 @@ namespace SifflForums.Api.Controllers
 
         // POST api/values
         [HttpPost, Authorize]
-        public void Post([FromBody]CommentViewModel value)
+        public ActionResult<CommentViewModel> Post([FromBody]CommentViewModel value)
         {
-            _service.Insert(HttpContext.User.Identity.Name, value); 
+            return _service.Insert(HttpContext.User.Identity.Name, value); 
         }
 
         // PUT api/values/5
