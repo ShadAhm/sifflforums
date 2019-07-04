@@ -2,7 +2,7 @@
   <h2>
     {{submission.title}}
   </h2>
-    <small class="text-muted">Posted by {{submission.username}}</small>
+    <small class="text-muted">Posted by {{submission.username}} on {{submission.createdAtUtc|dateAgo}}</small>
   <p>{{submission.text}}</p>
 
   <hr />
@@ -10,7 +10,7 @@
   <div class="comment" *ngFor="let comment of comments">
     <p class="comment-header">
       <span class="comment-username">{{comment.username}} </span>
-      <span class="comment-date">commented on {{comment.createdAtUtc}}</span>
+      <span class="comment-date">commented {{comment.createdAtUtc|dateAgo}}</span>
     </p>
     <div class="comment-content" [innerHTML]="comment.text"></div>
   </div>

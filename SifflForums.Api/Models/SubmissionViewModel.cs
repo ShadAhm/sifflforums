@@ -13,5 +13,6 @@ namespace SifflForums.Api.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public IEnumerable<CommentViewModel> Comments { get; set; }
+        public DateTime CreatedAtUtc { get; set; }
     }
 }
