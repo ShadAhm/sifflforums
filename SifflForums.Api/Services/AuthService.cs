@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SifflForums.Api.Models.Auth;
+using SifflForums.Api.Services.Validators;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
 using System;
@@ -54,6 +56,13 @@ namespace SifflForums.Api.Services
 
         public TokenModel SignUp(SignUpViewModel user)
         {
+            ValidationResult validationResult = new SignUpValidator().Validate(user);
+
+            if(!validationResult.IsValid)
+            {
+                return null; 
+            }
+
             bool passwordDisallowed = _dbContext.BlacklistedPasswords.Any(o => o.Password == user.Password);
 
             if(passwordDisallowed)
