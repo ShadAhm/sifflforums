@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit {
     this.router.navigate(['/home']); 
   }
 
-  onSingupFailed(error: HttpErrorResponse): void {
-    alert('Sign up failed'); 
+  onSingupFailed(response: HttpErrorResponse): void {
+    alert(response.error);
   }
 }

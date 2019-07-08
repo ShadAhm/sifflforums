@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SifflForums.Api.Models;
 using SifflForums.Api.Models.Auth;
 using SifflForums.Api.Services.Validators;
 using SifflForums.Data;
@@ -19,7 +20,7 @@ namespace SifflForums.Api.Services
 {
     public interface IAuthService
     {
-        TokenModel SignUp(SignUpViewModel user);
+        RequestResult<TokenModel> SignUp(SignUpViewModel user);
         bool Login(LoginViewModel input, out TokenModel token);
     }
 
@@ -54,21 +55,20 @@ namespace SifflForums.Api.Services
             return true; 
         }
 
-        public TokenModel SignUp(SignUpViewModel user)
+        public RequestResult<TokenModel> SignUp(SignUpViewModel user)
         {
             ValidationResult validationResult = new SignUpValidator().Validate(user);
 
             if(!validationResult.IsValid)
             {
-                return null; 
+                return RequestResult<TokenModel>.Fail(validationResult.ToString()); 
             }
 
             bool passwordDisallowed = _dbContext.BlacklistedPasswords.Any(o => o.Password == user.Password);
 
             if(passwordDisallowed)
             {
-                // rejectuser
-                return null; 
+                return RequestResult<TokenModel>.Fail("Please choose a different password");
             }
 
             byte[] salt;
@@ -85,7 +85,9 @@ namespace SifflForums.Api.Services
             _dbContext.Add(userEntity);
             _dbContext.SaveChanges();
 
-            return IssueToken(userEntity.Username);
+            var token = IssueToken(userEntity.Username); 
+
+            return RequestResult<TokenModel>.Success(token);
         }
 
         public string HashPasswordIntoBase64(string password, byte[] salt)

@@ -29,9 +29,16 @@ namespace SifflForums.Api.Controllers
         [HttpPost, Route("signup")]
         public ActionResult<TokenModel> SignUp([FromBody]SignUpViewModel user)
         {
-            var token = _authService.SignUp(user);
+            var result = _authService.SignUp(user);
 
-            return Ok(token);
+            if(result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return BadRequest(result.ErrorMessage);
+            }
         }
 
         [HttpPost, Route("login")]
