@@ -44,17 +44,16 @@ namespace SifflForums.Api.Controllers
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]LoginViewModel user)
         {
-            if (user == null)
-            {
-                return BadRequest("Invalid client request");
-            }
+            var result = _authService.Login(user, out TokenModel token);
 
-            if(_authService.Login(user, out TokenModel token))
+            if (result.IsSuccess)
             {
-                return Ok(token);
+                return Ok(result.Data);
             }
-
-            return StatusCode(StatusCodes.Status403Forbidden);
+            else
+            {
+                return StatusCode(StatusCodes.Status403Forbidden);
+            }
         }
 
         [HttpPost, Route("validatetoken")]

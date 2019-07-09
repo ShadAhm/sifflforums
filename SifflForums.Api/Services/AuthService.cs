@@ -21,7 +21,7 @@ namespace SifflForums.Api.Services
     public interface IAuthService
     {
         RequestResult<TokenModel> SignUp(SignUpViewModel user);
-        bool Login(LoginViewModel input, out TokenModel token);
+        RequestResult<bool> Login(LoginViewModel input, out TokenModel token);
     }
 
     public class AuthService : IAuthService
@@ -37,7 +37,7 @@ namespace SifflForums.Api.Services
             this._mapper = mapper;
         }
 
-        public bool Login(LoginViewModel input, out TokenModel token)
+        public RequestResult<bool> Login(LoginViewModel input, out TokenModel token)
         {
             token = null; 
             User user = _dbContext.Users.Where(o => o.Username == input.Username).SingleOrDefault();
@@ -47,12 +47,12 @@ namespace SifflForums.Api.Services
 
             if(hash != user.Password)
             {
-                return false; 
+                return RequestResult<bool>.Fail("Incorrect password"); 
             }
 
             token = IssueToken(input.Username);
 
-            return true; 
+            return RequestResult<bool>.Success(true);
         }
 
         public RequestResult<TokenModel> SignUp(SignUpViewModel user)
