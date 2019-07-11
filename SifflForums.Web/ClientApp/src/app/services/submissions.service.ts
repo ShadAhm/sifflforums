@@ -25,4 +25,9 @@ export class SubmissionsService extends BaseService {
     return this.httpClient.post<Submission>(`${this.apiRoot}api/submissions`, input, this.httpHeaders)
       .pipe(map(res => res));
   }
+
+  upvote(submissionId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/upvote`, null, this.httpHeaders)
+      .pipe(map(res => res));
+  }
 }

@@ -14,5 +14,7 @@ namespace SifflForums.Api.Models
         public string Username { get; set; }
         public IEnumerable<CommentViewModel> Comments { get; set; }
         public DateTime CreatedAtUtc { get; set; }
+        public int CurrentUserVoteWeight { get; set; }
+        public int Upvotes { get; set; }
     }
 }

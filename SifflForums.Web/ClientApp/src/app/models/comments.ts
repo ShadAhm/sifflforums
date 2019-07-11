@@ -9,5 +9,6 @@ export class Submission {
   public title: string; 
   public text: string;
   public username: string;
-  public comments: CommentPost[]; 
+  public comments: CommentPost[];
+  public upvotes: number; 
 }

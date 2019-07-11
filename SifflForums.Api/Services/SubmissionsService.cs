@@ -42,11 +42,21 @@ namespace SifflForums.Api.Services
 
         public SubmissionViewModel GetById(int id)
         {
-            var entity = _dbContext.Submissions
+            var viewModel = _dbContext.Submissions
                 .Include(o => o.User)
+                .Select(o => new SubmissionViewModel
+                {
+                    SubmissionId = o.SubmissionId,
+                    Title = o.Title,
+                    Text = o.Text,
+                    UserId = o.UserId,
+                    Username = o.User.Username,
+                    Upvotes = o.Upvotes.Sum(uv => uv.Weight),
+                    CurrentUserVoteWeight = o.Upvotes.Where(uv => uv.UserId == o.UserId).SingleOrDefault().Weight
+                })
                 .SingleOrDefault(o => o.SubmissionId == id);
 
-            return _mapper.Map<SubmissionViewModel>(entity);
+            return viewModel;
         }
 
         public SubmissionViewModel Insert(string username, SubmissionViewModel input)

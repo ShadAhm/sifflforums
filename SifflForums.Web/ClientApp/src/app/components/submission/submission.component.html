@@ -2,8 +2,20 @@
   <h2>
     {{submission.title}}
   </h2>
-    <small class="text-muted">Posted by {{submission.username}} on {{submission.createdAtUtc|dateAgo}}</small>
+  <small class="text-muted">Posted by {{submission.username}} on {{submission.createdAtUtc|dateAgo}}</small>
   <p>{{submission.text}}</p>
+
+  <div class="input-group mb-3">
+    <input type="number" readonly class="form-control" placeholder="" [value]="submission.upvotes" />
+    <div class="input-group-append">
+      <button class="btn btn-sm btn-success btn-outline" (click)="upvote()" type="button">
+        Upvote
+      </button>
+      <button class="btn btn-sm btn-danger btn-outline" (click)="downvote()" type="button">
+        Downvote
+      </button>
+    </div>
+  </div>
 
   <hr />
   <h6>Comments</h6>

@@ -30,6 +30,8 @@ export class SubmissionComponent implements OnInit {
       (response: Submission) => {
         this.submission = response;
 
+        this.submission.upvotes = 43292; // temporary
+
         if (this.submission.submissionId > 0)
           this.getComments(this.submission.submissionId);
       },
@@ -55,5 +57,18 @@ export class SubmissionComponent implements OnInit {
       },
       (error) => { console.error("Error happened", error) }
     );
+  }
+
+  upvote(): void {
+    ++this.submission.upvotes;
+
+    this.submissionsService.upvote(this.submission.submissionId).subscribe(
+      (response) => { },
+      (error) => { }
+    );
+  }
+
+  downvote(): void {
+    --this.submission.upvotes; 
   }
 }
