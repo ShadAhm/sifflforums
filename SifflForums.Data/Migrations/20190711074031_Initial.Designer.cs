@@ -9,7 +9,7 @@ using SifflForums.Data;
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    [Migration("20190711073921_Initial")]
+    [Migration("20190711074031_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
