@@ -11,4 +11,5 @@ export class Submission {
   public username: string;
   public comments: CommentPost[];
   public upvotes: number; 
+  public currentUserVoteWeight: number;
 }

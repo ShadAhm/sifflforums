@@ -30,8 +30,6 @@ export class SubmissionComponent implements OnInit {
       (response: Submission) => {
         this.submission = response;
 
-        this.submission.upvotes = 43292; // temporary
-
         if (this.submission.submissionId > 0)
           this.getComments(this.submission.submissionId);
       },
@@ -61,6 +59,7 @@ export class SubmissionComponent implements OnInit {
 
   upvote(): void {
     ++this.submission.upvotes;
+    this.submission.currentUserVoteWeight = 1; 
 
     this.submissionsService.upvote(this.submission.submissionId).subscribe(
       (response) => { },
@@ -69,6 +68,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   downvote(): void {
-    --this.submission.upvotes; 
+    --this.submission.upvotes;
+    this.submission.currentUserVoteWeight = -1; 
   }
 }
