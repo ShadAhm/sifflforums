@@ -9,7 +9,7 @@ using SifflForums.Data;
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    [Migration("20190617071220_Initial")]
+    [Migration("20190711073921_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,30 @@ namespace SifflForums.Data.Migrations
                     b.ToTable("Submissions");
                 });
 
+            modelBuilder.Entity("SifflForums.Data.Entities.Upvote", b =>
+                {
+                    b.Property<int>("UpvoteId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CommentId");
+
+                    b.Property<int?>("SubmissionId");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("Weight");
+
+                    b.HasKey("UpvoteId");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("SubmissionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Upvotes");
+                });
+
             modelBuilder.Entity("SifflForums.Data.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -148,6 +172,22 @@ namespace SifflForums.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SifflForums.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SifflForums.Data.Entities.Upvote", b =>
+                {
+                    b.HasOne("SifflForums.Data.Entities.Comment", "Comment")
+                        .WithMany()
+                        .HasForeignKey("CommentId");
+
+                    b.HasOne("SifflForums.Data.Entities.Submission", "Submission")
+                        .WithMany()
+                        .HasForeignKey("SubmissionId");
 
                     b.HasOne("SifflForums.Data.Entities.User", "User")
                         .WithMany()

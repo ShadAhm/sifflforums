@@ -10,6 +10,7 @@ namespace SifflForums.Api.Services
 {
     public interface IUsersService
     {
+        IEnumerable<UserViewModel> GetAll();
         UserViewModel GetByUsername(string username);
     }
 
@@ -24,11 +25,18 @@ namespace SifflForums.Api.Services
             _mapper = mapper;
         }
 
+        public IEnumerable<UserViewModel> GetAll()
+        {
+            var entities = _dbContext.Users.Take(500).ToList();
+
+            return _mapper.Map<IEnumerable<UserViewModel>>(entities);
+        }
+
         public UserViewModel GetByUsername(string username)
         {
             var entity = _dbContext.Users.SingleOrDefault(o => o.Username == username);
 
-            return _mapper.Map<UserViewModel>(entity); 
+            return _mapper.Map<UserViewModel>(entity);
         }
     }
 }

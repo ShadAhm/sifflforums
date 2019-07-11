@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SifflForums.Api.Models;
 using SifflForums.Api.Services;
+using SifflForums.Data.Entities;
+using System.Collections.Generic;
 
 namespace SifflForums.Api.Controllers
 {
@@ -13,11 +11,13 @@ namespace SifflForums.Api.Controllers
     [ApiController]
     public class SubmissionsController : SifflControllerBase
     {
-        ISubmissionsService _service; 
+        ISubmissionsService _service;
+        IUpvotesService _upvotesService; 
 
-        public SubmissionsController(ISubmissionsService service)
+        public SubmissionsController(ISubmissionsService service, IUpvotesService upvotesService)
         {
-            _service = service; 
+            _service = service;
+            _upvotesService = upvotesService;
         }
 
         // GET api/values
@@ -40,7 +40,7 @@ namespace SifflForums.Api.Controllers
         {
             return _service.Insert(HttpContext.User.Identity.Name, value);
         }
-
+         
         // PUT api/values/5
         [HttpPut("{id}"), Authorize]
         public void Put(int id, [FromBody] string value)
@@ -51,6 +51,25 @@ namespace SifflForums.Api.Controllers
         [HttpDelete("{id}"), Authorize]
         public void Delete(int id)
         {
+        }
+
+        [HttpPut("{id}/Upvote"), Authorize]
+        public void Upvote(int id)
+        {
+            _upvotesService.CastVote(HttpContext.User.Identity.Name, nameof(Submission), id, false);
+        }
+
+        [HttpPut("{id}/Downvote"), Authorize]
+        public void Downvote(int id)
+        {
+            _upvotesService.CastVote(HttpContext.User.Identity.Name, nameof(Submission), id, true);
+        }
+
+        // DELETE api/values/5
+        [HttpDelete("{id}/RemoveVotes"), Authorize]
+        public void RemoveVotes(int id)
+        {
+            _upvotesService.RemoveVotes(HttpContext.User.Identity.Name, nameof(Submission), id);
         }
     }
 }

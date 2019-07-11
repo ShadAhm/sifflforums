@@ -15,6 +15,7 @@ namespace SifflForums.Api
             services.AddScoped<ICommentsService, CommentsService>();
             services.AddScoped<ISubmissionsService, SubmissionsService>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IUpvotesService, UpvotesService>();
         }
 
         public static void AddFluentValidationServices(this IServiceCollection services)
