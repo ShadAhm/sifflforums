@@ -57,20 +57,6 @@ namespace SifflForums.Api.Services
 
         public RequestResult<TokenModel> SignUp(SignUpViewModel user)
         {
-            ValidationResult validationResult = new SignUpValidator().Validate(user);
-
-            if(!validationResult.IsValid)
-            {
-                return RequestResult<TokenModel>.Fail(validationResult.ToString()); 
-            }
-
-            bool passwordDisallowed = _dbContext.BlacklistedPasswords.Any(o => o.Password == user.Password);
-
-            if(passwordDisallowed)
-            {
-                return RequestResult<TokenModel>.Fail("Please choose a different password");
-            }
-
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
 

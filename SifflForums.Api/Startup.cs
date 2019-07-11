@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SifflForums.Api.Services;
-using SifflForums.Data;
+using System.Text;
 
 namespace SifflForums.Api
 {
@@ -51,10 +43,12 @@ namespace SifflForums.Api
                 {
                     builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
                 });
-            }); 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddFluentValidation();
 
-            services.AddDataAccessServices(); 
+            services.AddDataAccessServices();
+            services.AddFluentValidationServices(); 
             services.AddInfrastructureServices();
         }
 

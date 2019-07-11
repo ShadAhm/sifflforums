@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using SifflForums.Api.Models.Auth;
 using SifflForums.Api.Services;
+using SifflForums.Api.Services.Validators;
 using SifflForums.Data;
 
 namespace SifflForums.Api
@@ -13,6 +15,11 @@ namespace SifflForums.Api
             services.AddScoped<ICommentsService, CommentsService>();
             services.AddScoped<ISubmissionsService, SubmissionsService>();
             services.AddScoped<IUsersService, UsersService>();
+        }
+
+        public static void AddFluentValidationServices(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator<SignUpViewModel>, SignUpValidator>(); 
         }
 
         public static void AddInfrastructureServices(this IServiceCollection services)
