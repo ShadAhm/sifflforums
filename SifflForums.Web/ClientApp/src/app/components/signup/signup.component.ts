@@ -11,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styles: []
 })
 export class SignupComponent implements OnInit {
+  maskPassword: string = 'password'; 
+
   signupForm: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -35,5 +37,14 @@ export class SignupComponent implements OnInit {
 
   onSingupFailed(response: HttpErrorResponse): void {
     alert(response.error);
+  }
+
+  togglePasswordMask(showOrHide: string): void {
+    if (showOrHide == 'show') {
+      this.maskPassword = 'text';
+    }
+    else {
+      this.maskPassword = 'password';
+    }
   }
 }

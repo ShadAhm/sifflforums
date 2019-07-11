@@ -20,7 +20,8 @@ namespace SifflForums.Api.Services.Validators
                 .NotEmpty()
                 .MaximumLength(20)
                 .MinimumLength(3)
-                .Matches(@"^[a-zA-Z][\w]*$");
+                .Matches(@"^[a-zA-Z][\w]*$")
+                .Must(BeUnique).WithMessage("That username already exists.");
 
             RuleFor(signUp => signUp.Email).EmailAddress();
 
@@ -28,6 +29,11 @@ namespace SifflForums.Api.Services.Validators
                 .NotEmpty()
                 .MinimumLength(8)
                 .Must(NotBeBlacklisted).WithMessage("That password has been blacklisted, please choose a different one.");
+        }
+
+        private bool BeUnique(string arg)
+        {
+            return !_dbContext.Users.Any(o => o.Username == arg);
         }
 
         private bool NotBeBlacklisted(string arg)
