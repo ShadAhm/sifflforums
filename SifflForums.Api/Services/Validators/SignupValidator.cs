@@ -17,7 +17,11 @@ namespace SifflForums.Api.Services.Validators
                 .MinimumLength(3)
                 .Matches(@"^[a-zA-Z][\w]*$");
 
-            RuleFor(signUp => signUp.Email).EmailAddress(); 
+            RuleFor(signUp => signUp.Email).EmailAddress();
+
+            RuleFor(signUp => signUp.Password)
+                .NotEmpty()
+                .MinimumLength(8);
         }
     }
 }
