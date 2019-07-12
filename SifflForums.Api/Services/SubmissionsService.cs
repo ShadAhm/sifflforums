@@ -15,7 +15,7 @@ namespace SifflForums.Api.Services
     {
         List<SubmissionViewModel> GetAll();
         SubmissionViewModel Insert(string username, SubmissionViewModel value);
-        SubmissionViewModel GetById(int id);
+        SubmissionViewModel GetById(string currentUsername, int id);
     }
 
     public class SubmissionsService : ISubmissionsService
@@ -40,7 +40,7 @@ namespace SifflForums.Api.Services
             return _mapper.Map<List<SubmissionViewModel>>(comments);
         }
 
-        public SubmissionViewModel GetById(int id)
+        public SubmissionViewModel GetById(string currentUsername, int id)
         {
             var viewModel = _dbContext.Submissions
                 .Include(o => o.User)
@@ -52,7 +52,7 @@ namespace SifflForums.Api.Services
                     UserId = o.UserId,
                     Username = o.User.Username,
                     Upvotes = o.Upvotes.Sum(uv => uv.Weight),
-                    CurrentUserVoteWeight = o.Upvotes.Where(uv => uv.UserId == o.UserId).SingleOrDefault().Weight
+                    CurrentUserVoteWeight = string.IsNullOrWhiteSpace(currentUsername) && o.Upvotes.Where(uv => uv.User.Username == currentUsername).SingleOrDefault() == null ? 0 : o.Upvotes.Where(uv => uv.User.Username == currentUsername).SingleOrDefault().Weight
                 })
                 .SingleOrDefault(o => o.SubmissionId == id);
 

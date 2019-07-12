@@ -31,7 +31,7 @@ namespace SifflForums.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<SubmissionViewModel> Get(int id)
         {
-            return _service.GetById(id);
+            return _service.GetById(HttpContext.User.Identity.Name, id);
         }
 
         // POST api/values
