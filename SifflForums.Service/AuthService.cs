@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using SifflForums.Api.Models;
-using SifflForums.Api.Models.Auth;
-using SifflForums.Api.Services.Validators;
+using SifflForums.Models;
+using SifflForums.Models.Auth;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
 using System;
@@ -14,31 +12,39 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SifflForums.Api.Services
+namespace SifflForums.Service
 {
     public interface IAuthService
     {
         RequestResult<TokenModel> SignUp(SignUpViewModel user);
         RequestResult<bool> Login(LoginViewModel input, out TokenModel token);
+        IAuthService SetServiceApiKey(string key); 
     }
 
     public class AuthService : IAuthService
     {
-        IConfiguration _appConfig;
         SifflContext _dbContext;
-        IMapper _mapper; 
+        IMapper _mapper;
+        string _serviceApiKey; 
 
-        public AuthService(IConfiguration configuration, SifflContext dbContext, IMapper mapper)
+        public AuthService(SifflContext dbContext, IMapper mapper)
         {
-            this._appConfig = configuration;
             this._dbContext = dbContext;
             this._mapper = mapper;
         }
 
+        public IAuthService SetServiceApiKey(string key)
+        {
+            this._serviceApiKey = key;
+            return this; 
+        }
+
         public RequestResult<bool> Login(LoginViewModel input, out TokenModel token)
         {
+            if (string.IsNullOrWhiteSpace(this._serviceApiKey))
+                throw new Exception("Expected API key"); 
+
             token = null; 
             User user = _dbContext.Users.Where(o => o.Username == input.Username).SingleOrDefault();
 
@@ -57,6 +63,9 @@ namespace SifflForums.Api.Services
 
         public RequestResult<TokenModel> SignUp(SignUpViewModel user)
         {
+            if (string.IsNullOrWhiteSpace(this._serviceApiKey))
+                throw new Exception("Expected API key");
+
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
 
@@ -91,7 +100,7 @@ namespace SifflForums.Api.Services
 
         private TokenModel IssueToken(string username)
         {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._appConfig["ServiceApiKey"]));
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_serviceApiKey));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim> {
@@ -108,7 +117,5 @@ namespace SifflForums.Api.Services
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
             return new TokenModel { Token = tokenString };
         }
-
-        
     }
 }

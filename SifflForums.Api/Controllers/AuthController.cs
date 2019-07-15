@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using SifflForums.Api.Models;
-using SifflForums.Api.Models.Auth;
-using SifflForums.Api.Services;
+using SifflForums.Models.Auth;
+using SifflForums.Service;
 
 namespace SifflForums.Api.Controllers
 {
@@ -20,23 +11,30 @@ namespace SifflForums.Api.Controllers
     public class AuthController : SifflControllerBase
     {
         IAuthService _authService;
+        IConfiguration _configuration;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IConfiguration configuration, IAuthService authService)
         {
             this._authService = authService;
+            this._configuration = configuration; 
         }
 
         [HttpPost, Route("signup")]
         public ActionResult<TokenModel> SignUp([FromBody]SignUpViewModel user)
         {
-            var result = _authService.SignUp(user);
+            var result = _authService
+                .SetServiceApiKey(_configuration["ServiceApiKey"])
+                .SignUp(user);
+
             return Ok(result.Data);
         }
 
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]LoginViewModel user)
         {
-            var result = _authService.Login(user, out TokenModel token);
+            var result = _authService
+                .SetServiceApiKey(_configuration["ServiceApiKey"])
+                .Login(user, out TokenModel token);
 
             if (result.IsSuccess)
             {

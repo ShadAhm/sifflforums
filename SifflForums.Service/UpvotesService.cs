@@ -4,7 +4,7 @@ using SifflForums.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SifflForums.Api.Services
+namespace SifflForums.Service
 {
     public interface IUpvotesService
     {

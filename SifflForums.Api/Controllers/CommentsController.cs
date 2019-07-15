@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SifflForums.Api.Models;
-using SifflForums.Api.Services;
+using SifflForums.Models;
+using SifflForums.Service;
+using System.Collections.Generic;
 
 namespace SifflForums.Api.Controllers
 {

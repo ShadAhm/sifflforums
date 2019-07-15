@@ -1,20 +1,17 @@
 ﻿using FluentValidation;
-using SifflForums.Api.Models.Auth;
+using SifflForums.Models.Auth;
 using SifflForums.Data;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace SifflForums.Api.Services.Validators
+namespace SifflForums.Service.Validators
 {
     public class SignUpValidator : AbstractValidator<SignUpViewModel>
     {
-        SifflContext _dbContext; 
+        SifflContext _dbContext;
 
         public SignUpValidator(SifflContext dbContext)
         {
-            this._dbContext = dbContext; 
+            this._dbContext = dbContext;
 
             RuleFor(signUp => signUp.Username)
                 .NotEmpty()
