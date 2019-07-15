@@ -58,7 +58,7 @@ namespace SifflForums.Service
 
             token = IssueToken(input.Username);
 
-            return RequestResult<bool>.Success(true);
+            return RequestResult<bool>.Success(token);
         }
 
         public RequestResult<TokenModel> SignUp(SignUpViewModel user)
