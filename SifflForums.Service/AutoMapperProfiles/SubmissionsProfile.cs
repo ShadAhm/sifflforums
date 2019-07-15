@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using SifflForums.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SifflForums.Models;
 
-namespace SifflForums.Api.Models.AutoMapperProfiles
+namespace SifflForums.AutoMapperProfiles
 {
     public class SubmissionsProfile : Profile
     {

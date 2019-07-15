@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using SifflForums.Api.Models;
+using SifflForums.Models;
 using SifflForums.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SifflForums.Api.Services
+namespace SifflForums.Service
 {
     public interface IUsersService
     {

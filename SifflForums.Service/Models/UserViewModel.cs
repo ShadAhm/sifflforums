@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SifflForums.Api.Models.Auth
+namespace SifflForums.Models
 {
-    public class LoginViewModel
+    public class UserViewModel
     {
+        public int UserId { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }
     }
 }

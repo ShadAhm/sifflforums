@@ -1,9 +1,8 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using SifflForums.Api.Models.Auth;
-using SifflForums.Api.Services;
-using SifflForums.Api.Services.Validators;
+using SifflForums.AutoMapperProfiles;
 using SifflForums.Data;
+using SifflForums.Service;
 
 namespace SifflForums.Api
 {
@@ -18,14 +17,17 @@ namespace SifflForums.Api
             services.AddScoped<IUpvotesService, UpvotesService>();
         }
 
-        public static void AddFluentValidationServices(this IServiceCollection services)
-        {
-            services.AddTransient<IValidator<SignUpViewModel>, SignUpValidator>(); 
-        }
-
         public static void AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddScoped<IAuthService, AuthService>();
+
+            var config = new MapperConfiguration(c => {
+                c.AddProfile<CommentsProfile>();
+                c.AddProfile<SubmissionsProfile>();
+                c.AddProfile<UsersProfile>();
+            });
+
+            services.AddSingleton<IMapper>(s => config.CreateMapper());
         }
     }
 }

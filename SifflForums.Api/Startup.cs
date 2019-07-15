@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,11 +43,9 @@ namespace SifflForums.Api
                     builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
                 });
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddFluentValidation();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDataAccessServices();
-            services.AddFluentValidationServices(); 
             services.AddInfrastructureServices();
         }
 

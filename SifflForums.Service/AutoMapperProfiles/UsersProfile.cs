@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using SifflForums.Data.Entities;
+using SifflForums.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SifflForums.Api.Models.AutoMapperProfiles
+namespace SifflForums.AutoMapperProfiles
 {
     public class UsersProfile : Profile
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SifflForums.Api.Models;
-using SifflForums.Api.Services;
 using SifflForums.Data.Entities;
+using SifflForums.Models;
+using SifflForums.Service;
 using System.Collections.Generic;
 
 namespace SifflForums.Api.Controllers
