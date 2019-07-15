@@ -34,7 +34,7 @@ namespace SifflForums.Api.Controllers
         {
             var result = _authService
                 .SetServiceApiKey(_configuration["ServiceApiKey"])
-                .Login(user, out TokenModel token);
+                .Login(user);
 
             if (result.IsSuccess)
             {

@@ -18,7 +18,7 @@ namespace SifflForums.Service
     public interface IAuthService
     {
         RequestResult<TokenModel> SignUp(SignUpViewModel user);
-        RequestResult<bool> Login(LoginViewModel input, out TokenModel token);
+        RequestResult<TokenModel> Login(LoginViewModel input);
         IAuthService SetServiceApiKey(string key); 
     }
 
@@ -40,12 +40,11 @@ namespace SifflForums.Service
             return this; 
         }
 
-        public RequestResult<bool> Login(LoginViewModel input, out TokenModel token)
+        public RequestResult<TokenModel> Login(LoginViewModel input)
         {
             if (string.IsNullOrWhiteSpace(this._serviceApiKey))
                 throw new Exception("Expected API key"); 
 
-            token = null; 
             User user = _dbContext.Users.Where(o => o.Username == input.Username).SingleOrDefault();
 
             byte[] salt = Convert.FromBase64String(user.Salt);
@@ -53,12 +52,12 @@ namespace SifflForums.Service
 
             if(hash != user.Password)
             {
-                return RequestResult<bool>.Fail("Incorrect password"); 
+                return RequestResult<TokenModel>.Fail("Incorrect password"); 
             }
 
-            token = IssueToken(input.Username);
+            TokenModel token = IssueToken(input.Username);
 
-            return RequestResult<bool>.Success(token);
+            return RequestResult<TokenModel>.Success(token);
         }
 
         public RequestResult<TokenModel> SignUp(SignUpViewModel user)
