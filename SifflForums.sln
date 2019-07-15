@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SifflForums.Api", "SifflFor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SifflForums.Data", "SifflForums.Data\SifflForums.Data.csproj", "{4BBB9CF7-AD58-4CA2-B54C-CCDC6A3858C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SifflForums.Web", "SifflForums.Web\SifflForums.Web.csproj", "{4DB65515-B407-4731-965A-C62DC790BDAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SifflForums.Web", "SifflForums.Web\SifflForums.Web.csproj", "{4DB65515-B407-4731-965A-C62DC790BDAD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{7302B7D5-9F09-461E-A2EC-785744529F4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{697D0CB9-72C0-4A8D-B927-A304324F0BF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +34,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{66F49396-8529-44A4-9DA0-F51C25F39D08} = {7302B7D5-9F09-461E-A2EC-785744529F4D}
+		{4BBB9CF7-AD58-4CA2-B54C-CCDC6A3858C8} = {697D0CB9-72C0-4A8D-B927-A304324F0BF0}
+		{4DB65515-B407-4731-965A-C62DC790BDAD} = {7302B7D5-9F09-461E-A2EC-785744529F4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {53D383C8-688A-4FE8-92D6-573722DBCEDB}
