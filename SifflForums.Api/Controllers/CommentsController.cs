@@ -25,21 +25,18 @@ namespace SifflForums.Api.Controllers
             return _service.GetBySubmissionId(submissionId); 
         }
 
-        // POST api/values
         [HttpPost, Authorize]
         public ActionResult<CommentViewModel> Post([FromBody]CommentViewModel value)
         {
             return _service.Insert(HttpContext.User.Identity.Name, value); 
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}"), Authorize]
-        public ActionResult Put(int id, [FromBody] string value)
+        [HttpPut, Authorize]
+        public ActionResult<CommentViewModel> Put([FromBody]CommentViewModel value)
         {
-            return StatusCode(StatusCodes.Status405MethodNotAllowed);
+            return _service.Update(HttpContext.User.Identity.Name, value);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}"), Authorize]
         public ActionResult Delete(int id)
         {

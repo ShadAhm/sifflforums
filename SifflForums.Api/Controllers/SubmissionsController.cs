@@ -42,11 +42,11 @@ namespace SifflForums.Api.Controllers
             return _service.Insert(HttpContext.User.Identity.Name, value);
         }
          
-        // PUT api/values/5
-        [HttpPut("{id}"), Authorize]
-        public ActionResult Put(int id, [FromBody] string value)
+        // PUT api/values
+        [HttpPut, Authorize]
+        public ActionResult<SubmissionViewModel> Put([FromBody]SubmissionViewModel value)
         {
-            return StatusCode(StatusCodes.Status403Forbidden);
+            return _service.Update(HttpContext.User.Identity.Name, value);
         }
 
         // DELETE api/values/5
