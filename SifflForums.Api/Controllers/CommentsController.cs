@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SifflForums.Models;
 using SifflForums.Service;
@@ -33,14 +34,16 @@ namespace SifflForums.Api.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}"), Authorize]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] string value)
         {
+            return StatusCode(StatusCodes.Status405MethodNotAllowed);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}"), Authorize]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            return StatusCode(StatusCodes.Status405MethodNotAllowed);
         }
     }
 }
