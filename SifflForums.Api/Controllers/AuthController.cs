@@ -26,7 +26,10 @@ namespace SifflForums.Api.Controllers
                 .SetServiceApiKey(_configuration["ServiceApiKey"])
                 .SignUp(user);
 
-            return Ok(result.Data);
+            if(result.IsSuccess)
+                return Ok(result.Data);
+
+            return BadRequest(result.ErrorMessage); 
         }
 
         [HttpPost, Route("login")]

@@ -12,6 +12,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using FluentValidation;
+using SifflForums.Service.Validators;
 
 namespace SifflForums.Service
 {
@@ -26,7 +28,7 @@ namespace SifflForums.Service
     {
         SifflContext _dbContext;
         IMapper _mapper;
-        string _serviceApiKey; 
+        string _serviceApiKey;
 
         public AuthService(SifflContext dbContext, IMapper mapper)
         {
@@ -64,6 +66,11 @@ namespace SifflForums.Service
         {
             if (string.IsNullOrWhiteSpace(this._serviceApiKey))
                 throw new Exception("Expected API key");
+
+            var result = new SignUpValidator(this._dbContext).Validate(user);
+
+            if (!result.IsValid)
+                return RequestResult<TokenModel>.Fail(result.ToString(","));
 
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);

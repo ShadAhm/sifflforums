@@ -15,12 +15,11 @@ namespace SifflForums.Api
             services.AddScoped<ISubmissionsService, SubmissionsService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IUpvotesService, UpvotesService>();
+            services.AddScoped<IAuthService, AuthService>();
         }
 
         public static void AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddScoped<IAuthService, AuthService>();
-
             var config = new MapperConfiguration(c => {
                 c.AddProfile<CommentsProfile>();
                 c.AddProfile<SubmissionsProfile>();
