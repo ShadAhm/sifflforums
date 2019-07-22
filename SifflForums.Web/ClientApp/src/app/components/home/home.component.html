@@ -3,7 +3,7 @@
 </div>
 
 <div *ngFor="let submission of submissions">
-  <h5><a [routerLink]="['/submission', submission.submissionId]">{{submission.title}}</a></h5>
+  <h5 class="submission-title"><a [routerLink]="['/submission', submission.submissionId]">{{submission.title}}</a></h5>
   <small class="text-muted">Posted by {{submission.username}} on {{submission.createdAtUtc|dateAgo}}</small>
   <p>{{submission.text}}</p>
 </div>

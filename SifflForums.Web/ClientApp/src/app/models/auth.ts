@@ -12,3 +12,8 @@ export class SigninModel {
 export class TokenModel {
   public token: string; 
 }
+
+export class UserModel {
+  public username: string;
+  public role: string; 
+}

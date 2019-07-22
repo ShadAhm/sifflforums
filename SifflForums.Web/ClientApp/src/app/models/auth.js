@@ -18,4 +18,10 @@ var TokenModel = /** @class */ (function () {
     return TokenModel;
 }());
 exports.TokenModel = TokenModel;
+var UserModel = /** @class */ (function () {
+    function UserModel() {
+    }
+    return UserModel;
+}());
+exports.UserModel = UserModel;
 //# sourceMappingURL=auth.js.map

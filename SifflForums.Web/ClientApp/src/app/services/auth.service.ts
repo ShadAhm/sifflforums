@@ -2,7 +2,7 @@ import { HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SigninModel, SignupModel, TokenModel } from '../models/auth';
+import { SigninModel, SignupModel, TokenModel, UserModel } from '../models/auth';
 import { HttpClientService } from '../util-services/http-client.service';
 import { BaseService } from './base.service';
 
