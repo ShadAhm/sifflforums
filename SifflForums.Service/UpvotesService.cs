@@ -36,32 +36,36 @@ namespace SifflForums.Service
             entity.UserId = user.UserId;
             entity.Weight = voteWeight;
 
-            bool proceedable = false; 
             if (parentEntity.Equals(nameof(Submission)))
             {
-                var vote = _dbContext.Upvotes.SingleOrDefault(uv => uv.SubmissionId == parentId && uv.UserId == user.UserId && uv.Weight == voteWeight);
+                var votes = _dbContext.Upvotes.Where(uv => uv.SubmissionId == parentId && uv.UserId == user.UserId).ToList();
 
-                if (vote == null)
+                // TODO: refactor
+                if (votes != null && votes.Count > 1)
+                {
+                    _dbContext.RemoveRange(votes);
+                    entity.SubmissionId = parentId;
+                    _dbContext.Upvotes.Add(entity);
+                    _dbContext.SaveChanges();
+                }
+                else if (votes != null && votes.Count == 1)
+                {
+                    if (votes.First().Weight == voteWeight)
+                        return;
+                    else
+                    {
+                        _dbContext.RemoveRange(votes);
+                        entity.SubmissionId = parentId;
+                        _dbContext.Upvotes.Add(entity);
+                        _dbContext.SaveChanges();
+                    }
+                }
+                else
                 {
                     entity.SubmissionId = parentId;
-                    proceedable = true; 
+                    _dbContext.Upvotes.Add(entity);
+                    _dbContext.SaveChanges();
                 }
-            }
-            else if (parentEntity.Equals(nameof(Comment)))
-            {
-                var upvote = _dbContext.Upvotes.SingleOrDefault(uv => uv.CommentId == parentId && uv.UserId == user.UserId && uv.Weight == voteWeight);
-
-                if (upvote == null)
-                {
-                    entity.CommentId = parentId;
-                    proceedable = true;
-                }
-            }
-
-            if(proceedable)
-            {
-                _dbContext.Upvotes.Add(entity);
-                _dbContext.SaveChanges();
             }
         }
 
