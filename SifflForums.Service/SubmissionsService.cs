@@ -22,12 +22,14 @@ namespace SifflForums.Service
         private SifflContext _dbContext;
         private IMapper _mapper;
         private IUsersService _usersService;
+        private IUpvotesService _upvotesService;
 
-        public SubmissionsService(SifflContext dbContext, IMapper mapper, IUsersService usersService)
+        public SubmissionsService(SifflContext dbContext, IMapper mapper, IUsersService usersService, IUpvotesService upvotesService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _usersService = usersService;
+            _upvotesService = upvotesService;
         }
 
         public List<SubmissionViewModel> GetAll()
@@ -73,6 +75,9 @@ namespace SifflForums.Service
 
             _dbContext.Submissions.Add(entity);
             _dbContext.SaveChanges();
+
+            // automatic upvote from the creator of the thread
+            _upvotesService.CastVote(username, nameof(Submission), entity.SubmissionId, false); 
 
             return _mapper.Map<SubmissionViewModel>(entity);
         }
