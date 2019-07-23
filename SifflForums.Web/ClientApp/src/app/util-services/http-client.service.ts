@@ -26,8 +26,11 @@ export class HttpClientService {
   }
 
   get<T>(url: string): Observable<T> {
-    let headers = new HttpHeaders();
-    this.createAuthorizationHeader(headers);
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    headers = this.createAuthorizationHeader(headers);
     return this.http.get<T>(url, { headers: headers });
   }
 

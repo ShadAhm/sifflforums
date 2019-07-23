@@ -69,6 +69,11 @@ export class SubmissionComponent implements OnInit {
 
   downvote(): void {
     --this.submission.upvotes;
-    this.submission.currentUserVoteWeight = -1; 
+    this.submission.currentUserVoteWeight = -1;
+
+    this.submissionsService.downvote(this.submission.submissionId).subscribe(
+      (response) => { },
+      (error) => { }
+    );
   }
 }

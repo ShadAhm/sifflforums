@@ -29,7 +29,7 @@ namespace SifflForums.Api.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}"),AllowAnonymous,Authorize]
         public ActionResult<SubmissionViewModel> Get(int id)
         {
             return _service.GetById(HttpContext.User.Identity.Name, id);

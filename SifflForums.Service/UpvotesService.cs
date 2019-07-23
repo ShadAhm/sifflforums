@@ -34,7 +34,7 @@ namespace SifflForums.Service
 
             Upvote entity = new Upvote();
             entity.UserId = user.UserId;
-            entity.Weight = 1;
+            entity.Weight = voteWeight;
 
             bool proceedable = false; 
             if (parentEntity.Equals(nameof(Submission)))

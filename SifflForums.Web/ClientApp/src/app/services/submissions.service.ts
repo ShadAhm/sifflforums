@@ -30,4 +30,9 @@ export class SubmissionsService extends BaseService {
     return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/upvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
+
+  downvote(submissionId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/downvote`, null, this.httpHeaders)
+      .pipe(map(res => res));
+  }
 }
