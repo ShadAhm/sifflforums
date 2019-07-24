@@ -21,4 +21,19 @@ export class CommentsService extends BaseService {
     return this.httpClient.post<CommentPost>(`${this.apiRoot}api/comments`, input, this.httpHeaders)
       .pipe(map(res => res));
   }
+
+  upvote(commentId: number, votingBoxId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiRoot}api/comments/${commentId}/upvote?votingBoxId=${votingBoxId}`, null, this.httpHeaders)
+      .pipe(map(res => res));
+  }
+
+  downvote(commentId: number, votingBoxId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiRoot}api/comments/${commentId}/downvote?votingBoxId=${votingBoxId}`, null, this.httpHeaders)
+      .pipe(map(res => res));
+  }
+
+  removevote(commentId: number, votingBoxId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiRoot}api/comments/${commentId}/removevotes?votingBoxId=${votingBoxId}`, this.httpHeaders)
+      .pipe(map(res => res));
+  }
 }

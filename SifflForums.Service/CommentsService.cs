@@ -11,7 +11,7 @@ namespace SifflForums.Service
 {
     public interface ICommentsService
     {
-        List<CommentViewModel> GetBySubmissionId(int submissionId);
+        List<CommentViewModel> GetBySubmissionId(string currentUsername, int submissionId);
         CommentViewModel Insert(string username, CommentViewModel input);
         CommentViewModel Update(string username, CommentViewModel input);
     }
@@ -31,14 +31,29 @@ namespace SifflForums.Service
             this._upvotesService = upvotesService;
         }
 
-        public List<CommentViewModel> GetBySubmissionId(int submissionId)
+        public List<CommentViewModel> GetBySubmissionId(string currentUsername, int submissionId)
         {
-            var comments = _dbContext.Comments
+            var entities = _dbContext.Comments
                 .Include(c => c.User)
+                .Include(c => c.VotingBox)
+                .ThenInclude(vb => vb.Upvotes)
+                .ThenInclude(uv => uv.User)
                 .Where(c => c.SubmissionId == submissionId)
                 .ToList();
 
-            return _mapper.Map<List<CommentViewModel>>(comments);
+            var vms = _mapper.Map<List<CommentViewModel>>(entities);
+
+            if (!string.IsNullOrWhiteSpace(currentUsername))
+            {
+                foreach (var item in vms)
+                {
+                    var entity = entities.SingleOrDefault(o => o.CommentId == item.CommentId);
+
+                    item.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(o => o.User.Username == currentUsername)?.Weight ?? 0;
+                }
+            }
+
+            return vms;
         }
 
         public CommentViewModel Insert(string username, CommentViewModel input)

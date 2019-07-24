@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SifflForums.Data.Entities;
 using SifflForums.Models;
+using System.Linq;
 
 namespace SifflForums.AutoMapperProfiles
 {
@@ -9,7 +10,8 @@ namespace SifflForums.AutoMapperProfiles
         public CommentsProfile()
         {
             CreateMap<Comment, CommentViewModel>()
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username))
+                .ForMember(dest => dest.Upvotes, opt => opt.MapFrom(src => src.VotingBox.Upvotes.Sum(uv => uv.Weight)));
         }
     }
 }

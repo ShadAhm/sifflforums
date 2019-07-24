@@ -11,18 +11,20 @@ namespace SifflForums.Api.Controllers
     [ApiController]
     public class CommentsController : SifflControllerBase
     {
-        ICommentsService _service; 
+        private readonly ICommentsService _service;
+        private readonly IUpvotesService _upvotesService;
 
-        public CommentsController(ICommentsService service)
+        public CommentsController(ICommentsService service, IUpvotesService upvotesService)
         {
-            _service = service; 
+            this._service = service;
+            this._upvotesService = upvotesService;
         }
 
         // GET api/values
-        [HttpGet()]
+        [HttpGet(),AllowAnonymous,Authorize]
         public ActionResult<IEnumerable<CommentViewModel>> Get(int submissionId)
         {
-            return _service.GetBySubmissionId(submissionId); 
+            return _service.GetBySubmissionId(HttpContext.User.Identity.Name, submissionId); 
         }
 
         [HttpPost, Authorize]
@@ -41,6 +43,40 @@ namespace SifflForums.Api.Controllers
         public ActionResult Delete(int id)
         {
             return StatusCode(StatusCodes.Status405MethodNotAllowed);
+        }
+
+        [HttpPut("{id}/Upvote"), Authorize]
+        public ActionResult Upvote(int id, [FromQuery]int votingBoxId)
+        {
+            if (votingBoxId == 0)
+                return BadRequest("No votingbox specified");
+
+            _upvotesService.CastVote(HttpContext.User.Identity.Name, votingBoxId, false);
+
+            return Ok();
+        }
+
+        [HttpPut("{id}/Downvote"), Authorize]
+        public ActionResult Downvote(int id, [FromQuery]int votingBoxId)
+        {
+            if (votingBoxId == 0)
+                return BadRequest("No votingbox specified");
+
+            _upvotesService.CastVote(HttpContext.User.Identity.Name, votingBoxId, true);
+
+            return Ok();
+        }
+
+        // DELETE api/values/5
+        [HttpDelete("{id}/RemoveVotes"), Authorize]
+        public ActionResult RemoveVotes(int id, [FromQuery]int votingBoxId)
+        {
+            if (votingBoxId == 0)
+                return BadRequest("No votingbox specified");
+
+            _upvotesService.RemoveVotes(HttpContext.User.Identity.Name, votingBoxId);
+
+            return Ok();
         }
     }
 }

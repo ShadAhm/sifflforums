@@ -1,7 +1,11 @@
 export class CommentPost {
   public commentId: number;
   public text: string;
-  public submissionId: number; 
+  public submissionId: number;
+  public upvotes: number;
+  public currentUserVoteWeight: number;
+  public votingBoxId: number;
+  public username: string;
 }
 
 export class Submission {
