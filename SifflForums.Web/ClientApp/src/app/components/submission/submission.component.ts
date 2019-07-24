@@ -14,7 +14,9 @@ export class SubmissionComponent implements OnInit {
   submissionId: number;
   submission: Submission;
   comments: CommentPost[];
-  commentInput: string; 
+  commentInput: string;
+  votePosition: number;
+  upvotesCountOnScreen: number; 
 
   constructor(private route: ActivatedRoute, private commentsService: CommentsService, private submissionsService: SubmissionsService) { }
 
@@ -29,6 +31,8 @@ export class SubmissionComponent implements OnInit {
     this.submissionsService.getSubmission(this.submissionId).subscribe(
       (response: Submission) => {
         this.submission = response;
+        this.votePosition = this.submission.currentUserVoteWeight;
+        this.upvotesCountOnScreen = this.submission.upvotes; 
 
         if (this.submission.submissionId > 0)
           this.getComments(this.submission.submissionId);
@@ -58,8 +62,14 @@ export class SubmissionComponent implements OnInit {
   }
 
   upvote(): void {
-    ++this.submission.upvotes;
-    this.submission.currentUserVoteWeight = 1; 
+    if (this.votePosition == 1) {
+      this.removeVote();
+      return; 
+    }
+
+    this.votePosition = 1;
+
+    this.upvotesCountOnScreen = this.submission.upvotes - this.submission.currentUserVoteWeight + this.votePosition; 
 
     this.submissionsService.upvote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
       (response) => { },
@@ -68,10 +78,25 @@ export class SubmissionComponent implements OnInit {
   }
 
   downvote(): void {
-    --this.submission.upvotes;
-    this.submission.currentUserVoteWeight = -1;
+    if (this.votePosition == -1) {
+      this.removeVote();
+      return;
+    }
+
+    this.votePosition = -1;
+    this.upvotesCountOnScreen = this.submission.upvotes - this.submission.currentUserVoteWeight + this.votePosition; 
 
     this.submissionsService.downvote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
+      (response) => { },
+      (error) => { }
+    );
+  }
+
+  removeVote(): void {
+    this.votePosition = 0;
+    this.upvotesCountOnScreen = this.submission.upvotes;
+
+    this.submissionsService.removevote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
       (response) => { },
       (error) => { }
     );

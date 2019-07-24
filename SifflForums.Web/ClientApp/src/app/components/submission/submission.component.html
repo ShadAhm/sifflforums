@@ -6,12 +6,12 @@
   <p>{{submission.text}}</p>
 
   <div class="input-group mb-3">
-    <input type="number" readonly class="form-control" placeholder="" [value]="submission.upvotes" />
+    <input type="number" readonly class="form-control" placeholder="" [value]="upvotesCountOnScreen" />
     <div class="input-group-append">
-      <button [ngClass]="{'btn-primary':submission.currentUserVoteWeight == 1}" class="btn btn-sm btn-default btn-outline" (click)="upvote()" type="button">
+      <button [ngClass]="{'btn-primary':votePosition == 1}" class="btn btn-sm btn-default btn-outline" (click)="upvote()" type="button">
         Upvote
       </button>
-      <button [ngClass]="{'btn-primary':submission.currentUserVoteWeight == -1}" class="btn btn-sm btn-outline" (click)="downvote()" type="button">
+      <button [ngClass]="{'btn-primary':votePosition == -1}" class="btn btn-sm btn-outline" (click)="downvote()" type="button">
         Downvote
       </button>
     </div>

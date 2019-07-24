@@ -35,4 +35,9 @@ export class SubmissionsService extends BaseService {
     return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/downvote?votingBoxId=${votingBoxId}`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
+
+  removevote(submissionId: number, votingBoxId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiRoot}api/submissions/${submissionId}/removevotes?votingBoxId=${votingBoxId}`, this.httpHeaders)
+      .pipe(map(res => res));
+  }
 }
