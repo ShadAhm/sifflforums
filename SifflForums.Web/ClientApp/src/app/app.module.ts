@@ -12,6 +12,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
 import { SubmissionComponent } from './components/submission/submission.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { CommentViewComponent } from './components/comment-view/comment-view.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
     HeaderComponent,
     SignupComponent,
     LoginComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    CommentViewComponent
   ],
   imports: [
     BrowserModule,

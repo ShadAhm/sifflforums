@@ -1,0 +1,15 @@
+<div class="comment">
+  <div class="d-flex align-items-center comment-header">
+    <div class="comment-infos">
+      <span class="comment-username">{{model.username}} </span>
+      <span class="comment-date">{{model.createdAtUtc|dateAgo}}</span>
+      <span class="comment-date badge badge-success">1,321 points</span>
+    </div>
+    <div class="ml-auto">
+      <button class="btn btn-sm" title="Quote this comment">💬</button>
+      <button class="btn btn-sm" title="This is a great comment">👍</button>
+      <button class="btn btn-sm">⠇</button>
+    </div>
+  </div>
+  <div class="comment-content" [innerHTML]="model.text"></div>
+</div>

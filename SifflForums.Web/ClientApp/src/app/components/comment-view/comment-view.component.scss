@@ -1,0 +1,23 @@
+div.comment {
+  margin-bottom: 0.5rem;
+
+  .comment-infos span {
+    margin-right: 0.25rem;
+  }
+
+  .comment-header {
+    font-size: smaller;
+    color: grey;
+    margin: unset;
+
+    .comment-username {
+      font-weight: 600;
+    }
+
+    .comment-date {
+    }
+  }
+
+  .comment-content {
+  }
+}

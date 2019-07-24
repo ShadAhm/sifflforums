@@ -1,4 +1,4 @@
-﻿<ng-container *ngIf="submission">
+<ng-container *ngIf="submission">
   <h2>
     {{submission.title}}
   </h2>
@@ -19,20 +19,8 @@
 
   <hr />
   <h6>Comments</h6>
-  <div class="comment" *ngFor="let comment of comments">
-    <div class="d-flex align-items-center comment-header">
-      <div class="comment-infos">
-        <span class="comment-username">{{comment.username}} </span>
-        <span class="comment-date">{{comment.createdAtUtc|dateAgo}}</span>
-        <span class="comment-date badge badge-success">1,321 points</span>
-      </div>
-      <div class="ml-auto">
-        <button class="btn btn-sm">💬</button>
-        <button class="btn btn-sm">👍</button>
-        <button class="btn btn-sm">⠇</button>
-      </div>
-    </div>
-    <div class="comment-content" [innerHTML]="comment.text"></div>
+  <div *ngFor="let comment of comments">
+    <app-comment-view [model]="comment"></app-comment-view>
   </div>
 
   <div class="mt-4">
