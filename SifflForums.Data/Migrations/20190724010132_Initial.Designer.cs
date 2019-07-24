@@ -9,7 +9,7 @@ using SifflForums.Data;
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    [Migration("20190711074031_Initial")]
+    [Migration("20190724010132_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,8 @@ namespace SifflForums.Data.Migrations
 
                     b.Property<int>("UserId");
 
+                    b.Property<int>("VotingBoxId");
+
                     b.HasKey("CommentId");
 
                     b.HasIndex("CreatedBy");
@@ -58,6 +60,8 @@ namespace SifflForums.Data.Migrations
                     b.HasIndex("SubmissionId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("VotingBoxId");
 
                     b.ToTable("Comments");
                 });
@@ -81,6 +85,8 @@ namespace SifflForums.Data.Migrations
 
                     b.Property<int>("UserId");
 
+                    b.Property<int>("VotingBoxId");
+
                     b.HasKey("SubmissionId");
 
                     b.HasIndex("CreatedBy");
@@ -88,6 +94,8 @@ namespace SifflForums.Data.Migrations
                     b.HasIndex("ModifiedBy");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("VotingBoxId");
 
                     b.ToTable("Submissions");
                 });
@@ -97,21 +105,17 @@ namespace SifflForums.Data.Migrations
                     b.Property<int>("UpvoteId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CommentId");
-
-                    b.Property<int?>("SubmissionId");
-
                     b.Property<int>("UserId");
+
+                    b.Property<int>("VotingBoxId");
 
                     b.Property<int>("Weight");
 
                     b.HasKey("UpvoteId");
 
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("SubmissionId");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("VotingBoxId");
 
                     b.ToTable("Upvotes");
                 });
@@ -138,6 +142,16 @@ namespace SifflForums.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("SifflForums.Data.Entities.VotingBox", b =>
+                {
+                    b.Property<int>("VotingBoxId")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("VotingBoxId");
+
+                    b.ToTable("VotingBoxes");
+                });
+
             modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
                 {
                     b.HasOne("SifflForums.Data.Entities.User", "Creator")
@@ -159,6 +173,11 @@ namespace SifflForums.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SifflForums.Data.Entities.VotingBox", "VotingBox")
+                        .WithMany()
+                        .HasForeignKey("VotingBoxId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
@@ -177,21 +196,23 @@ namespace SifflForums.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SifflForums.Data.Entities.VotingBox", "VotingBox")
+                        .WithMany()
+                        .HasForeignKey("VotingBoxId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Upvote", b =>
                 {
-                    b.HasOne("SifflForums.Data.Entities.Comment", "Comment")
-                        .WithMany()
-                        .HasForeignKey("CommentId");
-
-                    b.HasOne("SifflForums.Data.Entities.Submission", "Submission")
-                        .WithMany()
-                        .HasForeignKey("SubmissionId");
-
                     b.HasOne("SifflForums.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SifflForums.Data.Entities.VotingBox", "VotingBox")
+                        .WithMany("Upvotes")
+                        .HasForeignKey("VotingBoxId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

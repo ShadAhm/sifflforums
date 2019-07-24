@@ -11,7 +11,7 @@ namespace SifflForums.AutoMapperProfiles
         {
             CreateMap<Submission, SubmissionViewModel>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username))
-                .ForMember(dest => dest.Upvotes, opt => opt.MapFrom(src => src.Upvotes.Sum(uv => uv.Weight)));
+                .ForMember(dest => dest.Upvotes, opt => opt.MapFrom(src => src.VotingBox.Upvotes.Sum(uv => uv.Weight)));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace SifflForums.Data
         public DbSet<Submission> Submissions { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Upvote> Upvotes { get; set; }
+        public DbSet<VotingBox> VotingBoxes { get; set; }
 
         // Reference data below this line (to be added to Redis cache down the road)
         public DbSet<BlacklistedPassword> BlacklistedPasswords { get; set; }

@@ -11,6 +11,8 @@ namespace SifflForums.Data.Entities
         public int UserId { get; set; }
         public User User { get; set; }
         public int SubmissionId { get; set; }
+        public int VotingBoxId { get; set; }
+        public VotingBox VotingBox { get; set; }
         public Submission Submission { get; set; }
     }
 }

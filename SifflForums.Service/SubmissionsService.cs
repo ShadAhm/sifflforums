@@ -45,7 +45,8 @@ namespace SifflForums.Service
         {
             var entity = _dbContext.Submissions
                 .Include(o => o.User)
-                .Include(o => o.Upvotes)
+                .Include(o => o.VotingBox)
+                .ThenInclude(o => o.Upvotes)
                 .ThenInclude(o => o.User)
                 .SingleOrDefault(o => o.SubmissionId == id);
 
@@ -54,7 +55,7 @@ namespace SifflForums.Service
             int userVoteWeight = 0;
             if (!string.IsNullOrWhiteSpace(currentUsername))
             {
-                userVoteWeight = entity.Upvotes.SingleOrDefault(o => o.User.Username == currentUsername)?.Weight ?? 0;
+                userVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(o => o.User.Username == currentUsername)?.Weight ?? 0;
             }
             viewModel.CurrentUserVoteWeight = userVoteWeight; 
 
@@ -73,12 +74,13 @@ namespace SifflForums.Service
             entity.CreatedBy = user.UserId;
             entity.ModifiedAtUtc = DateTime.UtcNow;
             entity.ModifiedBy = user.UserId;
+            entity.VotingBox = new VotingBox(); 
 
             _dbContext.Submissions.Add(entity);
             _dbContext.SaveChanges();
 
             // automatic upvote from the creator of the thread
-            _upvotesService.CastVote(username, nameof(Submission), entity.SubmissionId, false); 
+            _upvotesService.CastVote(username, entity.VotingBox.VotingBoxId, false); 
 
             return _mapper.Map<SubmissionViewModel>(entity);
         }

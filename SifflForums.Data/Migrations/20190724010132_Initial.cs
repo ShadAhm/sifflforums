@@ -39,6 +39,18 @@ namespace SifflForums.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "VotingBoxes",
+                columns: table => new
+                {
+                    VotingBoxId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VotingBoxes", x => x.VotingBoxId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Submissions",
                 columns: table => new
                 {
@@ -50,7 +62,8 @@ namespace SifflForums.Data.Migrations
                     ModifiedBy = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    VotingBoxId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,6 +86,39 @@ namespace SifflForums.Data.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Submissions_VotingBoxes_VotingBoxId",
+                        column: x => x.VotingBoxId,
+                        principalTable: "VotingBoxes",
+                        principalColumn: "VotingBoxId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Upvotes",
+                columns: table => new
+                {
+                    UpvoteId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    VotingBoxId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    Weight = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Upvotes", x => x.UpvoteId);
+                    table.ForeignKey(
+                        name: "FK_Upvotes_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Upvotes_VotingBoxes_VotingBoxId",
+                        column: x => x.VotingBoxId,
+                        principalTable: "VotingBoxes",
+                        principalColumn: "VotingBoxId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,7 +133,8 @@ namespace SifflForums.Data.Migrations
                     ModifiedBy = table.Column<int>(nullable: false),
                     Text = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
-                    SubmissionId = table.Column<int>(nullable: false)
+                    SubmissionId = table.Column<int>(nullable: false),
+                    VotingBoxId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,39 +163,11 @@ namespace SifflForums.Data.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Upvotes",
-                columns: table => new
-                {
-                    UpvoteId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    SubmissionId = table.Column<int>(nullable: true),
-                    CommentId = table.Column<int>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    Weight = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Upvotes", x => x.UpvoteId);
                     table.ForeignKey(
-                        name: "FK_Upvotes_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "CommentId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Upvotes_Submissions_SubmissionId",
-                        column: x => x.SubmissionId,
-                        principalTable: "Submissions",
-                        principalColumn: "SubmissionId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Upvotes_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
+                        name: "FK_Comments_VotingBoxes_VotingBoxId",
+                        column: x => x.VotingBoxId,
+                        principalTable: "VotingBoxes",
+                        principalColumn: "VotingBoxId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -173,6 +192,11 @@ namespace SifflForums.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_VotingBoxId",
+                table: "Comments",
+                column: "VotingBoxId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Submissions_CreatedBy",
                 table: "Submissions",
                 column: "CreatedBy");
@@ -188,19 +212,19 @@ namespace SifflForums.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Upvotes_CommentId",
-                table: "Upvotes",
-                column: "CommentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Upvotes_SubmissionId",
-                table: "Upvotes",
-                column: "SubmissionId");
+                name: "IX_Submissions_VotingBoxId",
+                table: "Submissions",
+                column: "VotingBoxId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upvotes_UserId",
                 table: "Upvotes",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Upvotes_VotingBoxId",
+                table: "Upvotes",
+                column: "VotingBoxId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -209,16 +233,19 @@ namespace SifflForums.Data.Migrations
                 name: "BlacklistedPasswords");
 
             migrationBuilder.DropTable(
-                name: "Upvotes");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "Upvotes");
 
             migrationBuilder.DropTable(
                 name: "Submissions");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "VotingBoxes");
         }
     }
 }

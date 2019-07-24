@@ -8,8 +8,8 @@ namespace SifflForums.Service
 {
     public interface IUpvotesService
     {
-        void CastVote(string username, string parentEntity, int submissionId, bool isDownvote);
-        void RemoveVotes(string username, string parentEntity, int parentId);
+        void CastVote(string username, int votingBoxId, bool isDownvote);
+        void RemoveVotes(string username, int votingBoxId);
     }
 
     public class UpvotesService : IUpvotesService
@@ -25,65 +25,48 @@ namespace SifflForums.Service
             _usersService = usersService;
         }
 
-        public void CastVote(string username, string parentEntity, int parentId, bool isDownvote)
+        public void CastVote(string username, int votingBoxId, bool isDownvote)
         {
             var user = _usersService.GetByUsername(username);
             if (user == null) { return; }
 
-            int voteWeight = isDownvote ? -1 : 1; 
+            int voteWeight = isDownvote ? -1 : 1;
 
             Upvote entity = new Upvote();
             entity.UserId = user.UserId;
             entity.Weight = voteWeight;
 
-            if (parentEntity.Equals(nameof(Submission)))
-            {
-                var votes = _dbContext.Upvotes.Where(uv => uv.SubmissionId == parentId && uv.UserId == user.UserId).ToList();
+            var votes = _dbContext.Upvotes.Where(uv => uv.VotingBoxId == votingBoxId && uv.UserId == user.UserId).ToList();
 
-                // TODO: refactor
-                if (votes != null && votes.Count > 1)
-                {
-                    _dbContext.RemoveRange(votes);
-                    entity.SubmissionId = parentId;
-                    _dbContext.Upvotes.Add(entity);
-                    _dbContext.SaveChanges();
-                }
-                else if (votes != null && votes.Count == 1)
-                {
-                    if (votes.First().Weight == voteWeight)
-                        return;
-                    else
-                    {
-                        _dbContext.RemoveRange(votes);
-                        entity.SubmissionId = parentId;
-                        _dbContext.Upvotes.Add(entity);
-                        _dbContext.SaveChanges();
-                    }
-                }
-                else
-                {
-                    entity.SubmissionId = parentId;
-                    _dbContext.Upvotes.Add(entity);
-                    _dbContext.SaveChanges();
-                }
+            if(votes == null)
+            {
+                entity.VotingBoxId = votingBoxId;
+                _dbContext.Upvotes.Add(entity);
+                _dbContext.SaveChanges();
+                return; 
+            }
+
+            if (votes != null && votes.Count == 1 && votes.First().Weight == voteWeight)
+            {
+                return; 
+            }
+            else
+            {
+                _dbContext.RemoveRange(votes);
+                entity.VotingBoxId = votingBoxId;
+                _dbContext.Upvotes.Add(entity);
+                _dbContext.SaveChanges();
             }
         }
 
-        public void RemoveVotes(string username, string parentEntity, int parentId)
+        public void RemoveVotes(string username, int votingBoxId)
         {
             var user = _usersService.GetByUsername(username);
             if (user == null) { return; }
 
-            IEnumerable<Upvote> votes = null; 
+            IEnumerable<Upvote> votes = null;
 
-            if (parentEntity.Equals(nameof(Submission)))
-            {
-                votes = _dbContext.Upvotes.Where(uv => uv.SubmissionId == parentId && uv.UserId == user.UserId).ToList();
-            }
-            else if (parentEntity.Equals(nameof(Comment)))
-            {
-                votes = _dbContext.Upvotes.Where(uv => uv.CommentId == parentId && uv.UserId == user.UserId).ToList();
-            }
+            votes = _dbContext.Upvotes.Where(uv => uv.VotingBoxId == votingBoxId && uv.UserId == user.UserId).ToList();
 
             if (votes != null)
             {

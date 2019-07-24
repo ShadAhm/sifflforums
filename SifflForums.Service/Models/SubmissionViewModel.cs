@@ -16,5 +16,6 @@ namespace SifflForums.Models
         public DateTime CreatedAtUtc { get; set; }
         public int CurrentUserVoteWeight { get; set; }
         public int Upvotes { get; set; }
+        public int VotingBoxId { get; set; }
     }
 }

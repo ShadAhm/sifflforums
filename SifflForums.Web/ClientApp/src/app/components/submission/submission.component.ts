@@ -61,7 +61,7 @@ export class SubmissionComponent implements OnInit {
     ++this.submission.upvotes;
     this.submission.currentUserVoteWeight = 1; 
 
-    this.submissionsService.upvote(this.submission.submissionId).subscribe(
+    this.submissionsService.upvote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -71,7 +71,7 @@ export class SubmissionComponent implements OnInit {
     --this.submission.upvotes;
     this.submission.currentUserVoteWeight = -1;
 
-    this.submissionsService.downvote(this.submission.submissionId).subscribe(
+    this.submissionsService.downvote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
       (response) => { },
       (error) => { }
     );

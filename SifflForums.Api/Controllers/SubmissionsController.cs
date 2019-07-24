@@ -57,22 +57,37 @@ namespace SifflForums.Api.Controllers
         }
 
         [HttpPut("{id}/Upvote"), Authorize]
-        public void Upvote(int id)
+        public ActionResult Upvote(int id, [FromQuery]int votingBoxId)
         {
-            _upvotesService.CastVote(HttpContext.User.Identity.Name, nameof(Submission), id, false);
+            if (votingBoxId == 0)
+                return BadRequest("No votingbox specified"); 
+
+            _upvotesService.CastVote(HttpContext.User.Identity.Name, votingBoxId, false);
+
+            return Ok();
         }
 
         [HttpPut("{id}/Downvote"), Authorize]
-        public void Downvote(int id)
+        public ActionResult Downvote(int id, [FromQuery]int votingBoxId)
         {
-            _upvotesService.CastVote(HttpContext.User.Identity.Name, nameof(Submission), id, true);
+            if (votingBoxId == 0)
+                return BadRequest("No votingbox specified");
+
+            _upvotesService.CastVote(HttpContext.User.Identity.Name, votingBoxId, true);
+
+            return Ok();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}/RemoveVotes"), Authorize]
-        public void RemoveVotes(int id)
+        public ActionResult RemoveVotes(int id, [FromQuery]int votingBoxId)
         {
-            _upvotesService.RemoveVotes(HttpContext.User.Identity.Name, nameof(Submission), id);
+            if (votingBoxId == 0)
+                return BadRequest("No votingbox specified");
+
+            _upvotesService.RemoveVotes(HttpContext.User.Identity.Name, votingBoxId);
+
+            return Ok(); 
         }
     }
 }
