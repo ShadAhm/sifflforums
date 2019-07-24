@@ -21,12 +21,14 @@ namespace SifflForums.Service
         private SifflContext _dbContext;
         private IMapper _mapper;
         private IUsersService _usersService;
+        private readonly IUpvotesService _upvotesService;
 
-        public CommentsService(SifflContext dbContext, IMapper mapper, IUsersService usersService)
+        public CommentsService(SifflContext dbContext, IMapper mapper, IUsersService usersService, IUpvotesService upvotesService)
         {
-            _dbContext = dbContext;
-            _mapper = mapper;
-            _usersService = usersService;
+            this._dbContext = dbContext;
+            this._mapper = mapper;
+            this._usersService = usersService;
+            this._upvotesService = upvotesService;
         }
 
         public List<CommentViewModel> GetBySubmissionId(int submissionId)
@@ -52,11 +54,13 @@ namespace SifflForums.Service
             comment.CreatedBy = user.UserId;
             comment.ModifiedAtUtc = DateTime.UtcNow;
             comment.ModifiedBy = user.UserId;
+            comment.VotingBox = new VotingBox(); 
 
             _dbContext.Comments.Add(comment);
             _dbContext.SaveChanges();
-
             _dbContext.Entry(comment).Reference(c => c.User).Load(); 
+
+            _upvotesService.CastVote(user.Username, comment.VotingBox.VotingBoxId, false); 
 
             return _mapper.Map<CommentViewModel>(comment); 
         }
