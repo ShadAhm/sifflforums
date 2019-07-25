@@ -60,24 +60,24 @@ namespace SifflForums.Service
         {
             var user = _usersService.GetByUsername(username);
 
-            Comment comment = new Comment();
-            comment.SubmissionId = input.SubmissionId;
-            comment.Text = input.Text;
+            Comment entity = new Comment();
+            entity.SubmissionId = input.SubmissionId;
+            entity.Text = input.Text;
 
-            comment.UserId = user.UserId;
-            comment.CreatedAtUtc = DateTime.UtcNow;
-            comment.CreatedBy = user.UserId;
-            comment.ModifiedAtUtc = DateTime.UtcNow;
-            comment.ModifiedBy = user.UserId;
-            comment.VotingBox = new VotingBox(); 
+            entity.UserId = user.UserId;
+            entity.CreatedAtUtc = DateTime.UtcNow;
+            entity.CreatedBy = user.UserId;
+            entity.ModifiedAtUtc = DateTime.UtcNow;
+            entity.ModifiedBy = user.UserId;
+            entity.VotingBox = new VotingBox(); 
 
-            _dbContext.Comments.Add(comment);
+            _dbContext.Comments.Add(entity);
             _dbContext.SaveChanges();
-            _dbContext.Entry(comment).Reference(c => c.User).Load(); 
+            _dbContext.Entry(entity).Reference(c => c.User).Load(); 
 
-            _upvotesService.CastVote(user.Username, comment.VotingBox.VotingBoxId, false); 
+            _upvotesService.CastVote(user.Username, entity.VotingBox.VotingBoxId, false);
 
-            return _mapper.Map<CommentViewModel>(comment); 
+            return _mapper.Map<CommentViewModel>(entity); 
         }
 
         public CommentViewModel Update(string username, CommentViewModel input)
