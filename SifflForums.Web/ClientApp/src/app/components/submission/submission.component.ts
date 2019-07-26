@@ -101,4 +101,8 @@ export class SubmissionComponent implements OnInit {
       (error) => { }
     );
   }
+
+  onCommentQuoted(comment: CommentPost): void {
+    this.commentInput = `> ${comment.text}`;
+  }
 }

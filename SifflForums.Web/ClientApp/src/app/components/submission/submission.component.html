@@ -20,7 +20,7 @@
   <hr />
   <h6>Comments</h6>
   <div *ngFor="let comment of comments">
-    <app-comment-view [model]="comment"></app-comment-view>
+    <app-comment-view [model]="comment" (quoted)="onCommentQuoted(comment)"></app-comment-view>
   </div>
 
   <div class="mt-4">

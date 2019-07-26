@@ -6,7 +6,7 @@
       <span *ngIf="model.upvotes && model.upvotes != 0" class="comment-date badge badge-success">{{model.upvotes}} points</span>
     </div>
     <div class="ml-auto">
-      <button class="btn btn-sm" title="Quote this comment" (click)="quoteComment()">💬</button>
+      <button class="btn btn-sm" title="Quote this comment" (click)="quote()">💬</button>
       <button class="btn btn-sm" title="This is a great comment" (click)="upvote()">👍</button>
       <button class="btn btn-sm">⠇</button>
     </div>

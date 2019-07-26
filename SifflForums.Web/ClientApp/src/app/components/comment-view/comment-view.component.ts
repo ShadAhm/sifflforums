@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommentPost } from '../../models/comments';
 import { CommentsService } from '../../services/comments.service';
 
@@ -9,6 +9,7 @@ import { CommentsService } from '../../services/comments.service';
 })
 export class CommentViewComponent implements OnInit {
   @Input() model: CommentPost;
+  @Output() quoted = new EventEmitter<void>();
 
   constructor(private commentsService: CommentsService) { }
 
@@ -16,7 +17,7 @@ export class CommentViewComponent implements OnInit {
   }
 
   quote(): void {
-
+    this.quoted.emit(); 
   }
 
   upvote(): void {
