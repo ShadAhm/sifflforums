@@ -34,7 +34,7 @@ namespace SifflForums.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody]SubmissionViewModel value)
+        public ActionResult Post([FromBody]object value)
         {
             return StatusCode(StatusCodes.Status405MethodNotAllowed);
         }
