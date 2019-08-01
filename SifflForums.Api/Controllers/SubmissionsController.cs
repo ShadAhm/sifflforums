@@ -32,21 +32,21 @@ namespace SifflForums.Api.Controllers
         [HttpGet("{id}"),AllowAnonymous,Authorize]
         public ActionResult<SubmissionViewModel> Get(int id)
         {
-            return _service.GetById(HttpContext.User.Identity.Name, id);
+            return _service.GetById(this.CurrentUsername, id);
         }
 
         // POST api/values
         [HttpPost,Authorize]
         public ActionResult<SubmissionViewModel> Post([FromBody]SubmissionViewModel value)
         {
-            return _service.Insert(HttpContext.User.Identity.Name, value);
+            return _service.Insert(this.CurrentUsername, value);
         }
          
         // PUT api/values
         [HttpPut, Authorize]
         public ActionResult<SubmissionViewModel> Put([FromBody]SubmissionViewModel value)
         {
-            return _service.Update(HttpContext.User.Identity.Name, value);
+            return _service.Update(this.CurrentUsername, value);
         }
 
         // DELETE api/values/5
@@ -62,7 +62,7 @@ namespace SifflForums.Api.Controllers
             if (votingBoxId == 0)
                 return BadRequest("No votingbox specified"); 
 
-            _upvotesService.CastVote(HttpContext.User.Identity.Name, votingBoxId, false);
+            _upvotesService.CastVote(this.CurrentUsername, votingBoxId, false);
 
             return Ok();
         }
@@ -73,7 +73,7 @@ namespace SifflForums.Api.Controllers
             if (votingBoxId == 0)
                 return BadRequest("No votingbox specified");
 
-            _upvotesService.CastVote(HttpContext.User.Identity.Name, votingBoxId, true);
+            _upvotesService.CastVote(this.CurrentUsername, votingBoxId, true);
 
             return Ok();
         }
@@ -85,7 +85,7 @@ namespace SifflForums.Api.Controllers
             if (votingBoxId == 0)
                 return BadRequest("No votingbox specified");
 
-            _upvotesService.RemoveVotes(HttpContext.User.Identity.Name, votingBoxId);
+            _upvotesService.RemoveVotes(this.CurrentUsername, votingBoxId);
 
             return Ok(); 
         }

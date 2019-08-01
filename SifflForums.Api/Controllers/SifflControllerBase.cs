@@ -9,5 +9,7 @@ namespace SifflForums.Api.Controllers
 {
     public class SifflControllerBase : ControllerBase
     {
+        private string _currentUsername;
+        protected string CurrentUsername => _currentUsername ?? (_currentUsername = HttpContext.User.Identity.Name);
     }
 }

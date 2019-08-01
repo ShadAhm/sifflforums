@@ -24,19 +24,19 @@ namespace SifflForums.Api.Controllers
         [HttpGet(),AllowAnonymous,Authorize]
         public ActionResult<IEnumerable<CommentViewModel>> Get(int submissionId)
         {
-            return _service.GetBySubmissionId(HttpContext.User.Identity.Name, submissionId); 
+            return _service.GetBySubmissionId(this.CurrentUsername, submissionId); 
         }
 
         [HttpPost, Authorize]
         public ActionResult<CommentViewModel> Post([FromBody]CommentViewModel value)
         {
-            return _service.Insert(HttpContext.User.Identity.Name, value); 
+            return _service.Insert(this.CurrentUsername, value); 
         }
 
         [HttpPut, Authorize]
         public ActionResult<CommentViewModel> Put([FromBody]CommentViewModel value)
         {
-            return _service.Update(HttpContext.User.Identity.Name, value);
+            return _service.Update(this.CurrentUsername, value);
         }
 
         [HttpDelete("{id}"), Authorize]
@@ -51,7 +51,7 @@ namespace SifflForums.Api.Controllers
             if (votingBoxId == 0)
                 return BadRequest("No votingbox specified");
 
-            _upvotesService.CastVote(HttpContext.User.Identity.Name, votingBoxId, false);
+            _upvotesService.CastVote(this.CurrentUsername, votingBoxId, false);
 
             return Ok();
         }
@@ -62,7 +62,7 @@ namespace SifflForums.Api.Controllers
             if (votingBoxId == 0)
                 return BadRequest("No votingbox specified");
 
-            _upvotesService.CastVote(HttpContext.User.Identity.Name, votingBoxId, true);
+            _upvotesService.CastVote(this.CurrentUsername, votingBoxId, true);
 
             return Ok();
         }
@@ -74,7 +74,7 @@ namespace SifflForums.Api.Controllers
             if (votingBoxId == 0)
                 return BadRequest("No votingbox specified");
 
-            _upvotesService.RemoveVotes(HttpContext.User.Identity.Name, votingBoxId);
+            _upvotesService.RemoveVotes(this.CurrentUsername, votingBoxId);
 
             return Ok();
         }
