@@ -85,6 +85,12 @@ namespace SifflForums.Service
             var user = _usersService.GetByUsername(username);
             var entity = _dbContext.Comments.Find(input.CommentId);
 
+            if(entity.UserId != user.UserId)
+            {
+                // reject action
+                return null; 
+            }
+
             if(entity != null)
             {
                 entity.Text = input.Text;
