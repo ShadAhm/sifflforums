@@ -45,11 +45,11 @@ namespace SifflForums.Service
 
             if (!string.IsNullOrWhiteSpace(currentUsername))
             {
-                foreach (var item in vms)
+                foreach (var viewModel in vms)
                 {
-                    var entity = entities.SingleOrDefault(o => o.CommentId == item.CommentId);
+                    var entity = entities.SingleOrDefault(o => o.CommentId == viewModel.CommentId);
 
-                    item.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(o => o.User.Username == currentUsername)?.Weight ?? 0;
+                    viewModel.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(o => o.User.Username == currentUsername)?.Weight ?? 0;
                 }
             }
 
@@ -84,6 +84,12 @@ namespace SifflForums.Service
         {
             var user = _usersService.GetByUsername(username);
             var entity = _dbContext.Comments.Find(input.CommentId);
+
+            if(entity.UserId != user.UserId)
+            {
+                // reject action
+                return null; 
+            }
 
             if(entity != null)
             {
