@@ -25,7 +25,7 @@ namespace SifflForums.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SubmissionViewModel>> Get()
         {
-            return _service.GetAll(); 
+            return _service.GetAll(this.CurrentUsername); 
         }
 
         // GET api/values/5

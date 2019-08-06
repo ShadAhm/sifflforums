@@ -11,7 +11,7 @@ namespace SifflForums.Service
 {
     public interface ISubmissionsService
     {
-        List<SubmissionViewModel> GetAll();
+        List<SubmissionViewModel> GetAll(string currentUsername);
         SubmissionViewModel Insert(string username, SubmissionViewModel value);
         SubmissionViewModel GetById(string currentUsername, int id);
         SubmissionViewModel Update(string username, SubmissionViewModel input);
@@ -32,13 +32,32 @@ namespace SifflForums.Service
             _upvotesService = upvotesService;
         }
 
-        public List<SubmissionViewModel> GetAll()
+        public List<SubmissionViewModel> GetAll(string currentUsername)
         {
-            var comments = _dbContext.Submissions
+            var entities = _dbContext.Submissions
                 .Include(o => o.User)
+                .Include(o => o.VotingBox)
+                .ThenInclude(o => o.Upvotes)
+                .ThenInclude(o => o.User)
+                .AsEnumerable()
+                .Select(MapToSubmissionVm(currentUsername))
                 .ToList();
 
-            return _mapper.Map<List<SubmissionViewModel>>(comments);
+            return entities;
+        }
+
+        private Func<Submission, SubmissionViewModel> MapToSubmissionVm(string currentUsername)
+        {
+            return o =>
+            {
+                if (string.IsNullOrWhiteSpace(currentUsername))
+                    return _mapper.Map<Submission, SubmissionViewModel>(o);
+
+                var vm = _mapper.Map<Submission, SubmissionViewModel>(o);
+                vm.CurrentUserVoteWeight = o.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
+
+                return vm;
+            };
         }
 
         public SubmissionViewModel GetById(string currentUsername, int id)
