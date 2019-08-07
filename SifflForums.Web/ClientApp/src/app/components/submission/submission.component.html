@@ -25,6 +25,6 @@
 
   <div class="mt-4">
     <div class="form-group"><textarea class="form-control" [(ngModel)]="commentInput" rows="6" placeholder="Comment"></textarea></div>
-    <button class="btn btn-primary" (click)="postComment()">Submit</button>
+    <button class="btn btn-primary" (click)="postComment()" [attr.disabled]="disableSubmitButton == true ? true : null">Submit</button>
   </div>
 </ng-container>

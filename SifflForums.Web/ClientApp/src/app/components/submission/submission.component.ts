@@ -17,6 +17,7 @@ export class SubmissionComponent implements OnInit {
   commentInput: string;
   votePosition: number;
   upvotesCountOnScreen: number; 
+  disableSubmitButton: boolean; 
 
   constructor(private route: ActivatedRoute, private commentsService: CommentsService, private submissionsService: SubmissionsService) { }
 
@@ -47,17 +48,20 @@ export class SubmissionComponent implements OnInit {
       (error) => { console.error("Error happened", error) }
     );
   }
-
   postComment(): void {
+    this.disableSubmitButton = true; 
+
     var input = new CommentPost();
     input.text = this.commentInput;
     input.submissionId = this.submissionId;
 
     this.commentsService.postComment(input).subscribe(
       (response) => {
-        this.comments.push(response); 
+        this.comments.push(response);
+        this.commentInput = '';
+        this.disableSubmitButton = false;
       },
-      (error) => { console.error("Error happened", error) }
+      (error) => { console.error("Error happened", error); this.disableSubmitButton = false; }
     );
   }
 
