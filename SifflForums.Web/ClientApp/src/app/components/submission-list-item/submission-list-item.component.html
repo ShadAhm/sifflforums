@@ -1,9 +1,9 @@
 <div class="d-flex">
   <div class="p-1">
     <div class="d-flex flex-column align-items-center">
-      <button class="btn btn-sm btn-link">▲</button>
-      <small>{{model.upvotes}}</small>
-      <button class="btn btn-sm btn-link">▼</button>
+      <button [ngClass]="{'arrow-vote-active':votePosition > 0}" class="btn btn-sm btn-link arrow-vote" (click)="upvote()">▲</button>
+      <small>{{upvotesCountOnScreen}}</small>
+      <button [ngClass]="{'arrow-vote-active':votePosition < 0}" class="btn btn-sm btn-link arrow-vote" (click)="downvote()">▼</button>
     </div>
   </div>
   <div class="p-2">

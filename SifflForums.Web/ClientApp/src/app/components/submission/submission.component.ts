@@ -72,7 +72,6 @@ export class SubmissionComponent implements OnInit {
     }
 
     this.votePosition = 1;
-
     this.upvotesCountOnScreen = this.submission.upvotes - this.submission.currentUserVoteWeight + this.votePosition; 
 
     this.submissionsService.upvote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
