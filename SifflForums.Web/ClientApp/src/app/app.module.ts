@@ -13,6 +13,7 @@ import { SubmissionCreateComponent } from './components/submission-create/submis
 import { SubmissionComponent } from './components/submission/submission.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { CommentViewComponent } from './components/comment-view/comment-view.component';
+import { SubmissionListItemComponent } from './components/submission-list-item/submission-list-item.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CommentViewComponent } from './components/comment-view/comment-view.com
     SignupComponent,
     LoginComponent,
     DateAgoPipe,
-    CommentViewComponent
+    CommentViewComponent,
+    SubmissionListItemComponent
   ],
   imports: [
     BrowserModule,

@@ -2,17 +2,6 @@
   <p>There are no submissions at the moment.</p>
 </div>
 
-<div *ngFor="let submission of submissions" class="d-flex">
-  <div class="p-1">
-    <div class="d-flex flex-column align-items-center">
-      <button class="btn btn-sm btn-link">▲</button>
-      <small>{{submission.upvotes}}</small>
-      <button class="btn btn-sm btn-link">▼</button>
-    </div>
-  </div>
-  <div class="p-2">
-    <h5 class="submission-title"><a [routerLink]="['/submission', submission.submissionId]">{{submission.title}}</a></h5>
-    <small class="text-muted">Posted by {{submission.username}} on {{submission.createdAtUtc|dateAgo}}</small>
-    <p>{{submission.text}}</p>
-  </div>
+<div *ngFor="let submission of submissions">
+  <app-submission-list-item [model]="submission"></app-submission-list-item>
 </div>
