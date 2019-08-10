@@ -62,7 +62,7 @@ namespace SifflForums.Service
 
         public SubmissionViewModel GetById(string currentUsername, int id)
         {
-            var viewModel = _dbContext.Submissions
+            var vm = _dbContext.Submissions
                 .Include(o => o.User)
                 .Include(o => o.VotingBox)
                 .ThenInclude(o => o.Upvotes)
@@ -71,7 +71,7 @@ namespace SifflForums.Service
                 .Select(MapToSubmissionVm(currentUsername))
                 .SingleOrDefault(o => o.SubmissionId == id);
 
-            return viewModel;
+            return vm;
         }
 
         public SubmissionViewModel Insert(string username, SubmissionViewModel input)
