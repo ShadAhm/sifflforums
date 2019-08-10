@@ -62,21 +62,14 @@ namespace SifflForums.Service
 
         public SubmissionViewModel GetById(string currentUsername, int id)
         {
-            var entity = _dbContext.Submissions
+            var viewModel = _dbContext.Submissions
                 .Include(o => o.User)
                 .Include(o => o.VotingBox)
                 .ThenInclude(o => o.Upvotes)
                 .ThenInclude(o => o.User)
+                .AsEnumerable()
+                .Select(MapToSubmissionVm(currentUsername))
                 .SingleOrDefault(o => o.SubmissionId == id);
-
-            var viewModel = _mapper.Map<SubmissionViewModel>(entity);
-
-            int userVoteWeight = 0;
-            if (!string.IsNullOrWhiteSpace(currentUsername))
-            {
-                userVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(o => o.User.Username == currentUsername)?.Weight ?? 0;
-            }
-            viewModel.CurrentUserVoteWeight = userVoteWeight; 
 
             return viewModel;
         }
