@@ -5,7 +5,7 @@ import { SubmissionsService } from '../../services/submissions.service';
 @Component({
   selector: 'app-submission-list-item',
   templateUrl: './submission-list-item.component.html',
-  styles: []
+  styleUrls: ['./submission-list-item.component.scss']
 })
 export class SubmissionListItemComponent implements OnInit {
   @Input() model: Submission;
