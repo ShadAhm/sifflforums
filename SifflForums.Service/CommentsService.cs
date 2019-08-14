@@ -11,9 +11,9 @@ namespace SifflForums.Service
 {
     public interface ICommentsService
     {
-        List<CommentViewModel> GetBySubmissionId(string currentUsername, int submissionId);
-        CommentViewModel Insert(string username, CommentViewModel input);
-        CommentViewModel Update(string username, CommentViewModel input);
+        List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId);
+        CommentModel Insert(string username, CommentModel input);
+        CommentModel Update(string username, CommentModel input);
     }
 
     public class CommentsService : ICommentsService 
@@ -31,7 +31,7 @@ namespace SifflForums.Service
             this._upvotesService = upvotesService;
         }
 
-        public List<CommentViewModel> GetBySubmissionId(string currentUsername, int submissionId)
+        public List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId)
         {
             var entities = _dbContext.Comments
                 .Include(c => c.User)
@@ -41,7 +41,7 @@ namespace SifflForums.Service
                 .Where(c => c.SubmissionId == submissionId)
                 .ToList();
 
-            var vms = _mapper.Map<List<CommentViewModel>>(entities);
+            var vms = _mapper.Map<List<CommentModel>>(entities);
 
             if (!string.IsNullOrWhiteSpace(currentUsername))
             {
@@ -56,7 +56,7 @@ namespace SifflForums.Service
             return vms;
         }
 
-        public CommentViewModel Insert(string username, CommentViewModel input)
+        public CommentModel Insert(string username, CommentModel input)
         {
             var user = _usersService.GetByUsername(username);
 
@@ -77,10 +77,10 @@ namespace SifflForums.Service
 
             _upvotesService.CastVote(user.Username, entity.VotingBox.VotingBoxId, false);
 
-            return _mapper.Map<CommentViewModel>(entity); 
+            return _mapper.Map<CommentModel>(entity); 
         }
 
-        public CommentViewModel Update(string username, CommentViewModel input)
+        public CommentModel Update(string username, CommentModel input)
         {
             var user = _usersService.GetByUsername(username);
             var entity = _dbContext.Comments.Find(input.CommentId);
@@ -100,7 +100,7 @@ namespace SifflForums.Service
                 _dbContext.Comments.Update(entity);
                 _dbContext.SaveChanges(); 
 
-                return _mapper.Map<CommentViewModel>(entity);
+                return _mapper.Map<CommentModel>(entity);
             }
 
             return null; 

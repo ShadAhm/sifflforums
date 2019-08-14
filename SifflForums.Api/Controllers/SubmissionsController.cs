@@ -23,28 +23,28 @@ namespace SifflForums.Api.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<SubmissionViewModel>> Get()
+        public ActionResult<IEnumerable<SubmissionModel>> Get()
         {
             return _service.GetAll(this.CurrentUsername); 
         }
 
         // GET api/values/5
         [HttpGet("{id}"),AllowAnonymous,Authorize]
-        public ActionResult<SubmissionViewModel> Get(int id)
+        public ActionResult<SubmissionModel> Get(int id)
         {
             return _service.GetById(this.CurrentUsername, id);
         }
 
         // POST api/values
         [HttpPost,Authorize]
-        public ActionResult<SubmissionViewModel> Post([FromBody]SubmissionViewModel value)
+        public ActionResult<SubmissionModel> Post([FromBody]SubmissionModel value)
         {
             return _service.Insert(this.CurrentUsername, value);
         }
          
         // PUT api/values
         [HttpPut, Authorize]
-        public ActionResult<SubmissionViewModel> Put([FromBody]SubmissionViewModel value)
+        public ActionResult<SubmissionModel> Put([FromBody]SubmissionModel value)
         {
             return _service.Update(this.CurrentUsername, value);
         }

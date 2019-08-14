@@ -11,10 +11,10 @@ namespace SifflForums.Service
 {
     public interface ISubmissionsService
     {
-        List<SubmissionViewModel> GetAll(string currentUsername);
-        SubmissionViewModel Insert(string username, SubmissionViewModel value);
-        SubmissionViewModel GetById(string currentUsername, int id);
-        SubmissionViewModel Update(string username, SubmissionViewModel input);
+        List<SubmissionModel> GetAll(string currentUsername);
+        SubmissionModel Insert(string username, SubmissionModel value);
+        SubmissionModel GetById(string currentUsername, int id);
+        SubmissionModel Update(string username, SubmissionModel input);
     }
 
     public class SubmissionsService : ISubmissionsService
@@ -32,7 +32,7 @@ namespace SifflForums.Service
             _upvotesService = upvotesService;
         }
 
-        public List<SubmissionViewModel> GetAll(string currentUsername)
+        public List<SubmissionModel> GetAll(string currentUsername)
         {
             var entities = _dbContext.Submissions
                 .Include(o => o.User)
@@ -46,21 +46,21 @@ namespace SifflForums.Service
             return entities;
         }
 
-        private Func<Submission, SubmissionViewModel> MapToSubmissionVm(string currentUsername)
+        private Func<Submission, SubmissionModel> MapToSubmissionVm(string currentUsername)
         {
             return o =>
             {
                 if (string.IsNullOrWhiteSpace(currentUsername))
-                    return _mapper.Map<Submission, SubmissionViewModel>(o);
+                    return _mapper.Map<Submission, SubmissionModel>(o);
 
-                var vm = _mapper.Map<Submission, SubmissionViewModel>(o);
+                var vm = _mapper.Map<Submission, SubmissionModel>(o);
                 vm.CurrentUserVoteWeight = o.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
 
                 return vm;
             };
         }
 
-        public SubmissionViewModel GetById(string currentUsername, int id)
+        public SubmissionModel GetById(string currentUsername, int id)
         {
             var vm = _dbContext.Submissions
                 .Include(o => o.User)
@@ -74,7 +74,7 @@ namespace SifflForums.Service
             return vm;
         }
 
-        public SubmissionViewModel Insert(string username, SubmissionViewModel input)
+        public SubmissionModel Insert(string username, SubmissionModel input)
         {
             var user = _usersService.GetByUsername(username);
 
@@ -94,10 +94,10 @@ namespace SifflForums.Service
             // automatic upvote from the creator of the thread
             _upvotesService.CastVote(username, entity.VotingBox.VotingBoxId, false); 
 
-            return _mapper.Map<SubmissionViewModel>(entity);
+            return _mapper.Map<SubmissionModel>(entity);
         }
 
-        public SubmissionViewModel Update(string username, SubmissionViewModel input)
+        public SubmissionModel Update(string username, SubmissionModel input)
         {
             var user = _usersService.GetByUsername(username);
             var submission = _dbContext.Submissions.Find(input.SubmissionId);
@@ -113,7 +113,7 @@ namespace SifflForums.Service
                 _dbContext.Submissions.Update(entity);
                 _dbContext.SaveChanges();
 
-                return _mapper.Map<SubmissionViewModel>(entity);
+                return _mapper.Map<SubmissionModel>(entity);
             }
             return null; 
         }

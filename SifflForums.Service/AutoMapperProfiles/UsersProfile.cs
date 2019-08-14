@@ -12,7 +12,7 @@ namespace SifflForums.AutoMapperProfiles
     {
         public UsersProfile()
         {
-            CreateMap<User, UserViewModel>();
+            CreateMap<User, UserModel>();
         }
     }
 }

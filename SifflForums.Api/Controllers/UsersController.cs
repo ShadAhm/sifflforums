@@ -20,7 +20,7 @@ namespace SifflForums.Api.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<UserViewModel>> Get()
+        public ActionResult<IEnumerable<UserModel>> Get()
         {
             var result = _service.GetAll();
 
@@ -28,7 +28,7 @@ namespace SifflForums.Api.Controllers
         }
 
         [HttpGet("{username}")]
-        public ActionResult<UserViewModel> Get(string username)
+        public ActionResult<UserModel> Get(string username)
         {
             return _service.GetByUsername(username);
         }

@@ -19,8 +19,8 @@ namespace SifflForums.Service
 {
     public interface IAuthService
     {
-        RequestResult<TokenModel> SignUp(SignUpViewModel user);
-        RequestResult<TokenModel> Login(LoginViewModel input);
+        RequestResult<TokenModel> SignUp(SignUpModel user);
+        RequestResult<TokenModel> Login(LoginModel input);
         IAuthService SetServiceApiKey(string key); 
     }
 
@@ -42,7 +42,7 @@ namespace SifflForums.Service
             return this; 
         }
 
-        public RequestResult<TokenModel> Login(LoginViewModel input)
+        public RequestResult<TokenModel> Login(LoginModel input)
         {
             if (string.IsNullOrWhiteSpace(this._serviceApiKey))
                 throw new Exception("Expected API key"); 
@@ -62,7 +62,7 @@ namespace SifflForums.Service
             return RequestResult<TokenModel>.Success(token);
         }
 
-        public RequestResult<TokenModel> SignUp(SignUpViewModel user)
+        public RequestResult<TokenModel> SignUp(SignUpModel user)
         {
             if (string.IsNullOrWhiteSpace(this._serviceApiKey))
                 throw new Exception("Expected API key");

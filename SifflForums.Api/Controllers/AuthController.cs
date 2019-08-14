@@ -20,7 +20,7 @@ namespace SifflForums.Api.Controllers
         }
 
         [HttpPost, Route("signup")]
-        public ActionResult<TokenModel> SignUp([FromBody]SignUpViewModel user)
+        public ActionResult<TokenModel> SignUp([FromBody]SignUpModel user)
         {
             var result = _authService
                 .SetServiceApiKey(_configuration["ServiceApiKey"])
@@ -33,7 +33,7 @@ namespace SifflForums.Api.Controllers
         }
 
         [HttpPost, Route("login")]
-        public IActionResult Login([FromBody]LoginViewModel user)
+        public IActionResult Login([FromBody]LoginModel user)
         {
             var result = _authService
                 .SetServiceApiKey(_configuration["ServiceApiKey"])

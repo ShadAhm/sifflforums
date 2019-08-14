@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SifflForums.Service.Validators
 {
-    public class SignUpValidator : AbstractValidator<SignUpViewModel>
+    public class SignUpValidator : AbstractValidator<SignUpModel>
     {
         SifflContext _dbContext;
 

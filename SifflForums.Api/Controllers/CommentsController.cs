@@ -22,19 +22,19 @@ namespace SifflForums.Api.Controllers
 
         // GET api/values
         [HttpGet(),AllowAnonymous,Authorize]
-        public ActionResult<IEnumerable<CommentViewModel>> Get(int submissionId)
+        public ActionResult<IEnumerable<CommentModel>> Get(int submissionId)
         {
             return _service.GetBySubmissionId(this.CurrentUsername, submissionId); 
         }
 
         [HttpPost, Authorize]
-        public ActionResult<CommentViewModel> Post([FromBody]CommentViewModel value)
+        public ActionResult<CommentModel> Post([FromBody]CommentModel value)
         {
             return _service.Insert(this.CurrentUsername, value); 
         }
 
         [HttpPut, Authorize]
-        public ActionResult<CommentViewModel> Put([FromBody]CommentViewModel value)
+        public ActionResult<CommentModel> Put([FromBody]CommentModel value)
         {
             return _service.Update(this.CurrentUsername, value);
         }
