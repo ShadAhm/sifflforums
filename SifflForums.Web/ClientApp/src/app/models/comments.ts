@@ -14,6 +14,7 @@ export class Submission {
   public text: string;
   public username: string;
   public comments: CommentPost[];
+  public commentsCount: number; 
   public upvotes: number; 
   public currentUserVoteWeight: number;
   public votingBoxId: number; 

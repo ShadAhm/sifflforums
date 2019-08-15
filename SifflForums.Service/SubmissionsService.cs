@@ -36,10 +36,10 @@ namespace SifflForums.Service
         {
             var entities = _dbContext.Submissions
                 .Include(o => o.User)
+                .Include(o => o.Comments)
                 .Include(o => o.VotingBox)
                 .ThenInclude(o => o.Upvotes)
                 .ThenInclude(o => o.User)
-                .AsEnumerable()
                 .Select(MapToSubmissionVm(currentUsername))
                 .ToList();
 
@@ -50,10 +50,11 @@ namespace SifflForums.Service
         {
             return o =>
             {
-                if (string.IsNullOrWhiteSpace(currentUsername))
-                    return _mapper.Map<Submission, SubmissionModel>(o);
-
                 var vm = _mapper.Map<Submission, SubmissionModel>(o);
+
+                if (string.IsNullOrWhiteSpace(currentUsername))
+                    return vm; 
+
                 vm.CurrentUserVoteWeight = o.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
 
                 return vm;

@@ -12,10 +12,10 @@ namespace SifflForums.Models
         public string Text { get; set; }
         public int UserId { get; set; }
         public string Username { get; set; }
-        public IEnumerable<CommentModel> Comments { get; set; }
         public DateTime CreatedAtUtc { get; set; }
         public int CurrentUserVoteWeight { get; set; }
         public int Upvotes { get; set; }
         public int VotingBoxId { get; set; }
+        public int CommentsCount { get; set; }
     }
 }
