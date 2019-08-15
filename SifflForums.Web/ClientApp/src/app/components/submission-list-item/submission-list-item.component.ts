@@ -27,7 +27,7 @@ export class SubmissionListItemComponent implements OnInit {
     }
 
     this.votePosition = 1;
-    this.upvotesCountOnScreen = this.model.upvotes - this.model.currentUserVoteWeight + this.votePosition;
+    this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
     this.submissionsService.upvote(this.model.submissionId, this.model.votingBoxId).subscribe(
       (response) => { },
@@ -42,7 +42,7 @@ export class SubmissionListItemComponent implements OnInit {
     }
 
     this.votePosition = -1;
-    this.upvotesCountOnScreen = this.model.upvotes - this.model.currentUserVoteWeight + this.votePosition;
+    this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
     this.submissionsService.downvote(this.model.submissionId, this.model.votingBoxId).subscribe(
       (response) => { },
@@ -52,7 +52,7 @@ export class SubmissionListItemComponent implements OnInit {
 
   removeVote(): void {
     this.votePosition = 0;
-    this.upvotesCountOnScreen = this.model.upvotes;
+    this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
     this.submissionsService.removevote(this.model.submissionId, this.model.votingBoxId).subscribe(
       (response) => { },
