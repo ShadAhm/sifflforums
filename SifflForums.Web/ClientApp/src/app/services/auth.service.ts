@@ -10,6 +10,8 @@ import { BaseService } from './base.service';
   providedIn: 'root'
 })
 export class AuthService extends BaseService {
+  username: string; 
+
   constructor(private httpClient: HttpClientService) { super(); }
 
   signUp(input: SignupModel, successCallback: Function, errorCallback: Function): void {
@@ -43,5 +45,16 @@ export class AuthService extends BaseService {
     }
 
     return false;
+  }
+
+  getUsername(): string {
+    let token = localStorage.getItem('id_token');
+
+    if (token) {
+      let tokenParsed = JSON.parse(atob(token.split('.')[1]));
+      return tokenParsed['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    }
+
+    return null;
   }
 }

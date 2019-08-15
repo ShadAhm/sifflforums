@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   isAuthenticated: boolean; 
+  loggedInUsername: string; 
 
   constructor(private router: Router, private authService: AuthService) {
     router.events.subscribe((val) => {
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
 
   checkAuthenticated(): void {
     this.isAuthenticated = this.authService.isSignedIn();
+    this.loggedInUsername = this.authService.getUsername();
   }
 
   signOut(): void {
