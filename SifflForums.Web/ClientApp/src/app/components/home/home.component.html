@@ -2,6 +2,11 @@
   <p>There are no submissions at the moment.</p>
 </div>
 
+<div  class="my-1">
+  <div class="d-flex justify-content-end">
+    <a class="btn btn-sm btn-primary" routerLink="/new-submission">+New Thread</a>
+  </div>
+</div>
 <div *ngFor="let submission of submissions">
   <app-submission-list-item [model]="submission"></app-submission-list-item>
 </div>
