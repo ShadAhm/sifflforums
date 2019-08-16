@@ -10,9 +10,10 @@
 <div *ngFor="let submission of submissions.results">
   <app-submission-list-item [model]="submission"></app-submission-list-item>
 </div>
-<div class="my-1">
-  <div class="d-flex">
-    <button class="btn btn-sm btn-default" [hidden]="!canNavigatePrevious" (click)="navigatePrevious()">🡸</button>
-    <button class="btn btn-sm btn-default ml-auto" [hidden]="!canNavigateNext" (click)="navigateNext()">🡺</button>
+<div class="mt-1 mb-4">
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-sm btn-default" [style.visibility]="canNavigatePrevious ? 'visible' : 'hidden'" (click)="navigatePrevious()">🡸</button>
+    <small>Page {{pageNumber}} of {{submissions.totalPages}}</small>
+    <button class="btn btn-sm btn-default" [style.visibility]="canNavigateNext ? 'visible' : 'hidden'" (click)="navigateNext()">🡺</button>
   </div>
 </div>
