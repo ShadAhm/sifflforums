@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   canNavigateNext: boolean;
   canNavigatePrevious: boolean;
   pageNumber: number = 1;
-  pageSize: number = 20; 
+  pageSize: number = 10; 
 
   constructor(private submissionsService: SubmissionsService) { }
 
