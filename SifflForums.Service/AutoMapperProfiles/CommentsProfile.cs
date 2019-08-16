@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SifflForums.Data.Entities;
-using SifflForums.Models;
+using SifflForums.Models.Dto;
 using System.Linq;
 
 namespace SifflForums.AutoMapperProfiles

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using SifflForums.Models.Auth;
 using SifflForums.Data;
+using SifflForums.Models.Dto;
 using System.Linq;
 
 namespace SifflForums.Service.Validators

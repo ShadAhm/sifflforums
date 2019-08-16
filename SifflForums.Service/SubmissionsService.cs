@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SifflForums.Models;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
+using SifflForums.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +40,8 @@ namespace SifflForums.Service
                 .Include(o => o.VotingBox)
                 .ThenInclude(o => o.Upvotes)
                 .ThenInclude(o => o.User)
+                .Skip(0)
+                .Take(2)
                 .Select(MapToSubmissionVm(currentUsername))
                 .ToList();
 
@@ -53,7 +55,7 @@ namespace SifflForums.Service
                 var vm = _mapper.Map<Submission, SubmissionModel>(o);
 
                 if (string.IsNullOrWhiteSpace(currentUsername))
-                    return vm; 
+                    return vm;
 
                 vm.CurrentUserVoteWeight = o.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
 
@@ -87,13 +89,13 @@ namespace SifflForums.Service
             entity.CreatedBy = user.UserId;
             entity.ModifiedAtUtc = DateTime.UtcNow;
             entity.ModifiedBy = user.UserId;
-            entity.VotingBox = new VotingBox(); 
+            entity.VotingBox = new VotingBox();
 
             _dbContext.Submissions.Add(entity);
             _dbContext.SaveChanges();
 
             // automatic upvote from the creator of the thread
-            _upvotesService.CastVote(username, entity.VotingBox.VotingBoxId, false); 
+            _upvotesService.CastVote(username, entity.VotingBox.VotingBoxId, false);
 
             return _mapper.Map<SubmissionModel>(entity);
         }
@@ -116,7 +118,7 @@ namespace SifflForums.Service
 
                 return _mapper.Map<SubmissionModel>(entity);
             }
-            return null; 
+            return null;
         }
     }
 }

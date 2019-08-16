@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SifflForums.Models.Auth
+namespace SifflForums.Models.Dto
 {
     public class TokenModel
     {

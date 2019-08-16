@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Configuration;
+using FluentValidation;
 using Microsoft.IdentityModel.Tokens;
-using SifflForums.Models;
-using SifflForums.Models.Auth;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
+using SifflForums.Models;
+using SifflForums.Models.Dto;
+using SifflForums.Service.Validators;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,8 +13,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using FluentValidation;
-using SifflForums.Service.Validators;
 
 namespace SifflForums.Service
 {
@@ -21,7 +20,7 @@ namespace SifflForums.Service
     {
         RequestResult<TokenModel> SignUp(SignUpModel user);
         RequestResult<TokenModel> Login(LoginModel input);
-        IAuthService SetServiceApiKey(string key); 
+        IAuthService SetServiceApiKey(string key);
     }
 
     public class AuthService : IAuthService
@@ -39,22 +38,22 @@ namespace SifflForums.Service
         public IAuthService SetServiceApiKey(string key)
         {
             this._serviceApiKey = key;
-            return this; 
+            return this;
         }
 
         public RequestResult<TokenModel> Login(LoginModel input)
         {
             if (string.IsNullOrWhiteSpace(this._serviceApiKey))
-                throw new Exception("Expected API key"); 
+                throw new Exception("Expected API key");
 
             User user = _dbContext.Users.Where(o => o.Username == input.Username).SingleOrDefault();
 
             byte[] salt = Convert.FromBase64String(user.Salt);
             string hash = HashPasswordIntoBase64(input.Password, salt);
 
-            if(hash != user.Password)
+            if (hash != user.Password)
             {
-                return RequestResult<TokenModel>.Fail("Incorrect password"); 
+                return RequestResult<TokenModel>.Fail("Incorrect password");
             }
 
             TokenModel token = IssueToken(input.Username);
@@ -78,7 +77,7 @@ namespace SifflForums.Service
             User userEntity = new User();
             userEntity.Username = user.Username;
             userEntity.Email = user.Email;
-            userEntity.Password = HashPasswordIntoBase64(user.Password, salt); 
+            userEntity.Password = HashPasswordIntoBase64(user.Password, salt);
             userEntity.Salt = Convert.ToBase64String(salt);
             userEntity.RegisteredAtUtc = DateTime.UtcNow;
             userEntity.LastPasswordResetUtc = DateTime.UtcNow;
@@ -86,7 +85,7 @@ namespace SifflForums.Service
             _dbContext.Add(userEntity);
             _dbContext.SaveChanges();
 
-            var token = IssueToken(userEntity.Username); 
+            var token = IssueToken(userEntity.Username);
 
             return RequestResult<TokenModel>.Success(token);
         }
@@ -101,7 +100,7 @@ namespace SifflForums.Service
 
         public bool ValidateToken(TokenModel token)
         {
-            return true; 
+            return true;
         }
 
         private TokenModel IssueToken(string username)

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SifflForums.Data.Entities;
-using SifflForums.Models;
-using System.Linq; 
+using SifflForums.Models.Dto;
+using System.Linq;
 
 namespace SifflForums.AutoMapperProfiles
 {

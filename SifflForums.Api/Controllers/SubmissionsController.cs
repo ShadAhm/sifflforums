@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SifflForums.Data.Entities;
-using SifflForums.Models;
+using SifflForums.Models.Dto;
 using SifflForums.Service;
 using System.Collections.Generic;
 
@@ -13,7 +12,7 @@ namespace SifflForums.Api.Controllers
     public class SubmissionsController : SifflControllerBase
     {
         ISubmissionsService _service;
-        IUpvotesService _upvotesService; 
+        IUpvotesService _upvotesService;
 
         public SubmissionsController(ISubmissionsService service, IUpvotesService upvotesService)
         {
@@ -25,23 +24,23 @@ namespace SifflForums.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SubmissionModel>> Get()
         {
-            return _service.GetAll(this.CurrentUsername); 
+            return _service.GetAll(this.CurrentUsername);
         }
 
         // GET api/values/5
-        [HttpGet("{id}"),AllowAnonymous,Authorize]
+        [HttpGet("{id}"), AllowAnonymous, Authorize]
         public ActionResult<SubmissionModel> Get(int id)
         {
             return _service.GetById(this.CurrentUsername, id);
         }
 
         // POST api/values
-        [HttpPost,Authorize]
+        [HttpPost, Authorize]
         public ActionResult<SubmissionModel> Post([FromBody]SubmissionModel value)
         {
             return _service.Insert(this.CurrentUsername, value);
         }
-         
+
         // PUT api/values
         [HttpPut, Authorize]
         public ActionResult<SubmissionModel> Put([FromBody]SubmissionModel value)
@@ -53,14 +52,14 @@ namespace SifflForums.Api.Controllers
         [HttpDelete("{id}"), Authorize]
         public ActionResult Delete(int id)
         {
-            return StatusCode(StatusCodes.Status403Forbidden); 
+            return StatusCode(StatusCodes.Status403Forbidden);
         }
 
         [HttpPut("{id}/Upvote"), Authorize]
         public ActionResult Upvote(int id, [FromQuery]int votingBoxId)
         {
             if (votingBoxId == 0)
-                return BadRequest("No votingbox specified"); 
+                return BadRequest("No votingbox specified");
 
             _upvotesService.CastVote(this.CurrentUsername, votingBoxId, false);
 
@@ -87,7 +86,7 @@ namespace SifflForums.Api.Controllers
 
             _upvotesService.RemoveVotes(this.CurrentUsername, votingBoxId);
 
-            return Ok(); 
+            return Ok();
         }
     }
 }

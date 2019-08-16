@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SifflForums.Models;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
+using SifflForums.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using SifflForums.Models.Auth;
+using SifflForums.Models.Dto;
 using SifflForums.Service;
 
 namespace SifflForums.Api.Controllers
@@ -16,7 +16,7 @@ namespace SifflForums.Api.Controllers
         public AuthController(IConfiguration configuration, IAuthService authService)
         {
             this._authService = authService;
-            this._configuration = configuration; 
+            this._configuration = configuration;
         }
 
         [HttpPost, Route("signup")]
@@ -26,10 +26,10 @@ namespace SifflForums.Api.Controllers
                 .SetServiceApiKey(_configuration["ServiceApiKey"])
                 .SignUp(user);
 
-            if(result.IsSuccess)
+            if (result.IsSuccess)
                 return Ok(result.Data);
 
-            return BadRequest(result.ErrorMessage); 
+            return BadRequest(result.ErrorMessage);
         }
 
         [HttpPost, Route("login")]

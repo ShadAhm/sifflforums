@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SifflForums.Models;
+using SifflForums.Models.Dto;
 using SifflForums.Service;
 using System.Collections.Generic;
 
@@ -21,16 +21,16 @@ namespace SifflForums.Api.Controllers
         }
 
         // GET api/values
-        [HttpGet(),AllowAnonymous,Authorize]
+        [HttpGet(), AllowAnonymous, Authorize]
         public ActionResult<IEnumerable<CommentModel>> Get(int submissionId)
         {
-            return _service.GetBySubmissionId(this.CurrentUsername, submissionId); 
+            return _service.GetBySubmissionId(this.CurrentUsername, submissionId);
         }
 
         [HttpPost, Authorize]
         public ActionResult<CommentModel> Post([FromBody]CommentModel value)
         {
-            return _service.Insert(this.CurrentUsername, value); 
+            return _service.Insert(this.CurrentUsername, value);
         }
 
         [HttpPut, Authorize]
