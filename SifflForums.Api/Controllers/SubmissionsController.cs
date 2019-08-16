@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SifflForums.Models.Dto;
 using SifflForums.Service;
+using SifflForums.Service.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SifflForums.Api.Controllers
 {
@@ -22,9 +24,9 @@ namespace SifflForums.Api.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<SubmissionModel>> Get()
+        public async Task<ActionResult<PagedResult<SubmissionModel>>> Get(int pageIndex, int pageSize)
         {
-            return _service.GetAll(this.CurrentUsername);
+            return await _service.GetPagedAsync(this.CurrentUsername, pageIndex, pageSize);
         }
 
         // GET api/values/5

@@ -27,11 +27,13 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\models\auth.ts" />
     <None Remove="ClientApp\src\app\models\comments.ts" />
+    <None Remove="ClientApp\src\app\models\pagination.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\models\auth.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\comments.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\pagination.ts" />
   </ItemGroup>
 
   <ItemGroup>

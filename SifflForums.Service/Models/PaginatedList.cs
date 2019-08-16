@@ -41,5 +41,30 @@ namespace SifflForums.Service.Models
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
+
+        public static async Task<PaginatedList<TResult>> CreateAsync<TResult>(IQueryable<T> source, Func<T,TResult> selectExpression, int pageIndex, int pageSize)
+        {
+            var count = await source.CountAsync();
+            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            var itemsVm = items.Select(selectExpression).ToList();
+            return new PaginatedList<TResult>(itemsVm, count, pageIndex, pageSize);
+        }
+
+        public PagedResult<T> ToPagedResult()
+        {
+            return new PagedResult<T>()
+            {
+                PageIndex = this.PageIndex,
+                TotalPages = this.TotalPages,
+                Results = this
+            };
+        }
+    }
+
+    public class PagedResult<T>
+    {
+        public int PageIndex { get; set; }
+        public int TotalPages { get; set; }
+        public IEnumerable<T> Results { get; set; }
     }
 }

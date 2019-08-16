@@ -4,6 +4,7 @@ import { map } from "rxjs/operators";
 import { Submission } from '../models/comments';
 import { HttpClientService } from '../util-services/http-client.service';
 import { BaseService } from './base.service';
+import { PaginatedResult } from '../models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class SubmissionsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  getSubmissions(): Observable<Submission[]> {
-    return this.httpClient.get<Submission[]>(`${this.apiRoot}api/submissions`)
+  getSubmissions(pageIndex: number, pageSize: number): Observable<PaginatedResult<Submission>> {
+    return this.httpClient.get<PaginatedResult<Submission>>(`${this.apiRoot}api/submissions?pageIndex=${pageIndex}&pageSize=${pageSize}`)
       .pipe(map(res => res));
   }
 

@@ -3,15 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
 using SifflForums.Models.Dto;
+using SifflForums.Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SifflForums.Service
 {
     public interface ISubmissionsService
     {
-        List<SubmissionModel> GetAll(string currentUsername);
+        Task<PagedResult<SubmissionModel>> GetPagedAsync(string currentUsername, int pageIndex, int pageSize);
         SubmissionModel Insert(string username, SubmissionModel value);
         SubmissionModel GetById(string currentUsername, int id);
         SubmissionModel Update(string username, SubmissionModel input);
@@ -32,20 +34,20 @@ namespace SifflForums.Service
             _upvotesService = upvotesService;
         }
 
-        public List<SubmissionModel> GetAll(string currentUsername)
+        public async Task<PagedResult<SubmissionModel>> GetPagedAsync(string currentUsername, int pageIndex, int pageSize)
         {
-            var entities = _dbContext.Submissions
+            var queryable = _dbContext.Submissions
                 .Include(o => o.User)
                 .Include(o => o.Comments)
                 .Include(o => o.VotingBox)
                 .ThenInclude(o => o.Upvotes)
                 .ThenInclude(o => o.User)
-                .Skip(0)
-                .Take(2)
-                .Select(MapToSubmissionVm(currentUsername))
-                .ToList();
+                .OrderByDescending(o => o.CreatedAtUtc);
 
-            return entities;
+            var paginatedList = await PaginatedList<Submission>
+                .CreateAsync<SubmissionModel>(queryable, MapToSubmissionVm(currentUsername), pageIndex, pageSize);
+
+            return paginatedList.ToPagedResult();
         }
 
         private Func<Submission, SubmissionModel> MapToSubmissionVm(string currentUsername)
