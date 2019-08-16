@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
   canNavigateNext: boolean;
   canNavigatePrevious: boolean;
   pageNumber: number = 1;
-  pageSize: number = 7; 
+  pageSize: number = 3;
+  isEditingPageNumber: boolean; 
 
   constructor(private submissionsService: SubmissionsService) { }
 
@@ -42,5 +43,19 @@ export class HomeComponent implements OnInit {
 
   navigatePrevious(): void {
     this.getSubmissions(--this.pageNumber, this.pageSize);
+  }
+
+  navigateTo(e): void {
+    var navigateToPageNumber = e.currentTarget.valueAsNumber;
+
+    if (navigateToPageNumber < 1 || navigateToPageNumber > this.submissions.totalPages) {
+      alert('Sorry we can\'t do that');
+      this.isEditingPageNumber = false;
+      return; 
+    }
+
+    this.pageNumber = navigateToPageNumber; 
+    this.getSubmissions(this.pageNumber, this.pageSize);
+    this.isEditingPageNumber = false;
   }
 }
