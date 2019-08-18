@@ -13,7 +13,7 @@ namespace SifflForums.Service
 {
     public interface ISubmissionsService
     {
-        Task<PagedResult<SubmissionModel>> GetPagedAsync(string currentUsername, int pageIndex, int pageSize);
+        Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int pageIndex, int pageSize);
         SubmissionModel Insert(string username, SubmissionModel value);
         SubmissionModel GetById(string currentUsername, int id);
         SubmissionModel Update(string username, SubmissionModel input);
@@ -34,7 +34,7 @@ namespace SifflForums.Service
             _upvotesService = upvotesService;
         }
 
-        public async Task<PagedResult<SubmissionModel>> GetPagedAsync(string currentUsername, int pageIndex, int pageSize)
+        public async Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int pageIndex, int pageSize)
         {
             var queryable = _dbContext.Submissions
                 .Include(o => o.User)

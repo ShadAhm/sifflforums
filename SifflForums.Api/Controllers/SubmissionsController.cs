@@ -24,7 +24,7 @@ namespace SifflForums.Api.Controllers
 
         // GET api/values
         [HttpGet]
-        public async Task<ActionResult<PagedResult<SubmissionModel>>> Get(int pageIndex, int pageSize)
+        public async Task<ActionResult<PaginatedListResult<SubmissionModel>>> Get(int pageIndex, int pageSize)
         {
             return await _service.GetPagedAsync(this.CurrentUsername, pageIndex, pageSize);
         }
