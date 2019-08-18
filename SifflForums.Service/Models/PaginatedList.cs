@@ -50,21 +50,14 @@ namespace SifflForums.Service.Models
             return new PaginatedList<TResult>(itemsVm, count, pageIndex, pageSize);
         }
 
-        public PagedResult<T> ToPagedResult()
+        public PaginatedListResult<T> ToPagedResult()
         {
-            return new PagedResult<T>()
+            return new PaginatedListResult<T>()
             {
                 PageIndex = this.PageIndex,
                 TotalPages = this.TotalPages,
                 Results = this
             };
         }
-    }
-
-    public class PagedResult<T>
-    {
-        public int PageIndex { get; set; }
-        public int TotalPages { get; set; }
-        public IEnumerable<T> Results { get; set; }
     }
 }
