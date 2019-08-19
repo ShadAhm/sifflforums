@@ -19,6 +19,10 @@
 
   <hr />
   <h6>Comments</h6>
+  <div *ngIf="!comments || comments.length == 0" class="text-muted">
+    No comments yet.
+  </div>
+
   <div *ngFor="let comment of comments">
     <app-comment-view [model]="comment" (quoted)="onCommentQuoted(comment)"></app-comment-view>
   </div>
