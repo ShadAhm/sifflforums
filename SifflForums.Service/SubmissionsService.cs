@@ -50,7 +50,7 @@ namespace SifflForums.Service
                     queryable = queryable.OrderByDescending(o => o.CreatedAtUtc);
                     break;
                 case SortType.Top:
-                    queryable = queryable.OrderByDescending(o => o.VotingBox.Upvotes.Count);
+                    queryable = queryable.OrderByDescending(o => o.VotingBox.Upvotes.Sum(l => l.Weight));
                     break;
             }
 
