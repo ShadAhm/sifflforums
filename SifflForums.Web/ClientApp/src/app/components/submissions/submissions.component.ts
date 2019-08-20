@@ -37,7 +37,7 @@ export class SubmissionsComponent implements OnInit {
   }
 
   getSubmissions(selectedSorter: string, pageNumber: number, pageSize: number): void {
-    this.submissionsService.getSubmissions(selectedSorter, pageNumber, pageSize).subscribe(
+    this.submissionsService.getSubmissions(this.forumSectionId, selectedSorter, pageNumber, pageSize).subscribe(
       (response: PaginatedResult<Submission>) => {
         this.submissions = response;
         this.bindPageNumbers();

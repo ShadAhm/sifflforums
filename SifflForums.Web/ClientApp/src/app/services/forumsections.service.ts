@@ -12,7 +12,7 @@ export class ForumsectionsService extends BaseService {
   constructor(private httpClient: HttpClientService) { super(); }
 
   getAll(): Observable<ForumSection[]> {
-    return this.httpClient.get<ForumSection>(`${this.apiRoot}api/forumSections`)
+    return this.httpClient.get<ForumSection[]>(`${this.apiRoot}api/forumSections`)
       .pipe(map(res => res));
   }
 

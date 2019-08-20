@@ -12,6 +12,7 @@ import { Submission } from '../../models/comments';
 export class ForumsectionListItemComponent implements OnInit {
   @Input() model: ForumSection;
   submissions: PaginatedResult<Submission>;
+  hasSubmissions: boolean; 
 
   constructor(private submissionsService: SubmissionsService) { }
 
@@ -20,9 +21,11 @@ export class ForumsectionListItemComponent implements OnInit {
   }
 
   getSubmissions(selectedSorter: string, pageNumber: number, pageSize: number): void {
-    this.submissionsService.getSubmissions(selectedSorter, pageNumber, pageSize).subscribe(
+    this.submissionsService.getSubmissions(this.model.forumSectionId, selectedSorter, pageNumber, pageSize).subscribe(
       (response: PaginatedResult<Submission>) => {
         this.submissions = response;
+        this.hasSubmissions = response != null && response.results != null && response.results.length > 0; 
+
       },
       (error) => { console.error("Error happened", error) }
     );

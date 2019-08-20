@@ -14,7 +14,7 @@ namespace SifflForums.Service
 {
     public interface ISubmissionsService
     {
-        Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, string sortType, int pageIndex, int pageSize);
+        Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int forumSectionId, string sortType, int pageIndex, int pageSize);
         SubmissionModel Insert(string username, SubmissionModel value);
         SubmissionModel GetById(string currentUsername, int id);
         SubmissionModel Update(string username, SubmissionModel input);
@@ -35,7 +35,7 @@ namespace SifflForums.Service
             _upvotesService = upvotesService;
         }
 
-        public async Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, string sortType, int pageIndex, int pageSize)
+        public async Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int forumSectionId, string sortType, int pageIndex, int pageSize)
         {
             IQueryable<Submission> queryable = _dbContext.Submissions
                 .Include(o => o.User)
@@ -43,6 +43,9 @@ namespace SifflForums.Service
                 .Include(o => o.VotingBox)
                 .ThenInclude(o => o.Upvotes)
                 .ThenInclude(o => o.User);
+
+            if (forumSectionId > 0)
+                queryable = queryable.Where(o => o.ForumSectionId == forumSectionId);
 
             switch(sortType)
             {
