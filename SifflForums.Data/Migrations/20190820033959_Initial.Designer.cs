@@ -9,7 +9,7 @@ using SifflForums.Data;
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    [Migration("20190724010132_Initial")]
+    [Migration("20190820033959_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,34 @@ namespace SifflForums.Data.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("SifflForums.Data.Entities.ForumSection", b =>
+                {
+                    b.Property<int>("ForumSectionId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAtUtc");
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("IsPrivate");
+
+                    b.Property<DateTime>("ModifiedAtUtc");
+
+                    b.Property<int>("ModifiedBy");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ForumSectionId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("ForumSections");
+                });
+
             modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
                 {
                     b.Property<int>("SubmissionId")
@@ -74,6 +102,8 @@ namespace SifflForums.Data.Migrations
                     b.Property<DateTime>("CreatedAtUtc");
 
                     b.Property<int>("CreatedBy");
+
+                    b.Property<int>("ForumSectionId");
 
                     b.Property<DateTime>("ModifiedAtUtc");
 
@@ -90,6 +120,8 @@ namespace SifflForums.Data.Migrations
                     b.HasKey("SubmissionId");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ForumSectionId");
 
                     b.HasIndex("ModifiedBy");
 
@@ -180,11 +212,29 @@ namespace SifflForums.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("SifflForums.Data.Entities.ForumSection", b =>
+                {
+                    b.HasOne("SifflForums.Data.Entities.User", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SifflForums.Data.Entities.User", "Modifier")
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
                 {
                     b.HasOne("SifflForums.Data.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SifflForums.Data.Entities.ForumSection", "ForumSection")
+                        .WithMany()
+                        .HasForeignKey("ForumSectionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SifflForums.Data.Entities.User", "Modifier")
