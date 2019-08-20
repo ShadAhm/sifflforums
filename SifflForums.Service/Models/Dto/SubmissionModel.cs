@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SifflForums.Models.Dto
+namespace SifflForums.Service.Models.Dto
 {
     public class SubmissionModel
     {
@@ -17,5 +17,6 @@ namespace SifflForums.Models.Dto
         public int Upvotes { get; set; }
         public int VotingBoxId { get; set; }
         public int CommentsCount { get; set; }
+        public int ForumSectionId { get; set; }
     }
 }

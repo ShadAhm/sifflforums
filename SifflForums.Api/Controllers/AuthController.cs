@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using SifflForums.Models.Dto;
+using SifflForums.Service.Models.Dto;
 using SifflForums.Service;
 
 namespace SifflForums.Api.Controllers

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
-using SifflForums.Models.Dto;
+using SifflForums.Service.Models.Dto;
 using SifflForums.Service.Common;
 using SifflForums.Service.Models;
 using System;
@@ -103,6 +103,7 @@ namespace SifflForums.Service
             entity.ModifiedAtUtc = DateTime.UtcNow;
             entity.ModifiedBy = user.UserId;
             entity.VotingBox = new VotingBox();
+            entity.ForumSectionId = input.ForumSectionId; 
 
             _dbContext.Submissions.Add(entity);
             _dbContext.SaveChanges();

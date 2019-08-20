@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using SifflForums.AutoMapperProfiles;
+using SifflForums.Service.AutoMapperProfiles;
 using SifflForums.Data;
 using SifflForums.Service;
 
@@ -16,6 +16,7 @@ namespace SifflForums.Api
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IUpvotesService, UpvotesService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IForumSectionsService, ForumSectionsService>();
         }
 
         public static void AddInfrastructureServices(this IServiceCollection services)
@@ -24,6 +25,7 @@ namespace SifflForums.Api
                 c.AddProfile<CommentsProfile>();
                 c.AddProfile<SubmissionsProfile>();
                 c.AddProfile<UsersProfile>();
+                c.AddProfile<ForumSectionsProfile>();
             });
 
             services.AddSingleton<IMapper>(s => config.CreateMapper());

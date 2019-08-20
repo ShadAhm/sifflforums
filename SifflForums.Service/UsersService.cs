@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SifflForums.Data;
-using SifflForums.Models.Dto;
+using SifflForums.Service.Models.Dto;
 using System.Collections.Generic;
 using System.Linq;
 

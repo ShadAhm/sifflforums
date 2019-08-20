@@ -17,5 +17,6 @@ export class Submission {
   public commentsCount: number; 
   public upvotes: number; 
   public currentUserVoteWeight: number;
-  public votingBoxId: number; 
+  public votingBoxId: number;
+  public forumSectionId: number; 
 }

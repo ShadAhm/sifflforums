@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using SifflForums.Data.Entities;
-using SifflForums.Models.Dto;
+using SifflForums.Service.Models.Dto;
 using System.Linq;
 
-namespace SifflForums.AutoMapperProfiles
+namespace SifflForums.Service.AutoMapperProfiles
 {
     public class SubmissionsProfile : Profile
     {

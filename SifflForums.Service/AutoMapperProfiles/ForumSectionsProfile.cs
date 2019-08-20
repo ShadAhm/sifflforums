@@ -4,11 +4,11 @@ using SifflForums.Service.Models.Dto;
 
 namespace SifflForums.Service.AutoMapperProfiles
 {
-    public class UsersProfile : Profile
+    public class ForumSectionsProfile : Profile
     {
-        public UsersProfile()
+        public ForumSectionsProfile()
         {
-            CreateMap<User, UserModel>();
+            CreateMap<ForumSection, ForumSectionModel>();
         }
     }
 }

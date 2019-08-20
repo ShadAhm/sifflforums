@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
 using SifflForums.Models;
-using SifflForums.Models.Dto;
+using SifflForums.Service.Models.Dto;
 using SifflForums.Service.Validators;
 using System;
 using System.Collections.Generic;

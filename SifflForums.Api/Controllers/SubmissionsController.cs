@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SifflForums.Models.Dto;
+using SifflForums.Service.Models.Dto;
 using SifflForums.Service;
 using SifflForums.Service.Models;
 using System.Collections.Generic;
