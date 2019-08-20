@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
 using SifflForums.Models.Dto;
+using SifflForums.Service.Common;
 using SifflForums.Service.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace SifflForums.Service
 {
     public interface ISubmissionsService
     {
-        Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int pageIndex, int pageSize);
+        Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, string sortType, int pageIndex, int pageSize);
         SubmissionModel Insert(string username, SubmissionModel value);
         SubmissionModel GetById(string currentUsername, int id);
         SubmissionModel Update(string username, SubmissionModel input);
@@ -34,18 +35,28 @@ namespace SifflForums.Service
             _upvotesService = upvotesService;
         }
 
-        public async Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int pageIndex, int pageSize)
+        public async Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, string sortType, int pageIndex, int pageSize)
         {
-            var queryable = _dbContext.Submissions
+            IQueryable<Submission> queryable = _dbContext.Submissions
                 .Include(o => o.User)
                 .Include(o => o.Comments)
                 .Include(o => o.VotingBox)
                 .ThenInclude(o => o.Upvotes)
-                .ThenInclude(o => o.User)
-                .OrderByDescending(o => o.CreatedAtUtc);
+                .ThenInclude(o => o.User);
+
+            switch(sortType)
+            {
+                case SortType.New:
+                    queryable = queryable.OrderByDescending(o => o.CreatedAtUtc);
+                    break;
+                case SortType.Top:
+                    queryable = queryable.OrderByDescending(o => o.VotingBox.Upvotes.Count);
+                    break;
+            }
 
             var paginatedList = await PaginatedList<Submission>
                 .CreateAsync<SubmissionModel>(queryable, MapToSubmissionVm(currentUsername), pageIndex, pageSize);
+
 
             return paginatedList.ToPagedResult();
         }

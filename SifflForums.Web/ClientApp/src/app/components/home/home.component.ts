@@ -13,17 +13,19 @@ export class HomeComponent implements OnInit {
   canNavigateNext: boolean;
   canNavigatePrevious: boolean;
   pageNumber: number = 1;
-  pageSize: number = 3;
-  isEditingPageNumber: boolean; 
+  pageSize: number = 10;
+  isEditingPageNumber: boolean;
+  sortingOptions: string[] = ['New', 'Top'];
+  selectedSorter: string = this.sortingOptions[0];
 
   constructor(private submissionsService: SubmissionsService) { }
 
   ngOnInit() {
-    this.getSubmissions(this.pageNumber, this.pageSize);
+    this.getSubmissions(this.selectedSorter, this.pageNumber, this.pageSize);
   }
 
-  getSubmissions(pageNumber: number, pageSize: number): void {
-    this.submissionsService.getSubmissions(pageNumber,pageSize).subscribe(
+  getSubmissions(selectedSorter:string, pageNumber: number, pageSize: number): void {
+    this.submissionsService.getSubmissions(selectedSorter, pageNumber,pageSize).subscribe(
       (response: PaginatedResult<Submission>) => {
         this.submissions = response;
         this.bindPageNumbers();
@@ -38,11 +40,11 @@ export class HomeComponent implements OnInit {
   }
 
   navigateNext(): void {
-    this.getSubmissions(++this.pageNumber, this.pageSize); 
+    this.getSubmissions(this.selectedSorter, ++this.pageNumber, this.pageSize); 
   }
 
   navigatePrevious(): void {
-    this.getSubmissions(--this.pageNumber, this.pageSize);
+    this.getSubmissions(this.selectedSorter, --this.pageNumber, this.pageSize);
   }
 
   navigateTo(e): void {
@@ -55,7 +57,11 @@ export class HomeComponent implements OnInit {
     }
 
     this.pageNumber = navigateToPageNumber; 
-    this.getSubmissions(this.pageNumber, this.pageSize);
+    this.getSubmissions(this.selectedSorter, this.pageNumber, this.pageSize);
     this.isEditingPageNumber = false;
+  }
+
+  selectedSorterChanged(e: string): void {
+    this.getSubmissions(e, this.pageNumber, this.pageSize);
   }
 }

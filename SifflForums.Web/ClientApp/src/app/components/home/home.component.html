@@ -3,7 +3,10 @@
 </div>
 
 <div class="my-1">
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-end align-items-center">
+    <select class="mr-auto sorting-control" [(ngModel)]="selectedSorter" (ngModelChange)="selectedSorterChanged($event)">
+      <option *ngFor="let sortingOption of sortingOptions" [value]="sortingOption">{{ sortingOption }}</option>
+    </select>
     <a class="btn btn-sm btn-primary" routerLink="/new-submission">+New Thread</a>
   </div>
 </div>

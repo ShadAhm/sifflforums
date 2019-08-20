@@ -17,7 +17,7 @@ export class SubmissionComponent implements OnInit {
   commentInput: string;
   votePosition: number;
   upvotesCountOnScreen: number; 
-  disableSubmitButton: boolean; 
+  disableSubmitButton: boolean;
 
   constructor(private route: ActivatedRoute, private commentsService: CommentsService, private submissionsService: SubmissionsService) { }
 

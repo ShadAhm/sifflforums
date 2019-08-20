@@ -17,8 +17,8 @@ export class SubmissionsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  getSubmissions(pageIndex: number, pageSize: number): Observable<PaginatedResult<Submission>> {
-    return this.httpClient.get<PaginatedResult<Submission>>(`${this.apiRoot}api/submissions?pageIndex=${pageIndex}&pageSize=${pageSize}`)
+  getSubmissions(sort: string, pageIndex: number, pageSize: number): Observable<PaginatedResult<Submission>> {
+    return this.httpClient.get<PaginatedResult<Submission>>(`${this.apiRoot}api/submissions?sort=${sort}&pageIndex=${pageIndex}&pageSize=${pageSize}`)
       .pipe(map(res => res));
   }
 
