@@ -9,6 +9,7 @@ import { SubmissionsService } from '../../services/submissions.service';
 })
 export class SubmissionListItemComponent implements OnInit {
   @Input() model: Submission;
+  @Input() showBody: boolean = true;
   votePosition: number;
   upvotesCountOnScreen: number;
   disableSubmitButton: boolean; 

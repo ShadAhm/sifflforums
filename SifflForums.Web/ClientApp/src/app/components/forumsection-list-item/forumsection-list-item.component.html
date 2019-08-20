@@ -3,12 +3,16 @@
     <a [routerLink]="['/submissions', model.forumSectionId]"><h4>{{model.name}}</h4></a>
     <p>{{model.description}}</p>
   </div>
-  <div>
-    <a class="ml-6" routerLink="/new-submission" [queryParams]="{forumSectionId:model.forumSectionId}">+New Thread</a>
-  </div>
 </div>
 <div *ngIf="submissions">
   <div *ngFor="let submission of submissions.results">
-    <app-submission-list-item [model]="submission"></app-submission-list-item>
+    <app-submission-list-item [model]="submission" [showBody]="false"></app-submission-list-item>
+  </div>
+
+  <div class="d-flex">
+    <div class="mr-auto">
+      <a [routerLink]="['/submissions', model.forumSectionId]">See all posts in {{model.name}}</a>
+    </div>
+    <div><a routerLink="/new-submission" [queryParams]="{forumSectionId:model.forumSectionId}">+New Thread</a></div>
   </div>
 </div>

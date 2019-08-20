@@ -9,7 +9,7 @@
   <div class="p-2">
     <h5 class="submission-title"><a [routerLink]="['/submission', model.submissionId]">{{model.title}}</a></h5>
     <small class="text-muted">Posted by {{model.username}} on {{model.createdAtUtc|dateAgo}}</small>
-    <div>{{model.text}}</div>
+    <div *ngIf="showBody">{{model.text}}</div>
     <div>
       <a class="btn btn-sm btn-default" [routerLink]="['/submission', model.submissionId]">🗨️ {{model.commentsCount}} comments</a>
     </div>
