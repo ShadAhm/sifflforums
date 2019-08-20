@@ -8,11 +8,17 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ForumSectionsService extends BaseService {
+export class ForumsectionsService extends BaseService {
   constructor(private httpClient: HttpClientService) { super(); }
+
+  getAll(): Observable<ForumSection[]> {
+    return this.httpClient.get<ForumSection>(`${this.apiRoot}api/forumSections`)
+      .pipe(map(res => res));
+  }
 
   getById(forumSectionId: number): Observable<ForumSection> {
     return this.httpClient.get<ForumSection>(`${this.apiRoot}api/forumSections/${forumSectionId}`)
       .pipe(map(res => res));
   }
+
 }

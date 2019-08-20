@@ -1,0 +1,30 @@
+<div *ngIf="!submissions || submissions.length == 0">
+  <p>There are no submissions at the moment.</p>
+  <a class="btn btn-sm btn-primary" routerLink="/new-submission" [queryParams]="{forumSectionId:forumSectionId}">+New Thread</a>
+</div>
+
+<ng-container *ngIf="submissions">
+  <div class="my-1">
+    <div class="d-flex justify-content-end align-items-center">
+      <select class="mr-auto sorting-control" [(ngModel)]="selectedSorter" (ngModelChange)="selectedSorterChanged($event)">
+        <option *ngFor="let sortingOption of sortingOptions" [value]="sortingOption">{{ sortingOption }}</option>
+      </select>
+      <a class="btn btn-sm btn-primary" routerLink="/new-submission" [queryParams]="{forumSectionId:forumSectionId}">+New Thread</a>
+    </div>
+  </div>
+  <div *ngFor="let submission of submissions.results">
+    <app-submission-list-item [model]="submission"></app-submission-list-item>
+  </div>
+  <div class="my-1">
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-sm btn-default" [style.visibility]="canNavigatePrevious ? 'visible' : 'hidden'" (click)="navigatePrevious()">🡸</button>
+      <small>
+        Page
+        <span [hidden]="isEditingPageNumber" (click)="isEditingPageNumber = true">{{pageNumber}}</span>
+        <input type="number" [hidden]="!isEditingPageNumber" [value]="pageNumber" class="px-1"
+               (change)="navigateTo($event)" /> of {{submissions.totalPages}}
+      </small>
+      <button class="btn btn-sm btn-default" [style.visibility]="canNavigateNext ? 'visible' : 'hidden'" (click)="navigateNext()">🡺</button>
+    </div>
+  </div>
+</ng-container>

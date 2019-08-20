@@ -7,6 +7,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuardService } from './util-services/auth-guard.service';
 import { UnauthGuardService } from './util-services/unauth-guard.service';
+import { SubmissionsComponent } from './components/submissions/submissions.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -35,7 +36,13 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [UnauthGuardService]
-  }];
+  },
+  {
+    path: 'submissions/:forumSectionId',
+    component: SubmissionsComponent,
+    data: { title: 'Submissions' }
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

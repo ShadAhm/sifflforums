@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SubmissionsService } from '../../services/submissions.service';
 import { Submission } from '../../models/comments';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ForumSectionsService } from '../../services/forum-sections.service';
+import { ForumsectionsService } from '../../services/forumsections.service';
 import { ForumSection } from '../../models/forums';
 
 @Component({
@@ -21,7 +21,7 @@ export class SubmissionCreateComponent implements OnInit {
     forumSectionId: new FormControl('', Validators.required)
   });
 
-  constructor(private router: Router, private route: ActivatedRoute, private submissionService: SubmissionsService, private forumSectionsService: ForumSectionsService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private submissionService: SubmissionsService, private forumSectionsService: ForumsectionsService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {

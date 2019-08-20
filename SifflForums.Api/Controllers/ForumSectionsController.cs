@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SifflForums.Service;
 using SifflForums.Service.Models.Dto;
+using System.Collections.Generic;
 
 namespace SifflForums.Api.Controllers
 {
@@ -20,6 +21,12 @@ namespace SifflForums.Api.Controllers
         public ActionResult<ForumSectionModel> Get(int id)
         {
             return _service.GetById(id);
+        }
+
+        [HttpGet(), AllowAnonymous, Authorize]
+        public ActionResult<IEnumerable<ForumSectionModel>> GetAll()
+        {
+            return _service.GetAll();
         }
     }
 }
