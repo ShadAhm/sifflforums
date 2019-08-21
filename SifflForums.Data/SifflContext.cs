@@ -22,7 +22,7 @@ namespace SifflForums.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite(@"Data Source=C:\Sample_db\Sample.db");
+                optionsBuilder.UseSqlite(@"Data Source=Sample.db");
             }
         }
 

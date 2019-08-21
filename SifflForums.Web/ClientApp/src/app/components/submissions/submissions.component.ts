@@ -23,8 +23,6 @@ export class SubmissionsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private submissionsService: SubmissionsService) { }
 
   ngOnInit() {
-
-
     this.route.params.subscribe(params => {
       var paramForumSectionId = params['forumSectionId'];
       var forumSectionId = parseInt(paramForumSectionId);
