@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./submissions.component.scss']
 })
 export class SubmissionsComponent implements OnInit {
-  submissions: PaginatedResult<Submission>;
+  submissions: PaginatedResult<Submission[]>;
   canNavigateNext: boolean;
   canNavigatePrevious: boolean;
   pageNumber: number = 1;
@@ -38,7 +38,7 @@ export class SubmissionsComponent implements OnInit {
 
   getSubmissions(selectedSorter: string, pageNumber: number, pageSize: number): void {
     this.submissionsService.getSubmissions(this.forumSectionId, selectedSorter, pageNumber, pageSize).subscribe(
-      (response: PaginatedResult<Submission>) => {
+      (response: PaginatedResult<Submission[]>) => {
         this.submissions = response;
         this.bindPageNumbers();
       },

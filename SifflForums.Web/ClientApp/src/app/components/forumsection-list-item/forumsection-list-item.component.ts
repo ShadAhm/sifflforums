@@ -11,13 +11,14 @@ import { Submission } from '../../models/comments';
 })
 export class ForumsectionListItemComponent implements OnInit {
   @Input() model: ForumSection;
-  submissions: PaginatedResult<Submission>;
+  @Input() showTopNPost: number = 3; 
+  submissions: PaginatedResult<Submission[]>;
   hasSubmissions: boolean; 
 
   constructor(private submissionsService: SubmissionsService) { }
 
   ngOnInit() {
-    this.getSubmissions('Top', 1, 3); 
+    this.getSubmissions('Top', 1, this.showTopNPost); 
   }
 
   getSubmissions(selectedSorter: string, pageNumber: number, pageSize: number): void {
