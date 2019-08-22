@@ -33,27 +33,30 @@ namespace SifflForums.Service
 
         public List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId)
         {
-            var entities = _dbContext.Comments
+            var comments = _dbContext.Comments
                 .Include(c => c.User)
                 .Include(c => c.VotingBox)
                 .ThenInclude(vb => vb.Upvotes)
                 .ThenInclude(uv => uv.User)
                 .Where(c => c.SubmissionId == submissionId)
+                .Select(MapToDto(currentUsername))
                 .ToList();
 
-            var vms = _mapper.Map<List<CommentModel>>(entities);
+            return comments;
+        }
 
-            if (!string.IsNullOrWhiteSpace(currentUsername))
+        private Func<Comment, CommentModel> MapToDto(string currentUsername)
+        {
+            return entity =>
             {
-                foreach (var viewModel in vms)
-                {
-                    var entity = entities.SingleOrDefault(o => o.CommentId == viewModel.CommentId);
+                var dto = _mapper.Map<Comment, CommentModel>(entity);
 
-                    viewModel.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(o => o.User.Username == currentUsername)?.Weight ?? 0;
-                }
-            }
+                if (string.IsNullOrWhiteSpace(currentUsername))
+                    return dto;
 
-            return vms;
+                dto.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
+                return dto;
+            };
         }
 
         public CommentModel Insert(string username, CommentModel input)
