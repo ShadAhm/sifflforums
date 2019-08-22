@@ -13,6 +13,8 @@ namespace SifflForums.Service.AutoMapperProfiles
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username))
                 .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count()))
                 .ForMember(dest => dest.Upvotes, opt => opt.MapFrom(src => src.VotingBox.Upvotes.Sum(uv => uv.Weight)));
+
+            CreateMap<SubmissionModel, Submission>();
         }
     }
 }
