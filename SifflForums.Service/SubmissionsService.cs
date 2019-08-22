@@ -66,16 +66,16 @@ namespace SifflForums.Service
 
         private Func<Submission, SubmissionModel> MapToSubmissionVm(string currentUsername)
         {
-            return o =>
+            return submissionEntity =>
             {
-                var vm = _mapper.Map<Submission, SubmissionModel>(o);
+                var submissionModel = _mapper.Map<Submission, SubmissionModel>(submissionEntity);
 
                 if (string.IsNullOrWhiteSpace(currentUsername))
-                    return vm;
+                    return submissionModel;
 
-                vm.CurrentUserVoteWeight = o.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
+                submissionModel.CurrentUserVoteWeight = submissionEntity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
 
-                return vm;
+                return submissionModel;
             };
         }
 
