@@ -58,24 +58,24 @@ namespace SifflForums.Service
             }
 
             var paginatedList = await PaginatedList<Submission>
-                .CreateAsync<SubmissionModel>(queryable, MapToSubmissionVm(currentUsername), pageIndex, pageSize);
+                .CreateAsync<SubmissionModel>(queryable, MapToDto(currentUsername), pageIndex, pageSize);
 
 
             return paginatedList.ToPagedResult();
         }
 
-        private Func<Submission, SubmissionModel> MapToSubmissionVm(string currentUsername)
+        private Func<Submission, SubmissionModel> MapToDto(string currentUsername)
         {
-            return submissionEntity =>
+            return entity =>
             {
-                var submissionModel = _mapper.Map<Submission, SubmissionModel>(submissionEntity);
+                var dto = _mapper.Map<Submission, SubmissionModel>(entity);
 
                 if (string.IsNullOrWhiteSpace(currentUsername))
-                    return submissionModel;
+                    return dto;
 
-                submissionModel.CurrentUserVoteWeight = submissionEntity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
+                dto.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
 
-                return submissionModel;
+                return dto;
             };
         }
 
@@ -87,7 +87,7 @@ namespace SifflForums.Service
                 .ThenInclude(o => o.Upvotes)
                 .ThenInclude(o => o.User)
                 .AsEnumerable()
-                .Select(MapToSubmissionVm(currentUsername))
+                .Select(MapToDto(currentUsername))
                 .SingleOrDefault(o => o.SubmissionId == id);
 
             return vm;
