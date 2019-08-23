@@ -8,7 +8,14 @@
     <div class="ml-auto">
       <button class="btn btn-sm" title="Quote this comment" (click)="quote()">💬</button>
       <button class="btn btn-sm" title="This is a great comment" (click)="upvote()">👍</button>
-      <button class="btn btn-sm">⠇</button>
+      <div class="btn-group" [ngClass]="{'show': showMenu}">
+        <button class="btn btn-sm" (click)="showMenu = !showMenu">⠇</button>
+        <ul class="dropdown-menu" [ngClass]="{'show': showMenu}">
+          <li>
+            <button class="btn btn-sm btn-link" (click)="showMenu = !showMenu; downvote()">Mark as Irrelevant</button>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="comment-content" [innerHTML]="model.text"></div>

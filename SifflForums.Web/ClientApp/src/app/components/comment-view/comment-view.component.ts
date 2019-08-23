@@ -26,4 +26,11 @@ export class CommentViewComponent implements OnInit {
       (error) => { }
     );
   }
+
+  downvote(): void {
+    this.commentsService.downvote(this.model.commentId).subscribe(
+      (response) => { },
+      (error) => { }
+    );
+  }
 }
