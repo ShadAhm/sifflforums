@@ -4,7 +4,6 @@ export class CommentPost {
   public submissionId: number;
   public upvotes: number;
   public currentUserVoteWeight: number;
-  public votingBoxId: number;
   public username: string;
 }
 
@@ -17,6 +16,5 @@ export class Submission {
   public commentsCount: number; 
   public upvotes: number; 
   public currentUserVoteWeight: number;
-  public votingBoxId: number;
   public forumSectionId: number; 
 }

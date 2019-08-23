@@ -46,35 +46,35 @@ namespace SifflForums.Api.Controllers
         }
 
         [HttpPut("{id}/Upvote"), Authorize]
-        public ActionResult Upvote(int id, [FromQuery]int votingBoxId)
+        public ActionResult Upvote(int id)
         {
-            if (votingBoxId == 0)
-                return BadRequest("No votingbox specified");
+            if (id == 0)
+                return BadRequest("No Comment specified");
 
-            _upvotesService.CastVote(this.CurrentUsername, votingBoxId, false);
+            _upvotesService.Vote(this.CurrentUsername, id, _service, false);
 
             return Ok();
         }
 
         [HttpPut("{id}/Downvote"), Authorize]
-        public ActionResult Downvote(int id, [FromQuery]int votingBoxId)
+        public ActionResult Downvote(int id)
         {
-            if (votingBoxId == 0)
-                return BadRequest("No votingbox specified");
+            if (id == 0)
+                return BadRequest("No Comment specified");
 
-            _upvotesService.CastVote(this.CurrentUsername, votingBoxId, true);
+            _upvotesService.Vote(this.CurrentUsername, id, _service, true);
 
             return Ok();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}/RemoveVotes"), Authorize]
-        public ActionResult RemoveVotes(int id, [FromQuery]int votingBoxId)
+        public ActionResult RemoveVotes(int id)
         {
-            if (votingBoxId == 0)
-                return BadRequest("No votingbox specified");
+            if (id == 0)
+                return BadRequest("No Comment specified");
 
-            _upvotesService.RemoveVotes(this.CurrentUsername, votingBoxId);
+            _upvotesService.RemoveVotes(this.CurrentUsername, id, _service);
 
             return Ok();
         }

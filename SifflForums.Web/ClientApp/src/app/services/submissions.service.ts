@@ -27,18 +27,18 @@ export class SubmissionsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  upvote(submissionId: number, votingBoxId: number): Observable<void> {
-    return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/upvote?votingBoxId=${votingBoxId}`, null, this.httpHeaders)
+  upvote(submissionId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/upvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
 
-  downvote(submissionId: number, votingBoxId: number): Observable<void> {
-    return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/downvote?votingBoxId=${votingBoxId}`, null, this.httpHeaders)
+  downvote(submissionId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/downvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
 
-  removevote(submissionId: number, votingBoxId: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.apiRoot}api/submissions/${submissionId}/removevotes?votingBoxId=${votingBoxId}`, this.httpHeaders)
+  removevote(submissionId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiRoot}api/submissions/${submissionId}/removevotes`, this.httpHeaders)
       .pipe(map(res => res));
   }
 }

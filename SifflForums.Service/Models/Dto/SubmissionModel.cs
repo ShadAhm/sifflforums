@@ -15,7 +15,6 @@ namespace SifflForums.Service.Models.Dto
         public DateTime CreatedAtUtc { get; set; }
         public int CurrentUserVoteWeight { get; set; }
         public int Upvotes { get; set; }
-        public int VotingBoxId { get; set; }
         public int CommentsCount { get; set; }
         public int ForumSectionId { get; set; }
     }

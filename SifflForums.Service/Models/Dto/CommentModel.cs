@@ -11,7 +11,6 @@ namespace SifflForums.Service.Models.Dto
         public int SubmissionId { get; set; }
         public string Username { get; set; }
         public string Text { get; set; }
-        public int VotingBoxId { get; set; }
         public int CurrentUserVoteWeight { get; set; }
         public int Upvotes { get; set; }
         public string CreatedAtUtc { get; set; }

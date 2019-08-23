@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
+using SifflForums.Data.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,8 +9,8 @@ namespace SifflForums.Service
 {
     public interface IUpvotesService
     {
-        void CastVote(string username, int votingBoxId, bool isDownvote);
-        void RemoveVotes(string username, int votingBoxId);
+        void RemoveVotes(string username, int upvotableEntityId, IUpvotablesService entityService);
+        void Vote(string username, int upvotableEntityId, IUpvotablesService entityService, bool isDownvote);
     }
 
     public class UpvotesService : IUpvotesService
@@ -25,8 +26,10 @@ namespace SifflForums.Service
             _usersService = usersService;
         }
 
-        public void CastVote(string username, int votingBoxId, bool isDownvote)
+        public void Vote(string username, int upvotableEntityId, IUpvotablesService entityService, bool isDownvote)
         {
+            IUpvotable upvotable = entityService.ResolveUpvotable(upvotableEntityId); 
+
             var user = _usersService.GetByUsername(username);
             if (user == null) { return; }
 
@@ -36,11 +39,11 @@ namespace SifflForums.Service
             entity.UserId = user.UserId;
             entity.Weight = voteWeight;
 
-            var votes = _dbContext.Upvotes.Where(uv => uv.VotingBoxId == votingBoxId && uv.UserId == user.UserId).ToList();
+            var votes = _dbContext.Upvotes.Where(uv => uv.VotingBoxId == upvotable.VotingBoxId && uv.UserId == user.UserId).ToList();
 
             if(votes == null)
             {
-                entity.VotingBoxId = votingBoxId;
+                entity.VotingBoxId = upvotable.VotingBoxId;
                 _dbContext.Upvotes.Add(entity);
                 _dbContext.SaveChanges();
                 return; 
@@ -53,20 +56,22 @@ namespace SifflForums.Service
             else
             {
                 _dbContext.RemoveRange(votes);
-                entity.VotingBoxId = votingBoxId;
+                entity.VotingBoxId = upvotable.VotingBoxId;
                 _dbContext.Upvotes.Add(entity);
                 _dbContext.SaveChanges();
             }
         }
 
-        public void RemoveVotes(string username, int votingBoxId)
+        public void RemoveVotes(string username, int upvotableEntityId, IUpvotablesService entityService)
         {
+            IUpvotable upvotable = entityService.ResolveUpvotable(upvotableEntityId); 
+
             var user = _usersService.GetByUsername(username);
             if (user == null) { return; }
 
             IEnumerable<Upvote> votes = null;
 
-            votes = _dbContext.Upvotes.Where(uv => uv.VotingBoxId == votingBoxId && uv.UserId == user.UserId).ToList();
+            votes = _dbContext.Upvotes.Where(uv => uv.VotingBoxId == upvotable.VotingBoxId && uv.UserId == user.UserId).ToList();
 
             if (votes != null)
             {

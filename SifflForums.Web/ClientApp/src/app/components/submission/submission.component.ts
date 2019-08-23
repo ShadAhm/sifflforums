@@ -74,7 +74,7 @@ export class SubmissionComponent implements OnInit {
     this.votePosition = 1;
     this.upvotesCountOnScreen = this.submission.upvotes - this.submission.currentUserVoteWeight + this.votePosition; 
 
-    this.submissionsService.upvote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
+    this.submissionsService.upvote(this.submission.submissionId).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -89,7 +89,7 @@ export class SubmissionComponent implements OnInit {
     this.votePosition = -1;
     this.upvotesCountOnScreen = this.submission.upvotes - this.submission.currentUserVoteWeight + this.votePosition; 
 
-    this.submissionsService.downvote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
+    this.submissionsService.downvote(this.submission.submissionId).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -99,7 +99,7 @@ export class SubmissionComponent implements OnInit {
     this.votePosition = 0;
     this.upvotesCountOnScreen = this.submission.upvotes;
 
-    this.submissionsService.removevote(this.submission.submissionId, this.submission.votingBoxId).subscribe(
+    this.submissionsService.removevote(this.submission.submissionId).subscribe(
       (response) => { },
       (error) => { }
     );

@@ -22,18 +22,18 @@ export class CommentsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  upvote(commentId: number, votingBoxId: number): Observable<void> {
-    return this.httpClient.put<void>(`${this.apiRoot}api/comments/${commentId}/upvote?votingBoxId=${votingBoxId}`, null, this.httpHeaders)
+  upvote(commentId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiRoot}api/comments/${commentId}/upvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
 
-  downvote(commentId: number, votingBoxId: number): Observable<void> {
-    return this.httpClient.put<void>(`${this.apiRoot}api/comments/${commentId}/downvote?votingBoxId=${votingBoxId}`, null, this.httpHeaders)
+  downvote(commentId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiRoot}api/comments/${commentId}/downvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
 
-  removevote(commentId: number, votingBoxId: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.apiRoot}api/comments/${commentId}/removevotes?votingBoxId=${votingBoxId}`, this.httpHeaders)
+  removevote(commentId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiRoot}api/comments/${commentId}/removevotes`, this.httpHeaders)
       .pipe(map(res => res));
   }
 }

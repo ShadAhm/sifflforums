@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
+using SifflForums.Data.Interfaces;
 using SifflForums.Service.Models.Dto;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,14 @@ using System.Linq;
 
 namespace SifflForums.Service
 {
-    public interface ICommentsService
+    public interface ICommentsService : IUpvotablesService
     {
         List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId);
         CommentModel Insert(string username, CommentModel input);
         CommentModel Update(string username, CommentModel input);
     }
 
-    public class CommentsService : ICommentsService 
+    public class CommentsService : ICommentsService
     {
         private SifflContext _dbContext;
         private IMapper _mapper;
@@ -78,7 +79,7 @@ namespace SifflForums.Service
             _dbContext.SaveChanges();
             _dbContext.Entry(entity).Reference(c => c.User).Load(); 
 
-            _upvotesService.CastVote(user.Username, entity.VotingBox.VotingBoxId, false);
+            _upvotesService.Vote(user.Username, entity.SubmissionId, this, false);
 
             return _mapper.Map<CommentModel>(entity); 
         }
@@ -107,6 +108,11 @@ namespace SifflForums.Service
             }
 
             return null; 
+        }
+
+        public IUpvotable ResolveUpvotable(int entityId)
+        {
+            return _dbContext.Comments.Find(entityId); 
         }
     }
 }

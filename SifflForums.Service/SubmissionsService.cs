@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SifflForums.Data.Interfaces;
 
 namespace SifflForums.Service
 {
-    public interface ISubmissionsService
+    public interface ISubmissionsService : IUpvotablesService
     {
         Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int forumSectionId, string sortType, int pageIndex, int pageSize);
         SubmissionModel Insert(string username, SubmissionModel value);
@@ -60,7 +61,6 @@ namespace SifflForums.Service
             var paginatedList = await PaginatedList<Submission>
                 .CreateAsync<SubmissionModel>(queryable, MapToDto(currentUsername), pageIndex, pageSize);
 
-
             return paginatedList.ToPagedResult();
         }
 
@@ -74,7 +74,7 @@ namespace SifflForums.Service
                     return dto;
 
                 dto.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
-
+                 
                 return dto;
             };
         }
@@ -110,7 +110,7 @@ namespace SifflForums.Service
             _dbContext.SaveChanges();
 
             // automatic upvote from the creator of the thread
-            _upvotesService.CastVote(username, entity.VotingBox.VotingBoxId, false);
+            _upvotesService.Vote(username, entity.SubmissionId, this, false);
 
             return _mapper.Map<SubmissionModel>(entity);
         }
@@ -134,6 +134,11 @@ namespace SifflForums.Service
                 return _mapper.Map<SubmissionModel>(entity);
             }
             return null;
+        }
+
+        public IUpvotable ResolveUpvotable(int entityId)
+        {
+            return _dbContext.Submissions.Find(entityId); 
         }
     }
 }

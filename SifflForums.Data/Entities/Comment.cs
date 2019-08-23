@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SifflForums.Data.Interfaces;
 
 namespace SifflForums.Data.Entities
 {
-    public class Comment : EntityBase
+    public class Comment : EntityBase, IUpvotable
     {
         public int CommentId { get; set;}
         public string Text { get; set; }

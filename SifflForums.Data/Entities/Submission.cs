@@ -1,10 +1,9 @@
-﻿using System;
+﻿using SifflForums.Data.Interfaces;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SifflForums.Data.Entities
 {
-    public class Submission : EntityBase
+    public class Submission : EntityBase, IUpvotable
     {
         public int SubmissionId { get; set; }
         public string Title { get; set; }

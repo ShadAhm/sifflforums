@@ -21,7 +21,7 @@ export class CommentViewComponent implements OnInit {
   }
 
   upvote(): void {
-    this.commentsService.upvote(this.model.commentId, this.model.votingBoxId).subscribe(
+    this.commentsService.upvote(this.model.commentId).subscribe(
       (response) => { },
       (error) => { }
     );
