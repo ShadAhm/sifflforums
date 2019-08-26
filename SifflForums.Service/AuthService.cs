@@ -25,9 +25,9 @@ namespace SifflForums.Service
 
     public class AuthService : IAuthService
     {
-        SifflContext _dbContext;
-        IMapper _mapper;
-        string _serviceApiKey;
+        private readonly SifflContext _dbContext;
+        private readonly IMapper _mapper;
+        private string _serviceApiKey;
 
         public AuthService(SifflContext dbContext, IMapper mapper)
         {

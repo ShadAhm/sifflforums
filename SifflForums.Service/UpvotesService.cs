@@ -15,9 +15,9 @@ namespace SifflForums.Service
 
     public class UpvotesService : IUpvotesService
     {
-        private SifflContext _dbContext;
-        private IMapper _mapper;
-        private IUsersService _usersService;
+        private readonly SifflContext _dbContext;
+        private readonly IMapper _mapper;
+        private readonly IUsersService _usersService;
 
         public UpvotesService(SifflContext dbContext, IMapper mapper, IUsersService usersService)
         {

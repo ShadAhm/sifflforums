@@ -17,9 +17,9 @@ namespace SifflForums.Service
 
     public class ForumSectionsService : IForumSectionsService
     {
-        private SifflContext _dbContext;
-        private IMapper _mapper;
-        private IUsersService _usersService;
+        private readonly SifflContext _dbContext;
+        private readonly IMapper _mapper;
+        private readonly IUsersService _usersService;
 
         public ForumSectionsService(SifflContext dbContext, IMapper mapper, IUsersService usersService)
         {

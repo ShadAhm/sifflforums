@@ -23,10 +23,10 @@ namespace SifflForums.Service
 
     public class SubmissionsService : ISubmissionsService
     {
-        private SifflContext _dbContext;
-        private IMapper _mapper;
-        private IUsersService _usersService;
-        private IUpvotesService _upvotesService;
+        private readonly SifflContext _dbContext;
+        private readonly IMapper _mapper;
+        private readonly IUsersService _usersService;
+        private readonly IUpvotesService _upvotesService;
 
         public SubmissionsService(SifflContext dbContext, IMapper mapper, IUsersService usersService, IUpvotesService upvotesService)
         {

@@ -14,8 +14,8 @@ namespace SifflForums.Service
 
     public class UsersService : IUsersService
     {
-        private SifflContext _dbContext;
-        private IMapper _mapper;
+        private readonly SifflContext _dbContext;
+        private readonly IMapper _mapper;
 
         public UsersService(SifflContext dbContext, IMapper mapper)
         {
