@@ -26,14 +26,7 @@ namespace SifflForums.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedListResult<SubmissionModel>>> Get(int forumSectionId, string sort, int pageIndex, int pageSize)
         {
-            try
-            {
-                return await _service.GetPagedAsync(this.CurrentUsername, forumSectionId, sort, pageIndex, pageSize);
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+            return await _service.GetPagedAsync(this.CurrentUsername, forumSectionId, sort, pageIndex, pageSize);
         }
 
         // GET api/values/5

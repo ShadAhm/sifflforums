@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
 using SifflForums.Data.Interfaces;
+using SifflForums.Service.Common;
+using SifflForums.Service.Models;
 using SifflForums.Service.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SifflForums.Service
 {
@@ -15,6 +18,7 @@ namespace SifflForums.Service
         List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId);
         CommentModel Insert(string username, CommentModel input);
         CommentModel Update(string username, CommentModel input);
+        Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, int submissionId, string sortType, int pageIndex, int pageSize); 
     }
 
     public class CommentsService : ICommentsService
@@ -44,6 +48,31 @@ namespace SifflForums.Service
                 .ToList();
 
             return comments;
+        }
+
+        public async Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, int submissionId, string sortType, int pageIndex, int pageSize)
+        {
+            IQueryable<Comment> queryable = _dbContext.Comments
+                .Include(c => c.User)
+                .Include(c => c.VotingBox)
+                .ThenInclude(vb => vb.Upvotes)
+                .ThenInclude(uv => uv.User)
+                .Where(c => c.SubmissionId == submissionId);
+
+            switch (sortType)
+            {
+                case SortType.New:
+                    queryable = queryable.OrderByDescending(o => o.CreatedAtUtc);
+                    break;
+                case SortType.Top:
+                    queryable = queryable.OrderByDescending(o => o.VotingBox.Upvotes.Sum(l => l.Weight));
+                    break;
+            }
+
+            var paginatedList = await PaginatedList<Comment>
+                .CreateAsync<CommentModel>(queryable, MapToDto(currentUsername), pageIndex, pageSize);
+
+            return paginatedList.ToPagedResult();
         }
 
         private Func<Comment, CommentModel> MapToDto(string currentUsername)
