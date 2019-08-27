@@ -6,8 +6,14 @@
 
   <div class="form-group">
     <label>Password:</label>
-    <input type="password" class="form-control" id="titleText" formControlName="password" placeholder="" />
+    <div class="input-group mb-3">
+      <input [type]="maskPassword" class="form-control" formControlName="password" placeholder="">
+      <div class="input-group-append">
+        <button class="btn btn-sm btn-outline-secondary" type="button" (mousedown)="togglePasswordMask('show')" (mouseup)="togglePasswordMask('hide')" (mouseleave)="togglePasswordMask('hide')">
+          Show
+        </button>
+      </div>
+    </div>
   </div>
-
   <input type="submit" class="btn btn-primary" value="Submit" />
 </form>

@@ -7,6 +7,6 @@ namespace SifflForums.Service.Common
     public static class SortType
     {
         public const string New = "New";
-        public const string Top = "Top"; 
+        public const string Top = "Top";
     }
 }

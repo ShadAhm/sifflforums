@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
   styles: []
 })
 export class LoginComponent implements OnInit {
+  maskPassword: string = 'password';
+
   loginForm: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
@@ -34,5 +36,14 @@ export class LoginComponent implements OnInit {
 
   onLoginFailed(error: HttpErrorResponse) {
     alert('Password invalid'); 
+  }
+
+  togglePasswordMask(showOrHide: string): void {
+    if (showOrHide == 'show') {
+      this.maskPassword = 'text';
+    }
+    else {
+      this.maskPassword = 'password';
+    }
   }
 }
