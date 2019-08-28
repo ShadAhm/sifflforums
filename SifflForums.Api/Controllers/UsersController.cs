@@ -36,19 +36,19 @@ namespace SifflForums.Api.Controllers
         [HttpPost]
         public ActionResult Post([FromBody]object value)
         {
-            return StatusCode(StatusCodes.Status405MethodNotAllowed);
+            return StatusCode(StatusCodes.Status403Forbidden);
         }
 
         [HttpPut("{id}"), Authorize]
         public ActionResult Put(int id, [FromBody] string value)
         {
-            return StatusCode(StatusCodes.Status405MethodNotAllowed);
+            return StatusCode(StatusCodes.Status403Forbidden);
         }
 
         [HttpDelete("{id}"), Authorize]
         public ActionResult Delete(int id)
         {
-            return StatusCode(StatusCodes.Status405MethodNotAllowed);
+            return StatusCode(StatusCodes.Status403Forbidden);
         }
     }
 }
