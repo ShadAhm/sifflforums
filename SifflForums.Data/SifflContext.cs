@@ -28,6 +28,8 @@ namespace SifflForums.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Comment>().HasIndex(a => a.VotingBoxId).IsUnique();
+            modelBuilder.Entity<Submission>().HasIndex(a => a.VotingBoxId).IsUnique();
             modelBuilder.Entity<Upvote>().HasAlternateKey(a => new { a.VotingBoxId, a.UserId });
         }
     }
