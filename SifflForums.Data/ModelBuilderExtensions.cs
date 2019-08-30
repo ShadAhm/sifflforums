@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SifflForums.Data.Entities;
+using System;
 
 namespace SifflForums.Data
 {
@@ -14,6 +15,10 @@ namespace SifflForums.Data
 
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasData(new User() { UserId = 1, Username = "System", Email = "system@example.com", LastPasswordResetUtc = DateTime.MinValue, Password = "suchAPrettyHouse", Salt = "suchAPrettyGarden", RegisteredAtUtc = DateTime.MinValue });
+            modelBuilder.Entity<ForumSection>().HasData(new ForumSection { ForumSectionId = 1, Name = "General", Description = "General Discussions", CreatedAtUtc = DateTime.UtcNow, CreatedBy = 1, ModifiedAtUtc = DateTime.UtcNow, ModifiedBy = 1 });
+            modelBuilder.Entity<VotingBox>().HasData(new VotingBox { VotingBoxId = 1 });
+            modelBuilder.Entity<Submission>().HasData(new Submission { SubmissionId = 1, VotingBoxId = 1, UserId = 1, ForumSectionId = 1, Title = "Welcome to Siffl Forums", Text = "Simple Forums for Learning", CreatedAtUtc = DateTime.UtcNow, CreatedBy = 1, ModifiedAtUtc = DateTime.UtcNow, ModifiedBy = 1 });
         }
     }
 }

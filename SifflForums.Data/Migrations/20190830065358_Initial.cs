@@ -94,6 +94,7 @@ namespace SifflForums.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Upvotes", x => x.UpvoteId);
+                    table.UniqueConstraint("AK_Upvotes_VotingBoxId_UserId", x => new { x.VotingBoxId, x.UserId });
                     table.ForeignKey(
                         name: "FK_Upvotes_Users_UserId",
                         column: x => x.UserId,
@@ -209,6 +210,26 @@ namespace SifflForums.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Email", "LastPasswordResetUtc", "Password", "RegisteredAtUtc", "Salt", "Username" },
+                values: new object[] { 1, "system@example.com", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "suchAPrettyHouse", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "suchAPrettyGarden", "System" });
+
+            migrationBuilder.InsertData(
+                table: "VotingBoxes",
+                column: "VotingBoxId",
+                value: 1);
+
+            migrationBuilder.InsertData(
+                table: "ForumSections",
+                columns: new[] { "ForumSectionId", "CreatedAtUtc", "CreatedBy", "Description", "IsPrivate", "ModifiedAtUtc", "ModifiedBy", "Name" },
+                values: new object[] { 1, new DateTime(2019, 8, 30, 6, 53, 57, 703, DateTimeKind.Utc).AddTicks(6023), 1, "General Discussions", false, new DateTime(2019, 8, 30, 6, 53, 57, 703, DateTimeKind.Utc).AddTicks(6988), 1, "General" });
+
+            migrationBuilder.InsertData(
+                table: "Submissions",
+                columns: new[] { "SubmissionId", "CreatedAtUtc", "CreatedBy", "ForumSectionId", "ModifiedAtUtc", "ModifiedBy", "Text", "Title", "UserId", "VotingBoxId" },
+                values: new object[] { 1, new DateTime(2019, 8, 30, 6, 53, 57, 704, DateTimeKind.Utc).AddTicks(2425), 1, 1, new DateTime(2019, 8, 30, 6, 53, 57, 704, DateTimeKind.Utc).AddTicks(2434), 1, "Simple Forums for Learning", "Welcome to Siffl Forums", 1, 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_CreatedBy",
                 table: "Comments",
@@ -232,7 +253,8 @@ namespace SifflForums.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_VotingBoxId",
                 table: "Comments",
-                column: "VotingBoxId");
+                column: "VotingBoxId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ForumSections_CreatedBy",
@@ -267,17 +289,13 @@ namespace SifflForums.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Submissions_VotingBoxId",
                 table: "Submissions",
-                column: "VotingBoxId");
+                column: "VotingBoxId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upvotes_UserId",
                 table: "Upvotes",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Upvotes_VotingBoxId",
-                table: "Upvotes",
-                column: "VotingBoxId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -9,7 +9,7 @@ using SifflForums.Data;
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    [Migration("20190820033959_Initial")]
+    [Migration("20190830065358_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,7 +61,8 @@ namespace SifflForums.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("VotingBoxId");
+                    b.HasIndex("VotingBoxId")
+                        .IsUnique();
 
                     b.ToTable("Comments");
                 });
@@ -92,6 +93,19 @@ namespace SifflForums.Data.Migrations
                     b.HasIndex("ModifiedBy");
 
                     b.ToTable("ForumSections");
+
+                    b.HasData(
+                        new
+                        {
+                            ForumSectionId = 1,
+                            CreatedAtUtc = new DateTime(2019, 8, 30, 6, 53, 57, 703, DateTimeKind.Utc).AddTicks(6023),
+                            CreatedBy = 1,
+                            Description = "General Discussions",
+                            IsPrivate = false,
+                            ModifiedAtUtc = new DateTime(2019, 8, 30, 6, 53, 57, 703, DateTimeKind.Utc).AddTicks(6988),
+                            ModifiedBy = 1,
+                            Name = "General"
+                        });
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
@@ -127,9 +141,25 @@ namespace SifflForums.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("VotingBoxId");
+                    b.HasIndex("VotingBoxId")
+                        .IsUnique();
 
                     b.ToTable("Submissions");
+
+                    b.HasData(
+                        new
+                        {
+                            SubmissionId = 1,
+                            CreatedAtUtc = new DateTime(2019, 8, 30, 6, 53, 57, 704, DateTimeKind.Utc).AddTicks(2425),
+                            CreatedBy = 1,
+                            ForumSectionId = 1,
+                            ModifiedAtUtc = new DateTime(2019, 8, 30, 6, 53, 57, 704, DateTimeKind.Utc).AddTicks(2434),
+                            ModifiedBy = 1,
+                            Text = "Simple Forums for Learning",
+                            Title = "Welcome to Siffl Forums",
+                            UserId = 1,
+                            VotingBoxId = 1
+                        });
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Upvote", b =>
@@ -145,9 +175,9 @@ namespace SifflForums.Data.Migrations
 
                     b.HasKey("UpvoteId");
 
-                    b.HasIndex("UserId");
+                    b.HasAlternateKey("VotingBoxId", "UserId");
 
-                    b.HasIndex("VotingBoxId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Upvotes");
                 });
@@ -172,6 +202,18 @@ namespace SifflForums.Data.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "system@example.com",
+                            LastPasswordResetUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Password = "suchAPrettyHouse",
+                            RegisteredAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Salt = "suchAPrettyGarden",
+                            Username = "System"
+                        });
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.VotingBox", b =>
@@ -182,6 +224,12 @@ namespace SifflForums.Data.Migrations
                     b.HasKey("VotingBoxId");
 
                     b.ToTable("VotingBoxes");
+
+                    b.HasData(
+                        new
+                        {
+                            VotingBoxId = 1
+                        });
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
