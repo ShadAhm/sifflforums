@@ -28,7 +28,7 @@ namespace SifflForums.Service
 
         public void Vote(string username, int upvotableEntityId, IUpvotablesService entityService, bool isDownvote)
         {
-            IUpvotable upvotable = entityService.ResolveUpvotable(upvotableEntityId); 
+            IUpvotable upvotable = entityService.ResolveUpvotableEntity(upvotableEntityId); 
 
             var user = _usersService.GetByUsername(username);
             if (user == null) { return; }
@@ -64,7 +64,7 @@ namespace SifflForums.Service
 
         public void RemoveVotes(string username, int upvotableEntityId, IUpvotablesService entityService)
         {
-            IUpvotable upvotable = entityService.ResolveUpvotable(upvotableEntityId); 
+            IUpvotable upvotable = entityService.ResolveUpvotableEntity(upvotableEntityId); 
 
             var user = _usersService.GetByUsername(username);
             if (user == null) { return; }
