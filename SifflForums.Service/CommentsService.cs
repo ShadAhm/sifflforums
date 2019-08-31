@@ -139,7 +139,7 @@ namespace SifflForums.Service
             return null; 
         }
 
-        public IUpvotable ResolveUpvotable(int entityId)
+        public IUpvotable ResolveUpvotableEntity(int entityId)
         {
             return _dbContext.Comments.Find(entityId); 
         }
