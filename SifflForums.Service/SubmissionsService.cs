@@ -118,12 +118,11 @@ namespace SifflForums.Service
         public SubmissionModel Update(string username, SubmissionModel input)
         {
             var user = _usersService.GetByUsername(username);
-            var submission = _dbContext.Submissions.Find(input.SubmissionId);
+            var submission = _dbContext.Submissions.Where(o => o.SubmissionId == input.SubmissionId && o.CreatedBy == user.UserId);
 
             if (submission != null)
             {
                 Submission entity = new Submission();
-                entity.Title = input.Title;
                 entity.Text = input.Text;
                 entity.ModifiedAtUtc = DateTime.UtcNow;
                 entity.ModifiedBy = user.UserId;
