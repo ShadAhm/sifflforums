@@ -12,7 +12,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
 import { SubmissionComponent } from './components/submission/submission.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
-import { CommentViewComponent } from './components/comment-view/comment-view.component';
+import { CommentListItemComponent } from './components/comment-list-item/comment-list-item.component';
 import { SubmissionListItemComponent } from './components/submission-list-item/submission-list-item.component';
 import { ForumsectionListItemComponent } from './components/forumsection-list-item/forumsection-list-item.component';
 import { SubmissionsComponent } from './components/submissions/submissions.component';
@@ -27,7 +27,7 @@ import { SubmissionsComponent } from './components/submissions/submissions.compo
     SignupComponent,
     LoginComponent,
     DateAgoPipe,
-    CommentViewComponent,
+    CommentListItemComponent,
     SubmissionListItemComponent,
     ForumsectionListItemComponent,
     SubmissionsComponent

@@ -3,11 +3,11 @@ import { CommentPost } from '../../models/comments';
 import { CommentsService } from '../../services/comments.service';
 
 @Component({
-  selector: 'app-comment-view',
-  templateUrl: './comment-view.component.html',
-  styleUrls: ['./comment-view.component.scss']
+  selector: 'app-comment-list-item',
+  templateUrl: './comment-list-item.component.html',
+  styleUrls: ['./comment-list-item.component.scss']
 })
-export class CommentViewComponent implements OnInit {
+export class CommentListItemComponent implements OnInit {
   @Input() model: CommentPost;
   @Output() quoted = new EventEmitter<void>();
 

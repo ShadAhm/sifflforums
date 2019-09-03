@@ -24,7 +24,7 @@
   </div>
 
   <div *ngFor="let comment of comments">
-    <app-comment-view [model]="comment" (quoted)="onCommentQuoted(comment)"></app-comment-view>
+    <app-comment-list-item [model]="comment" (quoted)="onCommentQuoted(comment)"></app-comment-list-item>
   </div>
 
   <div class="mt-4">
