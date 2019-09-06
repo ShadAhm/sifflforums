@@ -7,7 +7,7 @@
     </div>
     <div class="ml-auto">
       <button class="btn btn-sm" title="Quote this comment" (click)="quote()">💬</button>
-      <button class="btn btn-sm" title="This is a great comment" (click)="upvote()">👍</button>
+      <button class="btn btn-sm" title="This is a great comment" (click)="upvote()" [ngClass]="{'vote-comment-notvoted':votePosition == 0,'vote-comment-upvoted':votePosition > 0,'vote-comment-downvoted':votePosition < 0 }" >👍</button>
       <div class="btn-group" [ngClass]="{'show': showMenu}">
         <button class="btn btn-sm" (click)="showMenu = !showMenu">⠇</button>
         <ul class="dropdown-menu" [ngClass]="{'show': showMenu}">

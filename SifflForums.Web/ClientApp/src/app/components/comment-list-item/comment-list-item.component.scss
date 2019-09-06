@@ -22,3 +22,16 @@ div.comment {
     white-space:pre-wrap; 
   }
 }
+
+.vote-comment-upvoted {
+
+}
+
+.vote-comment-notvoted, .vote-comment-downvoted {
+  color: transparent;
+  text-shadow: 0 0 0 #ced4da;
+}
+
+.vote-comment-downvoted {
+  transform: rotate(180deg);
+}

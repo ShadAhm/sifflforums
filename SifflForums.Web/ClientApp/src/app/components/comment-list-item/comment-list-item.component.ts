@@ -10,10 +10,12 @@ import { CommentsService } from '../../services/comments.service';
 export class CommentListItemComponent implements OnInit {
   @Input() model: CommentPost;
   @Output() quoted = new EventEmitter<void>();
+  votePosition: number; 
 
   constructor(private commentsService: CommentsService) { }
 
   ngOnInit() {
+    this.votePosition = this.model.currentUserVoteWeight;
   }
 
   quote(): void {
