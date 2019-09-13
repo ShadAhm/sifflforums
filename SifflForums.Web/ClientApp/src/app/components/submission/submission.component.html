@@ -2,22 +2,18 @@
   <h2>
     {{submission.title}}
   </h2>
-  <small class="text-muted">Posted by {{submission.username}} on {{submission.createdAtUtc|dateAgo}}</small>
-  <p>{{submission.text}}</p>
-
-  <div class="input-group mb-3">
-    <input type="number" readonly class="form-control" placeholder="" [value]="upvotesCountOnScreen" />
-    <div class="input-group-append">
-      <button [ngClass]="{'btn-primary':votePosition == 1}" class="btn btn-sm btn-default btn-outline" (click)="upvote()" type="button">
-        Upvote
-      </button>
-      <button [ngClass]="{'btn-primary':votePosition == -1}" class="btn btn-sm btn-outline" (click)="downvote()" type="button">
-        Downvote
-      </button>
+  <div class="d-flex align-items-center bg-light">
+    <div class="mr-2">
+      <button [ngClass]="{'arrow-vote-active':votePosition > 0}" class="btn btn-sm btn-link arrow-vote" (click)="upvote()">▲</button>
+      <span>{{upvotesCountOnScreen}}</span>
+      <button [ngClass]="{'arrow-vote-active':votePosition < 0}" class="btn btn-sm btn-link arrow-vote" (click)="downvote()">▼</button>
     </div>
+    <small class="text-muted">Posted by {{submission.username}} on {{submission.createdAtUtc|dateAgo}}</small>
+  </div>
+  <div class="arrow-vote" style="padding:0.5rem; margin-bottom:1rem; border:1px solid rgb(248, 249, 250); border-radius:0 0 0.2rem 0.2rem;">
+    <p>{{submission.text}}</p>
   </div>
 
-  <hr />
   <h6>Comments</h6>
   <div *ngIf="!comments || comments.length == 0" class="text-muted">
     No comments yet.
