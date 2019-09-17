@@ -18,7 +18,7 @@ namespace SifflForums.Service
         List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId);
         CommentModel Insert(string username, CommentModel input);
         CommentModel Update(string username, CommentModel input);
-        Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, int submissionId, string sortType, int pageIndex, int pageSize); 
+        Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, int submissionId, string sortType, int pageIndex, int pageSize);
     }
 
     public class CommentsService : ICommentsService
@@ -91,26 +91,26 @@ namespace SifflForums.Service
 
         public CommentModel Insert(string username, CommentModel input)
         {
-            var user = _usersService.GetByUsername(username);
+            UserModel user = _usersService.GetByUsername(username);
 
-            Comment entity = new Comment();
-            entity.SubmissionId = input.SubmissionId;
-            entity.Text = input.Text;
-
-            entity.UserId = user.UserId;
-            entity.CreatedAtUtc = DateTime.UtcNow;
-            entity.CreatedBy = user.UserId;
-            entity.ModifiedAtUtc = DateTime.UtcNow;
-            entity.ModifiedBy = user.UserId;
-            entity.VotingBox = new VotingBox(); 
+            var entity = _mapper.Map<CommentModel, Comment>(input, opt => opt.AfterMap((src, dest) =>
+            {
+                dest.CreatedAtUtc = DateTime.UtcNow;
+                dest.UserId = user.UserId;
+                dest.CreatedAtUtc = DateTime.UtcNow;
+                dest.CreatedBy = user.UserId;
+                dest.ModifiedAtUtc = DateTime.UtcNow;
+                dest.ModifiedBy = user.UserId;
+                dest.VotingBox = new VotingBox();
+            }));
 
             _dbContext.Comments.Add(entity);
             _dbContext.SaveChanges();
-            _dbContext.Entry(entity).Reference(c => c.User).Load(); 
+            _dbContext.Entry(entity).Reference(c => c.User).Load();
 
             _upvotesService.Vote(user.Username, entity.SubmissionId, this, false);
 
-            return _mapper.Map<CommentModel>(entity); 
+            return _mapper.Map<CommentModel>(entity);
         }
 
         public CommentModel Update(string username, CommentModel input)
@@ -118,30 +118,30 @@ namespace SifflForums.Service
             var user = _usersService.GetByUsername(username);
             var entity = _dbContext.Comments.Find(input.CommentId);
 
-            if(entity.UserId != user.UserId)
+            if (entity.UserId != user.UserId)
             {
                 // reject action
-                return null; 
+                return null;
             }
 
-            if(entity != null)
+            if (entity != null)
             {
                 entity.Text = input.Text;
                 entity.ModifiedAtUtc = DateTime.UtcNow;
                 entity.ModifiedBy = user.UserId;
 
                 _dbContext.Comments.Update(entity);
-                _dbContext.SaveChanges(); 
+                _dbContext.SaveChanges();
 
                 return _mapper.Map<CommentModel>(entity);
             }
 
-            return null; 
+            return null;
         }
 
         public IUpvotable ResolveUpvotableEntity(int entityId)
         {
-            return _dbContext.Comments.Find(entityId); 
+            return _dbContext.Comments.Find(entityId);
         }
     }
 }
