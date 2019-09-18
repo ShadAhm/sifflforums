@@ -97,14 +97,16 @@ namespace SifflForums.Service
         {
             var user = _usersService.GetByUsername(username);
 
-            var entity = _mapper.Map<Submission>(input); 
-
-            entity.UserId = user.UserId;
-            entity.CreatedAtUtc = DateTime.UtcNow;
-            entity.CreatedBy = user.UserId;
-            entity.ModifiedAtUtc = DateTime.UtcNow;
-            entity.ModifiedBy = user.UserId;
-            entity.VotingBox = new VotingBox();
+            var entity = _mapper.Map<SubmissionModel, Submission>(input, opt => opt.AfterMap((src, dest) =>
+            {
+                dest.CreatedAtUtc = DateTime.UtcNow;
+                dest.UserId = user.UserId;
+                dest.CreatedAtUtc = DateTime.UtcNow;
+                dest.CreatedBy = user.UserId;
+                dest.ModifiedAtUtc = DateTime.UtcNow;
+                dest.ModifiedBy = user.UserId;
+                dest.VotingBox = new VotingBox();
+            }));
 
             _dbContext.Submissions.Add(entity);
             _dbContext.SaveChanges();
