@@ -108,9 +108,12 @@ namespace SifflForums.Service
             _dbContext.SaveChanges();
             _dbContext.Entry(entity).Reference(c => c.User).Load();
 
-            _upvotesService.Vote(user.Username, entity.SubmissionId, this, false);
+            // automatic upvote from the poster
+            _upvotesService.Vote(user.Username, entity.CommentId, this, false);
 
-            return _mapper.Map<CommentModel>(entity);
+            _dbContext.Entry(entity.VotingBox).Collection(c => c.Upvotes).Load();
+
+            return MapToDto(username)(entity); 
         }
 
         public CommentModel Update(string username, CommentModel input)

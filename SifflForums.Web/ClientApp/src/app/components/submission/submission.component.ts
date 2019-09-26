@@ -48,6 +48,7 @@ export class SubmissionComponent implements OnInit {
       (error) => { console.error("Error happened", error) }
     );
   }
+
   postComment(): void {
     this.disableSubmitButton = true; 
 
