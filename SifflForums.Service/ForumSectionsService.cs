@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SifflForums.Data;
+using SifflForums.Data.Entities;
 using SifflForums.Service.Models.Dto;
 using System;
 using System.Collections.Generic;
@@ -43,9 +44,23 @@ namespace SifflForums.Service
             return _mapper.Map<List<ForumSectionModel>>(entities);
         }
 
-        public ForumSectionModel Insert(string username, ForumSectionModel input)
+        public ForumSectionModel Insert(string currentUsername, ForumSectionModel input)
         {
-            throw new NotImplementedException();
+            var user = _usersService.GetByUsername(currentUsername);
+
+            var entity = _mapper.Map<ForumSectionModel, ForumSection>(input, opt => opt.AfterMap((src, dest) =>
+            {
+                dest.CreatedAtUtc = DateTime.UtcNow;
+                dest.CreatedAtUtc = DateTime.UtcNow;
+                dest.CreatedBy = user.UserId;
+                dest.ModifiedAtUtc = DateTime.UtcNow;
+                dest.ModifiedBy = user.UserId;
+            }));
+
+            _dbContext.ForumSections.Add(entity);
+            _dbContext.SaveChanges();
+
+            return _mapper.Map<ForumSectionModel>(entity);
         }
 
         public ForumSectionModel Update(string username, ForumSectionModel input)
