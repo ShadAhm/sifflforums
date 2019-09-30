@@ -12,8 +12,8 @@ namespace SifflForums.Service
     {
         ForumSectionModel GetById(int id);
         List<ForumSectionModel> GetAll();
-        ForumSectionModel Insert(string username, ForumSectionModel input);
-        ForumSectionModel Update(string username, ForumSectionModel input);
+        ForumSectionModel Insert(string currentUsername, ForumSectionModel input);
+        ForumSectionModel Update(string currentUsername, ForumSectionModel input);
     }
 
     public class ForumSectionsService : IForumSectionsService
@@ -63,7 +63,7 @@ namespace SifflForums.Service
             return _mapper.Map<ForumSectionModel>(entity);
         }
 
-        public ForumSectionModel Update(string username, ForumSectionModel input)
+        public ForumSectionModel Update(string currentUsername, ForumSectionModel input)
         {
             throw new NotImplementedException();
         }
