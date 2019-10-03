@@ -47,15 +47,17 @@ export class SubmissionCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.submissionForm.valid)
-      alert('Form invalid. All fields are required, please check.'); 
+    if (!this.submissionForm.valid) {
+      alert('Form invalid. All fields are required, please check.');
+      return; 
+    }
 
     var input = new Submission();
     input.text = this.submissionForm.value.text;
     input.title = this.submissionForm.value.title;
     input.forumSectionId = this.submissionForm.value.forumSectionId;
 
-    this.submissionService.postThread(input).subscribe(
+    this.submissionService.postSubmission(input).subscribe(
       (response: Submission) => {
         this.router.navigateByUrl(`/submission/${response.submissionId}`);
       },
