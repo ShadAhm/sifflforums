@@ -16,8 +16,8 @@ namespace SifflForums.Service
     public interface ICommentsService : IUpvotablesService
     {
         List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId);
-        CommentModel Insert(string username, CommentModel input);
-        CommentModel Update(string username, CommentModel input);
+        CommentModel Insert(string currentUsername, CommentModel input);
+        CommentModel Update(string currentUsername, CommentModel input);
         Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, int submissionId, string sortType, int pageIndex, int pageSize);
     }
 
@@ -89,9 +89,9 @@ namespace SifflForums.Service
             };
         }
 
-        public CommentModel Insert(string username, CommentModel input)
+        public CommentModel Insert(string currentUsername, CommentModel input)
         {
-            UserModel user = _usersService.GetByUsername(username);
+            UserModel user = _usersService.GetByUsername(currentUsername);
 
             var entity = _mapper.Map<CommentModel, Comment>(input, opt => opt.AfterMap((src, dest) =>
             {
@@ -113,12 +113,12 @@ namespace SifflForums.Service
 
             _dbContext.Entry(entity.VotingBox).Collection(c => c.Upvotes).Load();
 
-            return MapToDto(username)(entity); 
+            return MapToDto(currentUsername)(entity); 
         }
 
-        public CommentModel Update(string username, CommentModel input)
+        public CommentModel Update(string currentUsername, CommentModel input)
         {
-            var user = _usersService.GetByUsername(username);
+            var user = _usersService.GetByUsername(currentUsername);
             var entity = _dbContext.Comments.Find(input.CommentId);
 
             if (entity.UserId != user.UserId)
