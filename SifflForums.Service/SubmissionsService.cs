@@ -16,9 +16,9 @@ namespace SifflForums.Service
     public interface ISubmissionsService : IUpvotablesService
     {
         Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int forumSectionId, string sortType, int pageIndex, int pageSize);
-        SubmissionModel Insert(string username, SubmissionModel value);
+        SubmissionModel Insert(string currentUsername, SubmissionModel value);
         SubmissionModel GetById(string currentUsername, int id);
-        SubmissionModel Update(string username, SubmissionModel input);
+        SubmissionModel Update(string currentUsername, SubmissionModel input);
     }
 
     public class SubmissionsService : ISubmissionsService
@@ -93,9 +93,9 @@ namespace SifflForums.Service
             return vm;
         }
 
-        public SubmissionModel Insert(string username, SubmissionModel input)
+        public SubmissionModel Insert(string currentUsername, SubmissionModel input)
         {
-            var user = _usersService.GetByUsername(username);
+            var user = _usersService.GetByUsername(currentUsername);
 
             var entity = _mapper.Map<SubmissionModel, Submission>(input, opt => opt.AfterMap((src, dest) =>
             {
@@ -112,14 +112,14 @@ namespace SifflForums.Service
             _dbContext.SaveChanges();
 
             // automatic upvote from the creator of the thread
-            _upvotesService.Vote(username, entity.SubmissionId, this, false);
+            _upvotesService.Vote(currentUsername, entity.SubmissionId, this, false);
 
             return _mapper.Map<SubmissionModel>(entity);
         }
 
-        public SubmissionModel Update(string username, SubmissionModel input)
+        public SubmissionModel Update(string currentUsername, SubmissionModel input)
         {
-            var user = _usersService.GetByUsername(username);
+            var user = _usersService.GetByUsername(currentUsername);
             var submission = _dbContext.Submissions.Where(o => o.SubmissionId == input.SubmissionId && o.CreatedBy == user.UserId);
 
             if (submission != null)
