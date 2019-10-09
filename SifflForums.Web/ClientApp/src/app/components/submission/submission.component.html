@@ -2,13 +2,13 @@
   <h2>
     {{submission.title}}
   </h2>
-  <div class="d-flex align-items-center bg-light">
+  <div class="d-flex align-items-center bg-dark">
     <div class="mr-2">
       <button [ngClass]="{'arrow-vote-active':votePosition > 0}" class="btn btn-sm btn-link arrow-vote" (click)="upvote()">▲</button>
-      <span>{{upvotesCountOnScreen}}</span>
+      <span class="text-light">{{upvotesCountOnScreen}}</span>
       <button [ngClass]="{'arrow-vote-active':votePosition < 0}" class="btn btn-sm btn-link arrow-vote" (click)="downvote()">▼</button>
     </div>
-    <small class="text-muted">Posted by {{submission.username}} on {{submission.createdAtUtc|dateAgo}}</small>
+    <small class="text-light">Posted by {{submission.username}} {{submission.createdAtUtc|dateAgo}}</small>
   </div>
   <div class="submission-text-container">
     <p>{{submission.text}}</p>
