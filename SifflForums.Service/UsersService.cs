@@ -32,7 +32,7 @@ namespace SifflForums.Service
 
         public UserModel GetByUsername(string username)
         {
-            var entity = _dbContext.Users.SingleOrDefault(o => o.Username == username);
+            var entity = _dbContext.Users.SingleOrDefault(u => u.Username == username);
 
             return _mapper.Map<UserModel>(entity);
         }
