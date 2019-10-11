@@ -46,7 +46,7 @@ namespace SifflForums.Service
             if (string.IsNullOrWhiteSpace(this._serviceApiKey))
                 throw new Exception("Expected API key");
 
-            User user = _dbContext.Users.Where(o => o.Username == input.Username).SingleOrDefault();
+            User user = _dbContext.Users.Where(u => u.Username == input.Username).SingleOrDefault();
 
             byte[] salt = Convert.FromBase64String(user.Salt);
             string hash = HashPasswordIntoBase64(input.Password, salt);
