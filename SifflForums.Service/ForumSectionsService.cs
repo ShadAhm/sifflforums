@@ -32,7 +32,7 @@ namespace SifflForums.Service
         public ForumSectionModel GetById(int id)
         {
             var entity = _dbContext.ForumSections
-                .SingleOrDefault(o => o.ForumSectionId == id);
+                .SingleOrDefault(fs => fs.ForumSectionId == id);
 
             return _mapper.Map<ForumSectionModel>(entity);
         }
