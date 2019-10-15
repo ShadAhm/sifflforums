@@ -30,12 +30,12 @@ namespace SifflForums.Service.Validators
 
         private bool BeUnique(string arg)
         {
-            return !_dbContext.Users.Any(o => o.Username == arg);
+            return !_dbContext.Users.Any(u => u.Username == arg);
         }
 
         private bool NotBeBlacklisted(string arg)
         {
-            return !_dbContext.BlacklistedPasswords.Any(o => o.Password == arg);
+            return !_dbContext.BlacklistedPasswords.Any(bp => bp.Password == arg);
         }
     }
 }
