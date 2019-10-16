@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using SifflForums.Data;
 using SifflForums.Service.Models.Dto;
+using System;
 using System.Linq;
 
 namespace SifflForums.Service.Validators
@@ -30,7 +31,7 @@ namespace SifflForums.Service.Validators
 
         private bool BeUnique(string arg)
         {
-            return !_dbContext.Users.Any(u => u.Username == arg);
+            return !_dbContext.Users.Any(u => string.Equals(u.Username,arg,StringComparison.InvariantCultureIgnoreCase));
         }
 
         private bool NotBeBlacklisted(string arg)
