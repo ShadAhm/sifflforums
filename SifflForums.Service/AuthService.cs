@@ -98,11 +98,6 @@ namespace SifflForums.Service
             return Convert.ToBase64String(hash);
         }
 
-        public bool ValidateToken(TokenModel token)
-        {
-            return true;
-        }
-
         private TokenModel IssueToken(string username)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_serviceApiKey));

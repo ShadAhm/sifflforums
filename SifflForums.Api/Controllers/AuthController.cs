@@ -48,11 +48,5 @@ namespace SifflForums.Api.Controllers
                 return StatusCode(StatusCodes.Status403Forbidden);
             }
         }
-
-        [HttpPost, Route("validatetoken")]
-        public IActionResult ValidateToken([FromBody]TokenModel user)
-        {
-            return Ok();
-        }
     }
 }
