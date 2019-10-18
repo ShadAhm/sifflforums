@@ -82,13 +82,13 @@ namespace SifflForums.Service
         public SubmissionModel GetById(string currentUsername, int id)
         {
             var vm = _dbContext.Submissions
-                .Include(o => o.User)
-                .Include(o => o.VotingBox)
-                .ThenInclude(o => o.Upvotes)
-                .ThenInclude(o => o.User)
+                .Include(s => s.User)
+                .Include(s => s.VotingBox)
+                .ThenInclude(s => s.Upvotes)
+                .ThenInclude(s => s.User)
                 .AsEnumerable()
                 .Select(MapToDto(currentUsername))
-                .SingleOrDefault(o => o.SubmissionId == id);
+                .SingleOrDefault(s => s.SubmissionId == id);
 
             return vm;
         }
