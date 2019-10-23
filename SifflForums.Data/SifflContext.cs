@@ -14,8 +14,6 @@ namespace SifflForums.Data
         public DbSet<Upvote> Upvotes { get; set; }
         public DbSet<VotingBox> VotingBoxes { get; set; }
         public DbSet<ForumSection> ForumSections { get; set; }
-
-        // Reference data below this line (to be added to Redis cache down the road)
         public DbSet<BlacklistedPassword> BlacklistedPasswords { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
