@@ -2,6 +2,7 @@
 using SifflForums.Data.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SifflForums.Data
@@ -20,7 +21,8 @@ namespace SifflForums.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite(@"Data Source=C:\Sample_db\Sample.db");
+                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Sample.db");
+                optionsBuilder.UseSqlite($@"Data Source={dbPath}");
             }
         }
 
