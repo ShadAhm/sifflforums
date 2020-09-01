@@ -21,7 +21,9 @@ namespace SifflForums.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Sample.db");
+                string appDataConfig = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Siffl");
+                Directory.CreateDirectory(appDataConfig);
+                string dbPath = Path.Combine(appDataConfig, "Sample.db");
                 optionsBuilder.UseSqlite($@"Data Source={dbPath}");
             }
         }
