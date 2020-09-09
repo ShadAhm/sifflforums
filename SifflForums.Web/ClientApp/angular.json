@@ -30,8 +30,7 @@
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -138,5 +137,8 @@
       }
     }
   },
-  "defaultProject": "ClientApp"
+  "defaultProject": "ClientApp",
+  "cli": {
+    "analytics": "9d59f466-1342-4844-b858-26c822d99672"
+  }
 }
