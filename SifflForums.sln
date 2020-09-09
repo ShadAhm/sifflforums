@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{51451E23-6609-4825-8E6A-2A9DE74260E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SifflForums.Service", "SifflForums.Service\SifflForums.Service.csproj", "{C0C57F3D-304A-4BEA-90BF-31A2829F79C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SifflForums.Service", "SifflForums.Service\SifflForums.Service.csproj", "{C0C57F3D-304A-4BEA-90BF-31A2829F79C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
