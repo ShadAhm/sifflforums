@@ -25,21 +25,17 @@ export class SubmissionCreateComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      var paramForumSectionId = params['forumSectionId'];
-      var forumSectionId = parseInt(paramForumSectionId);
-
-      if (forumSectionId != NaN) {
-        this.getForumSection(forumSectionId);
-      }
+      const forumSectionId = params['forumSectionId'];
+      this.getForumSection(forumSectionId);
     });
   }
 
-  getForumSection(forumSectionId: number): void {
+  getForumSection(forumSectionId: string): void {
     this.forumSectionsService.getById(forumSectionId).subscribe(
       (response: ForumSection) => {
         if (response != null) {
           this.submissionForm.controls.forumSectionName.setValue(response.name);
-          this.submissionForm.controls.forumSectionId.setValue(response.forumSectionId);
+          this.submissionForm.controls.forumSectionId.setValue(response.id);
         }
       },
       (error) => { console.error("Error happened", error) }
@@ -59,7 +55,7 @@ export class SubmissionCreateComponent implements OnInit {
 
     this.submissionService.postSubmission(input).subscribe(
       (response: Submission) => {
-        this.router.navigateByUrl(`/submission/${response.submissionId}`);
+        this.router.navigateByUrl(`/submission/${response.id}`);
       },
       (error) => { console.error("Error happened", error) }
     );

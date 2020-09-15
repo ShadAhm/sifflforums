@@ -17,7 +17,7 @@ namespace SifflForums.Service
     {
         Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int forumSectionId, string sortType, int pageIndex, int pageSize);
         SubmissionModel Insert(string currentUsername, SubmissionModel value);
-        SubmissionModel GetById(string currentUsername, int id);
+        SubmissionModel GetById(string currentUsername, string id);
         SubmissionModel Update(string currentUsername, SubmissionModel input);
     }
 
@@ -73,13 +73,13 @@ namespace SifflForums.Service
                 if (string.IsNullOrWhiteSpace(currentUsername))
                     return dto;
 
-                dto.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
+                dto.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.UserName == currentUsername)?.Weight ?? 0;
                  
                 return dto;
             };
         }
 
-        public SubmissionModel GetById(string currentUsername, int id)
+        public SubmissionModel GetById(string currentUsername, string id)
         {
             var vm = _dbContext.Submissions
                 .Include(s => s.User)
@@ -112,7 +112,7 @@ namespace SifflForums.Service
             _dbContext.SaveChanges();
 
             // automatic upvote from the creator of the thread
-            _upvotesService.Vote(currentUsername, entity.SubmissionId, this, false);
+            _upvotesService.Vote(currentUsername, entity.Id, this, false);
 
             return _mapper.Map<SubmissionModel>(entity);
         }
@@ -120,7 +120,7 @@ namespace SifflForums.Service
         public SubmissionModel Update(string currentUsername, SubmissionModel input)
         {
             var user = _usersService.GetByUsername(currentUsername);
-            var submission = _dbContext.Submissions.Where(o => o.SubmissionId == input.SubmissionId && o.CreatedBy == user.UserId);
+            var submission = _dbContext.Submissions.Where(o => o.Id == input.SubmissionId && o.CreatedBy == user.UserId);
 
             if (submission != null)
             {
@@ -137,7 +137,7 @@ namespace SifflForums.Service
             return null;
         }
 
-        public IUpvotable ResolveUpvotableEntity(int entityId)
+        public IUpvotableEntity ResolveUpvotableEntity(string entityId)
         {
             return _dbContext.Submissions.Find(entityId); 
         }

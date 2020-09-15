@@ -2,14 +2,13 @@
 
 namespace SifflForums.Data.Entities
 {
-    public class Comment : EntityBase, IUpvotable
+    public class Comment : AuditableEntityBase, IUpvotableEntity
     {
-        public int CommentId { get; set;}
         public string Text { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         public int SubmissionId { get; set; }
-        public int VotingBoxId { get; set; }
+        public string VotingBoxId { get; set; }
         public VotingBox VotingBox { get; set; }
         public Submission Submission { get; set; }
     }

@@ -16,7 +16,7 @@ export class ForumsectionsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  getById(forumSectionId: number): Observable<ForumSection> {
+  getById(forumSectionId: string): Observable<ForumSection> {
     return this.httpClient.get<ForumSection>(`${this.apiRoot}api/forumSections/${forumSectionId}`)
       .pipe(map(res => res));
   }

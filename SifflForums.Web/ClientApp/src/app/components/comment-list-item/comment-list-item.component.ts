@@ -33,7 +33,7 @@ export class CommentListItemComponent implements OnInit {
     this.votePosition = 1;
     this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
-    this.commentsService.upvote(this.model.commentId).subscribe(
+    this.commentsService.upvote(this.model.id).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -48,7 +48,7 @@ export class CommentListItemComponent implements OnInit {
     this.votePosition = -1;
     this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
-    this.commentsService.downvote(this.model.commentId).subscribe(
+    this.commentsService.downvote(this.model.id).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -58,7 +58,7 @@ export class CommentListItemComponent implements OnInit {
     this.votePosition = 0;
     this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
-    this.commentsService.removevote(this.model.commentId).subscribe(
+    this.commentsService.removevote(this.model.id).subscribe(
       (response) => { },
       (error) => { }
     );

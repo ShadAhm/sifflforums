@@ -9,8 +9,8 @@ namespace SifflForums.Service
 {
     public interface IUpvotesService
     {
-        void RemoveVotes(string username, int upvotableEntityId, IUpvotablesService entityService);
-        void Vote(string username, int upvotableEntityId, IUpvotablesService entityService, bool isDownvote);
+        void RemoveVotes(string username, string upvotableEntityId, IUpvotablesService entityService);
+        void Vote(string username, string upvotableEntityId, IUpvotablesService entityService, bool isDownvote);
     }
 
     public class UpvotesService : IUpvotesService
@@ -26,9 +26,9 @@ namespace SifflForums.Service
             _usersService = usersService;
         }
 
-        public void Vote(string username, int upvotableEntityId, IUpvotablesService entityService, bool isDownvote)
+        public void Vote(string username, string upvotableEntityId, IUpvotablesService entityService, bool isDownvote)
         {
-            IUpvotable upvotable = entityService.ResolveUpvotableEntity(upvotableEntityId); 
+            IUpvotableEntity upvotable = entityService.ResolveUpvotableEntity(upvotableEntityId); 
 
             var user = _usersService.GetByUsername(username);
             if (user == null) { return; }
@@ -62,9 +62,9 @@ namespace SifflForums.Service
             }
         }
 
-        public void RemoveVotes(string username, int upvotableEntityId, IUpvotablesService entityService)
+        public void RemoveVotes(string username, string upvotableEntityId, IUpvotablesService entityService)
         {
-            IUpvotable upvotable = entityService.ResolveUpvotableEntity(upvotableEntityId); 
+            IUpvotableEntity upvotable = entityService.ResolveUpvotableEntity(upvotableEntityId); 
 
             var user = _usersService.GetByUsername(username);
             if (user == null) { return; }

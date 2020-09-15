@@ -30,7 +30,7 @@ export class SubmissionListItemComponent implements OnInit {
     this.votePosition = 1;
     this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
-    this.submissionsService.upvote(this.model.submissionId).subscribe(
+    this.submissionsService.upvote(this.model.id).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -45,7 +45,7 @@ export class SubmissionListItemComponent implements OnInit {
     this.votePosition = -1;
     this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
-    this.submissionsService.downvote(this.model.submissionId).subscribe(
+    this.submissionsService.downvote(this.model.id).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -55,7 +55,7 @@ export class SubmissionListItemComponent implements OnInit {
     this.votePosition = 0;
     this.upvotesCountOnScreen = (this.model.upvotes - this.model.currentUserVoteWeight) + this.votePosition;
 
-    this.submissionsService.removevote(this.model.submissionId).subscribe(
+    this.submissionsService.removevote(this.model.id).subscribe(
       (response) => { },
       (error) => { }
     );

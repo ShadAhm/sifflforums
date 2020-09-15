@@ -4,9 +4,8 @@ using System.Text;
 
 namespace SifflForums.Data.Entities
 {
-    public class BlacklistedPassword
+    public class BlacklistedPassword : EntityBase
     {
-        public int BlacklistedPasswordId { get; set; }
         public string Password { get; set; }
     }
 }

@@ -12,12 +12,12 @@ import { PaginatedResult } from '../models/pagination';
 export class SubmissionsService extends BaseService {
   constructor(private httpClient: HttpClientService) { super(); }
 
-  getSubmission(submissionId: number): Observable<Submission> {
+  getSubmission(submissionId: string): Observable<Submission> {
     return this.httpClient.get<Submission>(`${this.apiRoot}api/submissions/${submissionId}`)
       .pipe(map(res => res));
   }
 
-  getSubmissions(forumSectionId: number, sort: string, pageIndex: number, pageSize: number): Observable<PaginatedResult<Submission[]>> {
+  getSubmissions(forumSectionId: string, sort: string, pageIndex: number, pageSize: number): Observable<PaginatedResult<Submission[]>> {
     return this.httpClient.get<PaginatedResult<Submission[]>>(`${this.apiRoot}api/submissions?forumSectionId=${forumSectionId}&sort=${sort}&pageIndex=${pageIndex}&pageSize=${pageSize}`)
       .pipe(map(res => res));
   }
@@ -27,17 +27,17 @@ export class SubmissionsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  upvote(submissionId: number): Observable<void> {
+  upvote(submissionId: string): Observable<void> {
     return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/upvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
 
-  downvote(submissionId: number): Observable<void> {
+  downvote(submissionId: string): Observable<void> {
     return this.httpClient.put<void>(`${this.apiRoot}api/submissions/${submissionId}/downvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
 
-  removevote(submissionId: number): Observable<void> {
+  removevote(submissionId: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.apiRoot}api/submissions/${submissionId}/removevotes`, this.httpHeaders)
       .pipe(map(res => res));
   }

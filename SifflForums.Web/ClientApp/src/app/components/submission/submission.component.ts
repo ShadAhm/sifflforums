@@ -11,7 +11,7 @@ import { CommentsService } from '../../services/comments.service';
   styleUrls: ['./submission.component.scss']
 })
 export class SubmissionComponent implements OnInit {
-  submissionId: number;
+  submissionId: string;
   submission: Submission;
   comments: CommentPost[];
   commentInput: string;
@@ -35,14 +35,14 @@ export class SubmissionComponent implements OnInit {
         this.votePosition = this.submission.currentUserVoteWeight;
         this.upvotesCountOnScreen = this.submission.upvotes; 
 
-        if (this.submission.submissionId > 0)
-          this.getComments(this.submission.submissionId);
+        if (this.submission.id != null && this.submission.id != '')
+          this.getComments(this.submission.id);
       },
       (error) => { console.error("Error happened", error) }
     );
   }
 
-  getComments(parentId: number): void {
+  getComments(parentId: string): void {
     this.commentsService.getComments(parentId).subscribe(
       (response: CommentPost[]) => { this.comments = response },
       (error) => { console.error("Error happened", error) }
@@ -75,7 +75,7 @@ export class SubmissionComponent implements OnInit {
     this.votePosition = 1;
     this.upvotesCountOnScreen = this.submission.upvotes - this.submission.currentUserVoteWeight + this.votePosition; 
 
-    this.submissionsService.upvote(this.submission.submissionId).subscribe(
+    this.submissionsService.upvote(this.submission.id).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -90,7 +90,7 @@ export class SubmissionComponent implements OnInit {
     this.votePosition = -1;
     this.upvotesCountOnScreen = this.submission.upvotes - this.submission.currentUserVoteWeight + this.votePosition; 
 
-    this.submissionsService.downvote(this.submission.submissionId).subscribe(
+    this.submissionsService.downvote(this.submission.id).subscribe(
       (response) => { },
       (error) => { }
     );
@@ -100,7 +100,7 @@ export class SubmissionComponent implements OnInit {
     this.votePosition = 0;
     this.upvotesCountOnScreen = this.submission.upvotes;
 
-    this.submissionsService.removevote(this.submission.submissionId).subscribe(
+    this.submissionsService.removevote(this.submission.id).subscribe(
       (response) => { },
       (error) => { }
     );

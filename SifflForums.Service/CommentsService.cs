@@ -84,7 +84,7 @@ namespace SifflForums.Service
                 if (string.IsNullOrWhiteSpace(currentUsername))
                     return dto;
 
-                dto.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.Username == currentUsername)?.Weight ?? 0;
+                dto.CurrentUserVoteWeight = entity.VotingBox.Upvotes.SingleOrDefault(uv => uv.User.UserName == currentUsername)?.Weight ?? 0;
                 return dto;
             };
         }
@@ -95,12 +95,6 @@ namespace SifflForums.Service
 
             var entity = _mapper.Map<CommentModel, Comment>(input, opt => opt.AfterMap((src, dest) =>
             {
-                dest.CreatedAtUtc = DateTime.UtcNow;
-                dest.UserId = user.UserId;
-                dest.CreatedAtUtc = DateTime.UtcNow;
-                dest.CreatedBy = user.UserId;
-                dest.ModifiedAtUtc = DateTime.UtcNow;
-                dest.ModifiedBy = user.UserId;
                 dest.VotingBox = new VotingBox();
             }));
 
@@ -109,7 +103,7 @@ namespace SifflForums.Service
             _dbContext.Entry(entity).Reference(c => c.User).Load();
 
             // automatic upvote from the poster
-            _upvotesService.Vote(user.Username, entity.CommentId, this, false);
+            _upvotesService.Vote(user.Username, entity.Id, this, false);
 
             _dbContext.Entry(entity.VotingBox).Collection(c => c.Upvotes).Load();
 
@@ -119,13 +113,7 @@ namespace SifflForums.Service
         public CommentModel Update(string currentUsername, CommentModel input)
         {
             var user = _usersService.GetByUsername(currentUsername);
-            var entity = _dbContext.Comments.Find(input.CommentId);
-
-            if (entity.UserId != user.UserId)
-            {
-                // reject action
-                return null;
-            }
+            var entity = _dbContext.Comments.Find(input.Id);
 
             if (entity != null)
             {
@@ -142,7 +130,7 @@ namespace SifflForums.Service
             return null;
         }
 
-        public IUpvotable ResolveUpvotableEntity(int entityId)
+        public IUpvotableEntity ResolveUpvotableEntity(string entityId)
         {
             return _dbContext.Comments.Find(entityId);
         }

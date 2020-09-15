@@ -18,19 +18,15 @@ export class SubmissionsComponent implements OnInit {
   isEditingPageNumber: boolean;
   sortingOptions: string[] = ['New', 'Top'];
   selectedSorter: string = this.sortingOptions[0];
-  forumSectionId: number; 
+  forumSectionId: string;
 
   constructor(private route: ActivatedRoute, private submissionsService: SubmissionsService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      var paramForumSectionId = params['forumSectionId'];
-      var forumSectionId = parseInt(paramForumSectionId);
-
-      if (forumSectionId != NaN) {
-        this.forumSectionId = forumSectionId; 
-        this.getSubmissions(this.selectedSorter, this.pageNumber, this.pageSize);
-      }
+      const forumSectionId = params['forumSectionId'];
+      this.forumSectionId = forumSectionId;
+      this.getSubmissions(this.selectedSorter, this.pageNumber, this.pageSize);
     });
   }
 

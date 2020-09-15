@@ -6,26 +6,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav ml-auto" *ngIf="isAuthenticated">
-          <li class="nav-item">
-            <span class="navbar-text">
-              Hi, <strong>{{loggedInUsername}}</strong>
-            </span>
-          </li>
-          <li class="nav-item">
-            <button class="btn btn-sm nav-link" (click)="signOut()">
-              Sign Out
-            </button>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml-auto" *ngIf="!isAuthenticated">
-          <li class="nav-item active">
-            <a class="nav-link" routerLink="/login">Log In <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/signup">Sign Up</a>
-          </li>
-        </ul>
+        <app-login-menu></app-login-menu>
       </div>
     </div>
   </nav>

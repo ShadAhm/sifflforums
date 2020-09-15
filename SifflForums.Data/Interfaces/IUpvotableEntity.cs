@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SifflForums.Data.Interfaces
 {
-    public interface IUpvotable
+    public interface IUpvotableEntity
     {
-        int VotingBoxId { get; set; }
+        string VotingBoxId { get; set; }
         VotingBox VotingBox { get; set; }
     }
 }

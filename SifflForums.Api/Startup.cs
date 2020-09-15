@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using SifflForums.Data;
+using SifflForums.Data.Entities;
 using System.Text;
 
 namespace SifflForums.Api
@@ -23,6 +26,10 @@ namespace SifflForums.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<SifflContext>(options =>
+                options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -34,6 +41,13 @@ namespace SifflForums.Api
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ServiceApiKey"]))
                     };
                 });
+
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<SifflContext>();
+
+            services.AddIdentityServer()
+                .AddApiAuthorization<ApplicationUser, SifflContext>();
+
             services.AddAutoMapper(typeof(Startup));
             services.AddCors(options =>
             {
@@ -43,6 +57,7 @@ namespace SifflForums.Api
                     builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
                 });
             });
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddDataAccessServices();
             services.AddInfrastructureServices();

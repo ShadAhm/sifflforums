@@ -1,19 +1,18 @@
-﻿using System;
+﻿using SifflForums.Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SifflForums.Data.Entities
 {
-    public abstract class EntityBase
+    public abstract class EntityBase : IEntity<string>
     {
-        public DateTime CreatedAtUtc { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime ModifiedAtUtc { get; set; }
-        public int ModifiedBy { get; set; }
-        [ForeignKey("CreatedBy")]
-        public User Creator { get; set; }
-        [ForeignKey("ModifiedBy")]
-        public User Modifier { get; set; }
+        public string Id { get; set; }
+    }
+
+    public abstract class EntityBase<TKey> : IEntity<TKey>
+    {
+        public TKey Id { get; set; }
     }
 }

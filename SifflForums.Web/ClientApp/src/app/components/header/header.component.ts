@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,22 +10,9 @@ export class HeaderComponent implements OnInit {
   isAuthenticated: boolean; 
   loggedInUsername: string; 
 
-  constructor(private router: Router, private authService: AuthService) {
-    router.events.subscribe((val) => {
-      this.checkAuthenticated(); 
-    });
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
-  }
-
-  checkAuthenticated(): void {
-    this.isAuthenticated = this.authService.isSignedIn();
-    this.loggedInUsername = this.authService.getUsername();
-  }
-
-  signOut(): void {
-    this.authService.signOut();
-    window.location.reload();
   }
 }

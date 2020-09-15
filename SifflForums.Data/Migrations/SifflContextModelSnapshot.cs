@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SifflForums.Data;
 
@@ -14,164 +15,461 @@ namespace SifflForums.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
+                {
+                    b.Property<string>("UserCode")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50000);
+
+                    b.Property<string>("DeviceCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime?>("Expiration")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.HasKey("UserCode");
+
+                    b.HasIndex("DeviceCode")
+                        .IsUnique();
+
+                    b.HasIndex("Expiration");
+
+                    b.ToTable("DeviceCodes");
+                });
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.PersistedGrant", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50000);
+
+                    b.Property<DateTime?>("Expiration")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Key");
+
+                    b.HasIndex("Expiration");
+
+                    b.HasIndex("SubjectId", "ClientId", "Type");
+
+                    b.ToTable("PersistedGrants");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("SifflForums.Data.Entities.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
 
             modelBuilder.Entity("SifflForums.Data.Entities.BlacklistedPassword", b =>
                 {
-                    b.Property<int>("BlacklistedPasswordId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BlacklistedPasswordId");
+                    b.HasKey("Id");
 
                     b.ToTable("BlacklistedPasswords");
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
                 {
-                    b.Property<int>("CommentId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAtUtc");
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("CreatedBy");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ModifiedAtUtc");
+                    b.Property<DateTime>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("ModifiedBy");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("SubmissionId");
+                    b.Property<int>("SubmissionId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Text");
+                    b.Property<string>("SubmissionId1")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VotingBoxId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CommentId");
+                    b.Property<string>("VotingBoxId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("ModifiedBy");
 
-                    b.HasIndex("SubmissionId");
+                    b.HasIndex("SubmissionId1");
 
                     b.HasIndex("UserId");
 
                     b.HasIndex("VotingBoxId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[VotingBoxId] IS NOT NULL");
 
                     b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.ForumSection", b =>
                 {
-                    b.Property<int>("ForumSectionId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAtUtc");
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("CreatedBy");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsPrivate");
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime>("ModifiedAtUtc");
+                    b.Property<DateTime>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("ModifiedBy");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ForumSectionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("ModifiedBy");
 
                     b.ToTable("ForumSections");
-
-                    b.HasData(
-                        new
-                        {
-                            ForumSectionId = 1,
-                            CreatedAtUtc = new DateTime(2019, 8, 30, 6, 53, 57, 703, DateTimeKind.Utc).AddTicks(6023),
-                            CreatedBy = 1,
-                            Description = "General Discussions",
-                            IsPrivate = false,
-                            ModifiedAtUtc = new DateTime(2019, 8, 30, 6, 53, 57, 703, DateTimeKind.Utc).AddTicks(6988),
-                            ModifiedBy = 1,
-                            Name = "General"
-                        });
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
                 {
-                    b.Property<int>("SubmissionId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAtUtc");
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("CreatedBy");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ForumSectionId");
+                    b.Property<int>("ForumSectionId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("ModifiedAtUtc");
+                    b.Property<string>("ForumSectionId1")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ModifiedBy");
+                    b.Property<DateTime>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Text");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VotingBoxId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("SubmissionId");
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VotingBoxId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
 
-                    b.HasIndex("ForumSectionId");
+                    b.HasIndex("ForumSectionId1");
 
                     b.HasIndex("ModifiedBy");
 
                     b.HasIndex("UserId");
 
                     b.HasIndex("VotingBoxId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[VotingBoxId] IS NOT NULL");
 
                     b.ToTable("Submissions");
-
-                    b.HasData(
-                        new
-                        {
-                            SubmissionId = 1,
-                            CreatedAtUtc = new DateTime(2019, 8, 30, 6, 53, 57, 704, DateTimeKind.Utc).AddTicks(2425),
-                            CreatedBy = 1,
-                            ForumSectionId = 1,
-                            ModifiedAtUtc = new DateTime(2019, 8, 30, 6, 53, 57, 704, DateTimeKind.Utc).AddTicks(2434),
-                            ModifiedBy = 1,
-                            Text = "Simple Forums for Learning",
-                            Title = "Welcome to Siffl Forums",
-                            UserId = 1,
-                            VotingBoxId = 1
-                        });
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Upvote", b =>
                 {
-                    b.Property<int>("UpvoteId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("VotingBoxId");
+                    b.Property<string>("VotingBoxId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Weight");
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
 
-                    b.HasKey("UpvoteId");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("VotingBoxId", "UserId");
 
@@ -180,136 +478,137 @@ namespace SifflForums.Data.Migrations
                     b.ToTable("Upvotes");
                 });
 
-            modelBuilder.Entity("SifflForums.Data.Entities.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Email");
-
-                    b.Property<DateTime>("LastPasswordResetUtc");
-
-                    b.Property<string>("Password");
-
-                    b.Property<DateTime>("RegisteredAtUtc");
-
-                    b.Property<string>("Salt");
-
-                    b.Property<string>("Username");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            Email = "system@example.com",
-                            LastPasswordResetUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "suchAPrettyHouse",
-                            RegisteredAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Salt = "suchAPrettyGarden",
-                            Username = "System"
-                        });
-                });
-
             modelBuilder.Entity("SifflForums.Data.Entities.VotingBox", b =>
                 {
-                    b.Property<int>("VotingBoxId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("VotingBoxId");
+                    b.HasKey("Id");
 
                     b.ToTable("VotingBoxes");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            VotingBoxId = 1
-                        });
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
                 {
-                    b.HasOne("SifflForums.Data.Entities.User", "Creator")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "Creator")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CreatedBy");
 
-                    b.HasOne("SifflForums.Data.Entities.User", "Modifier")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "Modifier")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ModifiedBy");
 
                     b.HasOne("SifflForums.Data.Entities.Submission", "Submission")
                         .WithMany("Comments")
-                        .HasForeignKey("SubmissionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SubmissionId1");
 
-                    b.HasOne("SifflForums.Data.Entities.User", "User")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
 
                     b.HasOne("SifflForums.Data.Entities.VotingBox", "VotingBox")
                         .WithMany()
-                        .HasForeignKey("VotingBoxId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VotingBoxId");
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.ForumSection", b =>
                 {
-                    b.HasOne("SifflForums.Data.Entities.User", "Creator")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "Creator")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CreatedBy");
 
-                    b.HasOne("SifflForums.Data.Entities.User", "Modifier")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "Modifier")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ModifiedBy");
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
                 {
-                    b.HasOne("SifflForums.Data.Entities.User", "Creator")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "Creator")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CreatedBy");
 
                     b.HasOne("SifflForums.Data.Entities.ForumSection", "ForumSection")
                         .WithMany()
-                        .HasForeignKey("ForumSectionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ForumSectionId1");
 
-                    b.HasOne("SifflForums.Data.Entities.User", "Modifier")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "Modifier")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ModifiedBy");
 
-                    b.HasOne("SifflForums.Data.Entities.User", "User")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
 
                     b.HasOne("SifflForums.Data.Entities.VotingBox", "VotingBox")
                         .WithMany()
-                        .HasForeignKey("VotingBoxId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VotingBoxId");
                 });
 
             modelBuilder.Entity("SifflForums.Data.Entities.Upvote", b =>
                 {
-                    b.HasOne("SifflForums.Data.Entities.User", "User")
+                    b.HasOne("SifflForums.Data.Entities.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SifflForums.Data.Entities.VotingBox", "VotingBox")
                         .WithMany("Upvotes")
                         .HasForeignKey("VotingBoxId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

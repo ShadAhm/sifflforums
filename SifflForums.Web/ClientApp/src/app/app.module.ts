@@ -7,8 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
 import { SubmissionComponent } from './components/submission/submission.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
@@ -16,6 +14,7 @@ import { CommentListItemComponent } from './components/comment-list-item/comment
 import { SubmissionListItemComponent } from './components/submission-list-item/submission-list-item.component';
 import { ForumsectionListItemComponent } from './components/forumsection-list-item/forumsection-list-item.component';
 import { SubmissionsComponent } from './components/submissions/submissions.component';
+import { ApiAuthorizationModule } from '../api-authorization/api-authorization.module';
 
 @NgModule({
   declarations: [
@@ -24,8 +23,6 @@ import { SubmissionsComponent } from './components/submissions/submissions.compo
     SubmissionComponent,
     SubmissionCreateComponent,
     HeaderComponent,
-    SignupComponent,
-    LoginComponent,
     DateAgoPipe,
     CommentListItemComponent,
     SubmissionListItemComponent,
@@ -37,7 +34,8 @@ import { SubmissionsComponent } from './components/submissions/submissions.compo
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ApiAuthorizationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

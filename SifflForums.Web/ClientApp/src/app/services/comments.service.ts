@@ -12,7 +12,7 @@ import { BaseService } from './base.service';
 export class CommentsService extends BaseService {
   constructor(private httpClient: HttpClientService) { super(); }
 
-  getComments(submissionId: number): Observable<CommentPost[]> {
+  getComments(submissionId: string): Observable<CommentPost[]> {
     return this.httpClient.get<CommentPost[]>(`${this.apiRoot}api/comments?submissionId=${submissionId}`)
       .pipe(map(res => res));
   }
@@ -22,17 +22,17 @@ export class CommentsService extends BaseService {
       .pipe(map(res => res));
   }
 
-  upvote(commentId: number): Observable<void> {
+  upvote(commentId: string): Observable<void> {
     return this.httpClient.put<void>(`${this.apiRoot}api/comments/${commentId}/upvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
 
-  downvote(commentId: number): Observable<void> {
+  downvote(commentId: string): Observable<void> {
     return this.httpClient.put<void>(`${this.apiRoot}api/comments/${commentId}/downvote`, null, this.httpHeaders)
       .pipe(map(res => res));
   }
 
-  removevote(commentId: number): Observable<void> {
+  removevote(commentId: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.apiRoot}api/comments/${commentId}/removevotes`, this.httpHeaders)
       .pipe(map(res => res));
   }

@@ -18,7 +18,7 @@ namespace SifflForums.Api.Controllers
         }
 
         [HttpGet("{id}"), AllowAnonymous, Authorize]
-        public ActionResult<ForumSectionModel> Get(int id)
+        public ActionResult<ForumSectionModel> Get(string id)
         {
             return _service.GetById(id);
         }

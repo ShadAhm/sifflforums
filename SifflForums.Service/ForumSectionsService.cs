@@ -10,7 +10,7 @@ namespace SifflForums.Service
 {
     public interface IForumSectionsService
     {
-        ForumSectionModel GetById(int id);
+        ForumSectionModel GetById(string id);
         List<ForumSectionModel> GetAll();
         ForumSectionModel Insert(string currentUsername, ForumSectionModel input);
         ForumSectionModel Update(string currentUsername, ForumSectionModel input);
@@ -29,10 +29,10 @@ namespace SifflForums.Service
             this._usersService = usersService;
         }
 
-        public ForumSectionModel GetById(int id)
+        public ForumSectionModel GetById(string id)
         {
             var entity = _dbContext.ForumSections
-                .SingleOrDefault(fs => fs.ForumSectionId == id);
+                .SingleOrDefault(fs => fs.Id == id);
 
             return _mapper.Map<ForumSectionModel>(entity);
         }

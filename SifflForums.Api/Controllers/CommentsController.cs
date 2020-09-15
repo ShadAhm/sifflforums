@@ -46,22 +46,16 @@ namespace SifflForums.Api.Controllers
         }
 
         [HttpPut("{id}/Upvote"), Authorize]
-        public ActionResult Upvote(int id)
+        public ActionResult Upvote(string id)
         {
-            if (id == 0)
-                return BadRequest("No Comment specified");
-
             _upvotesService.Vote(this.CurrentUsername, id, _service, false);
 
             return Ok();
         }
 
         [HttpPut("{id}/Downvote"), Authorize]
-        public ActionResult Downvote(int id)
+        public ActionResult Downvote(string id)
         {
-            if (id == 0)
-                return BadRequest("No Comment specified");
-
             _upvotesService.Vote(this.CurrentUsername, id, _service, true);
 
             return Ok();
@@ -69,11 +63,8 @@ namespace SifflForums.Api.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}/RemoveVotes"), Authorize]
-        public ActionResult RemoveVotes(int id)
+        public ActionResult RemoveVotes(string id)
         {
-            if (id == 0)
-                return BadRequest("No Comment specified");
-
             _upvotesService.RemoveVotes(this.CurrentUsername, id, _service);
 
             return Ok();

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SifflForums.Data.Entities
 {
-    public class VotingBox
+    public class VotingBox : EntityBase
     {
-        public int VotingBoxId { get; set; }
         public List<Upvote> Upvotes { get; set; }
     }
 }

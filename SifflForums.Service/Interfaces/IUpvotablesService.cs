@@ -7,6 +7,6 @@ namespace SifflForums.Service
 {
     public interface IUpvotablesService
     {
-        IUpvotable ResolveUpvotableEntity(int entityId); 
+        IUpvotableEntity ResolveUpvotableEntity(string entityId); 
     }
 }

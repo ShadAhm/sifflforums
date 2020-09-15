@@ -4,13 +4,12 @@ using System.Text;
 
 namespace SifflForums.Data.Entities
 {
-    public class Upvote
+    public class Upvote : EntityBase
     {
-        public int UpvoteId { get; set; }
-        public int VotingBoxId { get; set; }
-        public int UserId { get; set; }
+        public string VotingBoxId { get; set; }
+        public string UserId { get; set; }
         public int Weight { get; set; }
         public VotingBox VotingBox { get; set; }
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

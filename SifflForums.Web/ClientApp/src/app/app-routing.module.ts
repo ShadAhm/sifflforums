@@ -3,10 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { SubmissionComponent } from './components/submission/submission.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { LoginComponent } from './components/login/login.component';
-import { AuthGuardService } from './util-services/auth-guard.service';
-import { UnauthGuardService } from './util-services/unauth-guard.service';
 import { SubmissionsComponent } from './components/submissions/submissions.component';
 
 const routes: Routes = [
@@ -24,18 +20,7 @@ const routes: Routes = [
   {
     path: 'new-submission',
     component: SubmissionCreateComponent,
-    canActivate: [AuthGuardService], 
     data: { title: 'New Submission' }
-  },
-  {
-    path: 'signup',
-    component: SignupComponent,
-    canActivate: [UnauthGuardService]
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [UnauthGuardService]
   },
   {
     path: 'submissions/:forumSectionId',

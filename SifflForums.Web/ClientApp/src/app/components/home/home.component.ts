@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
         this.forumSections = response;
 
         if (this.forumSections.length == 1) {
-          this.router.navigateByUrl(`/submissions/${this.forumSections[0].forumSectionId}`);
+          this.router.navigateByUrl(`/submissions/${this.forumSections[0].id}`);
         }
       },
       (error) => { console.error("Error happened", error) }

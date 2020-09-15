@@ -7,8 +7,8 @@ namespace SifflForums.Service.Models.Dto
 {
     public class CommentModel
     {
-        public int CommentId { get; set; }
-        public int SubmissionId { get; set; }
+        public string Id { get; set; }
+        public string SubmissionId { get; set; }
         public string Username { get; set; }
         public string Text { get; set; }
         public int CurrentUserVoteWeight { get; set; }
