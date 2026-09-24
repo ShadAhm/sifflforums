@@ -1,8 +1,6 @@
-﻿using IdentityServer4.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.Extensions.Options;
 using SifflForums.Data.Entities;
 using SifflForums.Data.Interfaces;
 using SifflForums.Data.Services;
@@ -14,11 +12,11 @@ using System.Text;
 
 namespace SifflForums.Data
 {
-    public class SifflContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class SifflContext : IdentityDbContext<ApplicationUser>
     {
         public IUserResolverService _userResolverService { get; }
 
-        public SifflContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions, IUserResolverService userResolverService) : base(options, operationalStoreOptions)
+        public SifflContext(DbContextOptions options, IUserResolverService userResolverService) : base(options)
         {
             _userResolverService = userResolverService;
         }

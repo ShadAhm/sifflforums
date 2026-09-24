@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-submissions',
+  standalone: false,
   templateUrl: './submissions.component.html',
   styleUrls: ['./submissions.component.scss']
 })

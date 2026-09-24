@@ -6,6 +6,7 @@ import { Submission } from '../../models/comments';
 
 @Component({
   selector: 'app-forumsection-list-item',
+  standalone: false,
   templateUrl: './forumsection-list-item.component.html',
   styles: []
 })

@@ -17,13 +17,13 @@ namespace SifflForums.Api.Controllers
             this._service = service; 
         }
 
-        [HttpGet("{id}"), AllowAnonymous, Authorize]
+        [HttpGet("{id}"), AllowAnonymous]
         public ActionResult<ForumSectionModel> Get(string id)
         {
             return _service.GetById(id);
         }
 
-        [HttpGet(), AllowAnonymous, Authorize]
+        [HttpGet(), AllowAnonymous]
         public ActionResult<IEnumerable<ForumSectionModel>> GetAll()
         {
             return _service.GetAll();
