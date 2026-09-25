@@ -8,6 +8,7 @@ import { ForumSection } from '../../models/forums';
 
 @Component({
   selector: 'app-submission-create',
+  standalone: false,
   templateUrl: './submission-create.component.html',
   styles: []
 })

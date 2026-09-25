@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login-menu',
+  standalone: false,
   templateUrl: './login-menu.component.html',
   styleUrls: ['./login-menu.component.css']
 })

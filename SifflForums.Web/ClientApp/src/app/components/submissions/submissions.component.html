@@ -1,4 +1,4 @@
-<div *ngIf="!submissions || submissions.length == 0">
+<div *ngIf="!submissions || !submissions.results || submissions.results.length == 0">
   <p>There are no submissions at the moment.</p>
   <a class="btn btn-sm btn-primary" routerLink="/new-submission" [queryParams]="{forumSectionId:forumSectionId}">+New Thread</a>
 </div>

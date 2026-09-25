@@ -21,7 +21,7 @@ namespace SifflForums.Api.Controllers
         }
 
         // GET api/values
-        [HttpGet(), AllowAnonymous, Authorize]
+        [HttpGet(), AllowAnonymous]
         public ActionResult<IEnumerable<CommentModel>> Get(int submissionId)
         {
             return _service.GetBySubmissionId(this.CurrentUsername, submissionId);

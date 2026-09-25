@@ -4,6 +4,7 @@ import { CommentsService } from '../../services/comments.service';
 
 @Component({
   selector: 'app-comment-list-item',
+  standalone: false,
   templateUrl: './comment-list-item.component.html',
   styleUrls: ['./comment-list-item.component.scss']
 })
@@ -12,6 +13,7 @@ export class CommentListItemComponent implements OnInit {
   @Output() quoted = new EventEmitter<void>();
   votePosition: number;
   upvotesCountOnScreen: number;
+  showMenu: boolean;
 
   constructor(private commentsService: CommentsService) { }
 

@@ -7,6 +7,7 @@ import { CommentsService } from '../../services/comments.service';
 
 @Component({
   selector: 'app-submission',
+  standalone: false,
   templateUrl: './submission.component.html',
   styleUrls: ['./submission.component.scss']
 })

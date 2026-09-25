@@ -4,6 +4,7 @@ import { SubmissionsService } from '../../services/submissions.service';
 
 @Component({
   selector: 'app-submission-list-item',
+  standalone: false,
   templateUrl: './submission-list-item.component.html',
   styleUrls: ['./submission-list-item.component.scss']
 })
