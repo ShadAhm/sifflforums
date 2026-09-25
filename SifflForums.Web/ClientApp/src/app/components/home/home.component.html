@@ -1,3 +1,6 @@
 <div *ngFor="let section of forumSections" class="mb-4">
   <app-forumsection-list-item [model]="section"></app-forumsection-list-item>
 </div>
+<div *ngIf="!loaded" class="text-muted">Loading…</div>
+<div *ngIf="loaded && !errorMessage && !forumSections?.length" class="text-muted">No forum sections yet.</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>

@@ -28,5 +28,11 @@ namespace SifflForums.Api.Controllers
         {
             return _service.GetAll();
         }
+
+        [HttpPost, Authorize(Roles = Roles.Admin)]
+        public ActionResult<ForumSectionModel> Post([FromBody] ForumSectionModel value)
+        {
+            return _service.Insert(this.CurrentUsername, value);
+        }
     }
 }

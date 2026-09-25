@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using SifflForums.Service.Models.Dto;
 using SifflForums.Service;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
 namespace SifflForums.Api.Controllers
 {
@@ -25,6 +27,17 @@ namespace SifflForums.Api.Controllers
             var result = _service.GetAll();
 
             return Ok(result);
+        }
+
+        // The current user's name and roles; bearer tokens are opaque to the SPA
+        [HttpGet("me"), Authorize]
+        public ActionResult<CurrentUserModel> Me()
+        {
+            return new CurrentUserModel
+            {
+                UserName = CurrentUsername,
+                Roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList()
+            };
         }
 
         [HttpGet("{username}")]

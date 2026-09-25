@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SubmissionsService } from '../../services/submissions.service';
 import { Submission, CommentPost } from '../../models/comments';
@@ -8,6 +8,7 @@ import { CommentsService } from '../../services/comments.service';
 @Component({
   selector: 'app-submission',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './submission.component.html',
   styleUrls: ['./submission.component.scss']
 })

@@ -22,7 +22,7 @@ namespace SifflForums.Api.Controllers
 
         // GET api/values
         [HttpGet(), AllowAnonymous]
-        public ActionResult<IEnumerable<CommentModel>> Get(int submissionId)
+        public ActionResult<IEnumerable<CommentModel>> Get(string submissionId)
         {
             return _service.GetBySubmissionId(this.CurrentUsername, submissionId);
         }

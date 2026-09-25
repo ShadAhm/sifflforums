@@ -16,7 +16,7 @@ namespace SifflForums.Data.Services
 
         public string GetUserId()
         {
-            return _context.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _context.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }

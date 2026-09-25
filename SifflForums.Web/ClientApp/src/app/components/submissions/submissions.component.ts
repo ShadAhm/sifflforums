@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SubmissionsService } from '../../services/submissions.service';
 import { Submission } from '../../models/comments';
 import { PaginatedResult } from '../../models/pagination';
@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-submissions',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './submissions.component.html',
   styleUrls: ['./submissions.component.scss']
 })

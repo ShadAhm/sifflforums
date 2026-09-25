@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommentPost } from '../../models/comments';
 import { CommentsService } from '../../services/comments.service';
 
 @Component({
   selector: 'app-comment-list-item',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './comment-list-item.component.html',
   styleUrls: ['./comment-list-item.component.scss']
 })

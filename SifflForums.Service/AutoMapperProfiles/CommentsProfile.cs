@@ -14,7 +14,9 @@ namespace SifflForums.Service.AutoMapperProfiles
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.UserName))
                 .ForMember(dest => dest.Upvotes, opt => opt.MapFrom(src => src.VotingBox.Upvotes.Sum(uv => uv.Weight)));
 
-            CreateMap<CommentModel, Comment>();
+            CreateMap<CommentModel, Comment>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAtUtc, opt => opt.Ignore());
         }
     }
 }

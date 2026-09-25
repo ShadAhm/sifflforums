@@ -22,6 +22,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
         // Matches the existing schema created by the previous ApiAuthorization/IdentityServer setup
         options.Stores.MaxLengthForKeys = 128;
     })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<SifflContext>()
     .AddApiEndpoints();
 
@@ -41,6 +42,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseCors(devCorsPolicy);
+    try
+    {
+        await app.SeedAdminAsync();
+    }
+    catch (Exception ex)
+    {
+        // Don't block startup (e.g. database unreachable); the API still serves what it can
+        app.Logger.LogError(ex, "Seeding the admin user failed");
+    }
 }
 else
 {

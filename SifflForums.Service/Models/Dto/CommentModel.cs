@@ -13,6 +13,6 @@ namespace SifflForums.Service.Models.Dto
         public string Text { get; set; }
         public int CurrentUserVoteWeight { get; set; }
         public int Upvotes { get; set; }
-        public string CreatedAtUtc { get; set; }
+        public DateTime CreatedAtUtc { get; set; }
     }
 }

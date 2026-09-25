@@ -7,15 +7,16 @@ namespace SifflForums.Service.Models.Dto
 {
     public class SubmissionModel
     {
+        public string Id { get; set; }
         public string SubmissionId { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
-        public int UserId { get; set; }
-        public string UserName { get; set; }
+        public string UserId { get; set; }
+        public string Username { get; set; }
         public DateTime CreatedAtUtc { get; set; }
         public int CurrentUserVoteWeight { get; set; }
         public int Upvotes { get; set; }
         public int CommentsCount { get; set; }
-        public int ForumSectionId { get; set; }
+        public string ForumSectionId { get; set; }
     }
 }
