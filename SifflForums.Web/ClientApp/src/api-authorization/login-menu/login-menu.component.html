@@ -1,4 +1,7 @@
 <ul class="navbar-nav" *ngIf="isAuthenticated | async">
+    <li class="nav-item" *ngIf="isAdmin | async">
+        <a class="nav-link text-dark" [routerLink]='["/new-forum-section"]'>New section</a>
+    </li>
     <li class="nav-item">
         <span class="nav-link text-dark">Hello {{ userName | async }}</span>
     </li>

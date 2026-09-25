@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SifflForums.Data;
 
@@ -11,9 +12,11 @@ using SifflForums.Data;
 namespace SifflForums.Data.Migrations
 {
     [DbContext(typeof(SifflContext))]
-    partial class SifflContextModelSnapshot : ModelSnapshot
+    [Migration("20260925060214_SeedGeneralForumSection")]
+    partial class SeedGeneralForumSection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,7 +230,6 @@ namespace SifflForums.Data.Migrations
             modelBuilder.Entity("SifflForums.Data.Entities.BlacklistedPassword", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
@@ -241,7 +243,6 @@ namespace SifflForums.Data.Migrations
             modelBuilder.Entity("SifflForums.Data.Entities.Comment", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAtUtc")
@@ -256,7 +257,10 @@ namespace SifflForums.Data.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SubmissionId")
+                    b.Property<int>("SubmissionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubmissionId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Text")
@@ -274,7 +278,7 @@ namespace SifflForums.Data.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.HasIndex("SubmissionId");
+                    b.HasIndex("SubmissionId1");
 
                     b.HasIndex("UserId");
 
@@ -288,7 +292,6 @@ namespace SifflForums.Data.Migrations
             modelBuilder.Entity("SifflForums.Data.Entities.ForumSection", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAtUtc")
@@ -335,7 +338,6 @@ namespace SifflForums.Data.Migrations
             modelBuilder.Entity("SifflForums.Data.Entities.Submission", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAtUtc")
@@ -344,7 +346,10 @@ namespace SifflForums.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ForumSectionId")
+                    b.Property<int>("ForumSectionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ForumSectionId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ModifiedAtUtc")
@@ -372,7 +377,7 @@ namespace SifflForums.Data.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.HasIndex("ForumSectionId");
+                    b.HasIndex("ForumSectionId1");
 
                     b.HasIndex("ModifiedBy");
 
@@ -388,7 +393,6 @@ namespace SifflForums.Data.Migrations
             modelBuilder.Entity("SifflForums.Data.Entities.Upvote", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
@@ -414,7 +418,6 @@ namespace SifflForums.Data.Migrations
             modelBuilder.Entity("SifflForums.Data.Entities.VotingBox", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -485,7 +488,7 @@ namespace SifflForums.Data.Migrations
 
                     b.HasOne("SifflForums.Data.Entities.Submission", "Submission")
                         .WithMany("Comments")
-                        .HasForeignKey("SubmissionId");
+                        .HasForeignKey("SubmissionId1");
 
                     b.HasOne("SifflForums.Data.Entities.ApplicationUser", "User")
                         .WithMany()
@@ -529,7 +532,7 @@ namespace SifflForums.Data.Migrations
 
                     b.HasOne("SifflForums.Data.Entities.ForumSection", "ForumSection")
                         .WithMany()
-                        .HasForeignKey("ForumSectionId");
+                        .HasForeignKey("ForumSectionId1");
 
                     b.HasOne("SifflForums.Data.Entities.ApplicationUser", "Modifier")
                         .WithMany()

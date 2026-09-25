@@ -9,7 +9,8 @@ namespace SifflForums.Service.AutoMapperProfiles
         public ForumSectionsProfile()
         {
             CreateMap<ForumSection, ForumSectionModel>();
-            CreateMap<ForumSectionModel, ForumSection>();
+            CreateMap<ForumSectionModel, ForumSection>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
         }
     }
 }

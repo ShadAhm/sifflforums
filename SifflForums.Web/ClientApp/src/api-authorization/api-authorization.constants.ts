@@ -13,11 +13,12 @@ export const LoginActions = {
   Register: 'register'
 };
 
-// Endpoints exposed by ASP.NET Core Identity (MapIdentityApi) on the API
+// Auth-related API endpoints; login/register/refresh come from ASP.NET Core Identity (MapIdentityApi)
 export const AuthApiPaths = {
   Login: 'api/auth/login',
   Register: 'api/auth/register',
-  Refresh: 'api/auth/refresh'
+  Refresh: 'api/auth/refresh',
+  CurrentUser: 'api/users/me'
 };
 
 let applicationPaths: ApplicationPathsType = {

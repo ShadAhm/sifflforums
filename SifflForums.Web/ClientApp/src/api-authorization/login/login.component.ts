@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -11,6 +11,7 @@ import { ApplicationPaths, LoginActions, QueryParameterNames } from '../api-auth
 @Component({
   selector: 'app-login',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
@@ -34,6 +35,10 @@ export class LoginComponent implements OnInit {
     this.activatedRoute.url.subscribe(url => {
       this.isRegister = url[1]?.path === LoginActions.Register;
       this.errorMessage = null;
+      // Registration needs an email address, but login also accepts a plain username (e.g. "admin")
+      const email = this.form.controls.email;
+      email.setValidators(this.isRegister ? [Validators.required, Validators.email] : Validators.required);
+      email.updateValueAndValidity();
     });
   }
 
@@ -43,7 +48,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.form.valid) {
-      this.errorMessage = 'Please enter a valid email and password.';
+      this.errorMessage = this.isRegister
+        ? 'Please enter a valid email and password.'
+        : 'Please enter your email or username and password.';
       return;
     }
 

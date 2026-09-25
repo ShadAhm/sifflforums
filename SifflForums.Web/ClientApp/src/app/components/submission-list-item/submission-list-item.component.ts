@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Submission } from '../../models/comments';
 import { SubmissionsService } from '../../services/submissions.service';
 
 @Component({
   selector: 'app-submission-list-item',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './submission-list-item.component.html',
   styleUrls: ['./submission-list-item.component.scss']
 })

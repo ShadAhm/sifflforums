@@ -8,7 +8,10 @@ namespace SifflForums.Service.AutoMapperProfiles
     {
         public UsersProfile()
         {
-            CreateMap<ApplicationUser, UserModel>().ReverseMap();
+            CreateMap<ApplicationUser, UserModel>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.UserName))
+                .ReverseMap();
         }
     }
 }

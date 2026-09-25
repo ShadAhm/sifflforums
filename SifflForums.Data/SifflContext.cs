@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SifflForums.Data.Entities;
 using SifflForums.Data.Interfaces;
 using SifflForums.Data.Services;
@@ -31,8 +32,24 @@ namespace SifflForums.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.SetConstraints();
+            modelBuilder.GenerateStringKeys();
             modelBuilder.Seed();
             base.OnModelCreating(modelBuilder);
+        }
+
+        // All timestamps are stored as UTC, but SQL Server returns them with Kind=Unspecified,
+        // which serializes without a "Z" and makes browsers read them as local time.
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<DateTime>().HaveConversion<UtcDateTimeConverter>();
+        }
+
+        private class UtcDateTimeConverter : ValueConverter<DateTime, DateTime>
+        {
+            public UtcDateTimeConverter()
+                : base(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc))
+            {
+            }
         }
 
         public override int SaveChanges()

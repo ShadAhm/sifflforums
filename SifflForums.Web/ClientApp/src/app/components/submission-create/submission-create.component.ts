@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SubmissionsService } from '../../services/submissions.service';
 import { Submission } from '../../models/comments';
@@ -9,11 +9,14 @@ import { ForumSection } from '../../models/forums';
 @Component({
   selector: 'app-submission-create',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './submission-create.component.html',
   styles: []
 })
 export class SubmissionCreateComponent implements OnInit {
   forumSection: ForumSection; 
+  isSubmitting: boolean;
+  errorMessage: string;
 
   submissionForm : FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -45,7 +48,7 @@ export class SubmissionCreateComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.submissionForm.valid) {
-      alert('Form invalid. All fields are required, please check.');
+      this.errorMessage = 'Title and text are required.';
       return; 
     }
 
@@ -54,11 +57,17 @@ export class SubmissionCreateComponent implements OnInit {
     input.title = this.submissionForm.value.title;
     input.forumSectionId = this.submissionForm.value.forumSectionId;
 
+    this.isSubmitting = true;
+    this.errorMessage = null;
     this.submissionService.postSubmission(input).subscribe(
       (response: Submission) => {
         this.router.navigateByUrl(`/submission/${response.id}`);
       },
-      (error) => { console.error("Error happened", error) }
+      (error) => {
+        console.error("Error happened", error);
+        this.errorMessage = error?.status === 401 ? 'Please log in to post.' : 'Could not create the post.';
+        this.isSubmitting = false;
+      }
     );
   }
 }

@@ -15,10 +15,10 @@ namespace SifflForums.Service
 {
     public interface ICommentsService : IUpvotablesService
     {
-        List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId);
+        List<CommentModel> GetBySubmissionId(string currentUsername, string submissionId);
         CommentModel Insert(string currentUsername, CommentModel input);
         CommentModel Update(string currentUsername, CommentModel input);
-        Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, int submissionId, string sortType, int pageIndex, int pageSize);
+        Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, string submissionId, string sortType, int pageIndex, int pageSize);
     }
 
     public class CommentsService : ICommentsService
@@ -36,7 +36,7 @@ namespace SifflForums.Service
             this._upvotesService = upvotesService;
         }
 
-        public List<CommentModel> GetBySubmissionId(string currentUsername, int submissionId)
+        public List<CommentModel> GetBySubmissionId(string currentUsername, string submissionId)
         {
             var comments = _dbContext.Comments
                 .Include(c => c.User)
@@ -50,7 +50,7 @@ namespace SifflForums.Service
             return comments;
         }
 
-        public async Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, int submissionId, string sortType, int pageIndex, int pageSize)
+        public async Task<PaginatedListResult<CommentModel>> GetPagedForSubmissionAsync(string currentUsername, string submissionId, string sortType, int pageIndex, int pageSize)
         {
             IQueryable<Comment> queryable = _dbContext.Comments
                 .Include(c => c.User)
@@ -95,6 +95,7 @@ namespace SifflForums.Service
 
             var entity = _mapper.Map<CommentModel, Comment>(input, opt => opt.AfterMap((src, dest) =>
             {
+                dest.UserId = user.UserId;
                 dest.VotingBox = new VotingBox();
             }));
 

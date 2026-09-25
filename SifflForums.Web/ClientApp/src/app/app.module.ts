@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { NgModule, provideZoneChangeDetection } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,7 @@ import { CommentListItemComponent } from './components/comment-list-item/comment
 import { SubmissionListItemComponent } from './components/submission-list-item/submission-list-item.component';
 import { ForumsectionListItemComponent } from './components/forumsection-list-item/forumsection-list-item.component';
 import { SubmissionsComponent } from './components/submissions/submissions.component';
+import { ForumsectionCreateComponent } from './components/forumsection-create/forumsection-create.component';
 import { ApiAuthorizationModule } from '../api-authorization/api-authorization.module';
 import { AuthorizeInterceptor } from '../api-authorization/authorize.interceptor';
 
@@ -28,7 +29,8 @@ import { AuthorizeInterceptor } from '../api-authorization/authorize.interceptor
     CommentListItemComponent,
     SubmissionListItemComponent,
     ForumsectionListItemComponent,
-    SubmissionsComponent
+    SubmissionsComponent,
+    ForumsectionCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,6 @@ import { AuthorizeInterceptor } from '../api-authorization/authorize.interceptor
     ApiAuthorizationModule
   ],
   providers: [
-    provideZoneChangeDetection(),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
   ],

@@ -21,4 +21,8 @@ export class ForumsectionsService extends BaseService {
       .pipe(map(res => res));
   }
 
+  create(section: ForumSection): Observable<ForumSection> {
+    return this.httpClient.post<ForumSection>(`${this.apiRoot}api/forumSections`, section, this.httpHeaders);
+  }
+
 }

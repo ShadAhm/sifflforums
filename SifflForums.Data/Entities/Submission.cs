@@ -12,7 +12,7 @@ namespace SifflForums.Data.Entities
         public string VotingBoxId { get; set; }
         public VotingBox VotingBox { get; set; }
         public List<Comment> Comments { get; set; }
-        public int ForumSectionId { get; set; }
+        public string ForumSectionId { get; set; }
         public ForumSection ForumSection { get; set; }
         public int Version { get; set; }
     }

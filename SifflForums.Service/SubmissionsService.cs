@@ -15,7 +15,7 @@ namespace SifflForums.Service
 {
     public interface ISubmissionsService : IUpvotablesService
     {
-        Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int forumSectionId, string sortType, int pageIndex, int pageSize);
+        Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, string forumSectionId, string sortType, int pageIndex, int pageSize);
         SubmissionModel Insert(string currentUsername, SubmissionModel value);
         SubmissionModel GetById(string currentUsername, string id);
         SubmissionModel Update(string currentUsername, SubmissionModel input);
@@ -36,7 +36,7 @@ namespace SifflForums.Service
             _upvotesService = upvotesService;
         }
 
-        public async Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, int forumSectionId, string sortType, int pageIndex, int pageSize)
+        public async Task<PaginatedListResult<SubmissionModel>> GetPagedAsync(string currentUsername, string forumSectionId, string sortType, int pageIndex, int pageSize)
         {
             IQueryable<Submission> queryable = _dbContext.Submissions
                 .Include(o => o.User)
@@ -45,7 +45,7 @@ namespace SifflForums.Service
                 .ThenInclude(o => o.Upvotes)
                 .ThenInclude(o => o.User);
 
-            if (forumSectionId > 0)
+            if (!string.IsNullOrEmpty(forumSectionId))
                 queryable = queryable.Where(o => o.ForumSectionId == forumSectionId);
 
             switch(sortType)
@@ -82,7 +82,9 @@ namespace SifflForums.Service
         public SubmissionModel GetById(string currentUsername, string id)
         {
             var vm = _dbContext.Submissions
+                .Where(s => s.Id == id)
                 .Include(s => s.User)
+                .Include(s => s.Comments)
                 .Include(s => s.VotingBox)
                 .ThenInclude(s => s.Upvotes)
                 .ThenInclude(s => s.User)
