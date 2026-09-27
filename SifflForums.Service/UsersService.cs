@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using SifflForums.Data;
+﻿using SifflForums.Data;
+using SifflForums.Service.Mapping;
 using SifflForums.Service.Models.Dto;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +15,24 @@ namespace SifflForums.Service
     public class UsersService : IUsersService
     {
         private readonly SifflContext _dbContext;
-        private readonly IMapper _mapper;
 
-        public UsersService(SifflContext dbContext, IMapper mapper)
+        public UsersService(SifflContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         public IEnumerable<UserModel> GetAll()
         {
             var entities = _dbContext.Users.Take(500).ToList();
 
-            return _mapper.Map<IEnumerable<UserModel>>(entities);
+            return entities.Select(e => e.ToModel()).ToList();
         }
 
         public UserModel GetByUsername(string username)
         {
             var entity = _dbContext.Users.SingleOrDefault(u => u.UserName == username);
 
-            return _mapper.Map<UserModel>(entity);
+            return entity.ToModel();
         }
     }
 }

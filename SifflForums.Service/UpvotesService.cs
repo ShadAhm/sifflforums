@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using SifflForums.Data;
+﻿using SifflForums.Data;
 using SifflForums.Data.Entities;
 using SifflForums.Data.Interfaces;
 using System.Collections.Generic;
@@ -16,13 +15,11 @@ namespace SifflForums.Service
     public class UpvotesService : IUpvotesService
     {
         private readonly SifflContext _dbContext;
-        private readonly IMapper _mapper;
         private readonly IUsersService _usersService;
 
-        public UpvotesService(SifflContext dbContext, IMapper mapper, IUsersService usersService)
+        public UpvotesService(SifflContext dbContext, IUsersService usersService)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
             _usersService = usersService;
         }
 

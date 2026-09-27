@@ -34,7 +34,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddDataAccessServices();
-builder.Services.AddInfrastructureServices();
 
 var app = builder.Build();
 

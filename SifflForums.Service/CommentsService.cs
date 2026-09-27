@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SifflForums.Data;
 using SifflForums.Data.Entities;
 using SifflForums.Data.Interfaces;
 using SifflForums.Service.Common;
+using SifflForums.Service.Mapping;
 using SifflForums.Service.Models;
 using SifflForums.Service.Models.Dto;
 using System;
@@ -24,14 +24,12 @@ namespace SifflForums.Service
     public class CommentsService : ICommentsService
     {
         private readonly SifflContext _dbContext;
-        private readonly IMapper _mapper;
         private readonly IUsersService _usersService;
         private readonly IUpvotesService _upvotesService;
 
-        public CommentsService(SifflContext dbContext, IMapper mapper, IUsersService usersService, IUpvotesService upvotesService)
+        public CommentsService(SifflContext dbContext, IUsersService usersService, IUpvotesService upvotesService)
         {
             this._dbContext = dbContext;
-            this._mapper = mapper;
             this._usersService = usersService;
             this._upvotesService = upvotesService;
         }
@@ -79,7 +77,7 @@ namespace SifflForums.Service
         {
             return entity =>
             {
-                var dto = _mapper.Map<Comment, CommentModel>(entity);
+                var dto = entity.ToModel();
 
                 if (string.IsNullOrWhiteSpace(currentUsername))
                     return dto;
@@ -93,11 +91,9 @@ namespace SifflForums.Service
         {
             UserModel user = _usersService.GetByUsername(currentUsername);
 
-            var entity = _mapper.Map<CommentModel, Comment>(input, opt => opt.AfterMap((src, dest) =>
-            {
-                dest.UserId = user.UserId;
-                dest.VotingBox = new VotingBox();
-            }));
+            var entity = input.ToEntity();
+            entity.UserId = user.UserId;
+            entity.VotingBox = new VotingBox();
 
             _dbContext.Comments.Add(entity);
             _dbContext.SaveChanges();
@@ -125,7 +121,7 @@ namespace SifflForums.Service
                 _dbContext.Comments.Update(entity);
                 _dbContext.SaveChanges();
 
-                return _mapper.Map<CommentModel>(entity);
+                return entity.ToModel();
             }
 
             return null;
