@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- 14.0.0 is the last MIT-licensed AutoMapper release; 15+ requires a commercial license -->
-    <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="FluentValidation" Version="12.1.1" />
   </ItemGroup>
 

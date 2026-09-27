@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using SifflForums.Data;
-using SifflForums.Data.Entities;
+﻿using SifflForums.Data;
+using SifflForums.Service.Mapping;
 using SifflForums.Service.Models.Dto;
 using System;
 using System.Collections.Generic;
@@ -19,13 +18,11 @@ namespace SifflForums.Service
     public class ForumSectionsService : IForumSectionsService
     {
         private readonly SifflContext _dbContext;
-        private readonly IMapper _mapper;
         private readonly IUsersService _usersService;
 
-        public ForumSectionsService(SifflContext dbContext, IMapper mapper, IUsersService usersService)
+        public ForumSectionsService(SifflContext dbContext, IUsersService usersService)
         {
             this._dbContext = dbContext;
-            this._mapper = mapper;
             this._usersService = usersService;
         }
 
@@ -34,33 +31,30 @@ namespace SifflForums.Service
             var entity = _dbContext.ForumSections
                 .SingleOrDefault(fs => fs.Id == id);
 
-            return _mapper.Map<ForumSectionModel>(entity);
+            return entity.ToModel();
         }
 
         public List<ForumSectionModel> GetAll()
         {
             var entities = _dbContext.ForumSections.ToList();
 
-            return _mapper.Map<List<ForumSectionModel>>(entities);
+            return entities.Select(e => e.ToModel()).ToList();
         }
 
         public ForumSectionModel Insert(string currentUsername, ForumSectionModel input)
         {
             var user = _usersService.GetByUsername(currentUsername);
 
-            var entity = _mapper.Map<ForumSectionModel, ForumSection>(input, opt => opt.AfterMap((src, dest) =>
-            {
-                dest.CreatedAtUtc = DateTime.UtcNow;
-                dest.CreatedAtUtc = DateTime.UtcNow;
-                dest.CreatedBy = user.UserId;
-                dest.ModifiedAtUtc = DateTime.UtcNow;
-                dest.ModifiedBy = user.UserId;
-            }));
+            var entity = input.ToEntity();
+            entity.CreatedAtUtc = DateTime.UtcNow;
+            entity.CreatedBy = user.UserId;
+            entity.ModifiedAtUtc = DateTime.UtcNow;
+            entity.ModifiedBy = user.UserId;
 
             _dbContext.ForumSections.Add(entity);
             _dbContext.SaveChanges();
 
-            return _mapper.Map<ForumSectionModel>(entity);
+            return entity.ToModel();
         }
 
         public ForumSectionModel Update(string currentUsername, ForumSectionModel input)
