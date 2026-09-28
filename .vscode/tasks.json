@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start SQL Server",
+      "type": "process",
+      "command": "docker",
+      "args": ["compose", "up", "-d", "--wait", "db"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Apply Database Migrations",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "ef",
+        "database",
+        "update",
+        "--project",
+        "SifflForums.Data",
+        "--startup-project",
+        "SifflForums.Api"
+      ],
+      "dependsOn": "Start SQL Server",
+      "dependsOrder": "sequence",
+      "options": {
+        "env": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+      },
+      "problemMatcher": []
+    }
+  ]
+}

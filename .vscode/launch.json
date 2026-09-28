@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "SifflForums API",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/SifflForums.Api/SifflForums.Api.csproj",
+      "launchSettingsProfile": "SifflForums.Api"
+    },
+    {
+      "name": "SifflForums Web",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/SifflForums.Web/SifflForums.Web.csproj",
+      "launchSettingsProfile": "SifflForums.Web"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Run All",
+      "configurations": ["SifflForums API", "SifflForums Web"],
+      "preLaunchTask": "Start SQL Server",
+      "stopAll": true
+    }
+  ]
+}
