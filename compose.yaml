@@ -5,7 +5,7 @@ services:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in the root .env file}
     ports:
-      - "14330:1433"
+      - "127.0.0.1:14330:1433"
     volumes:
       - sifflforums-sql-data:/var/opt/mssql
     healthcheck:
