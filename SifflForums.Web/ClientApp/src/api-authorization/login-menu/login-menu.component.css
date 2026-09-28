@@ -1,0 +1,5 @@
+/* Let the navbar-nav lists become direct children of .navbar-collapse
+   so Bootstrap's ml-auto flex utility can push them to the right. */
+:host {
+  display: contents;
+}

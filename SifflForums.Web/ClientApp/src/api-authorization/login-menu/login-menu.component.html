@@ -1,15 +1,15 @@
-<ul class="navbar-nav" *ngIf="isAuthenticated | async">
+<ul class="navbar-nav ml-auto align-items-md-center" *ngIf="isAuthenticated | async">
+    <li class="nav-item">
+        <span class="navbar-text">Hello, {{ userName | async }}</span>
+    </li>
     <li class="nav-item" *ngIf="isAdmin | async">
         <a class="nav-link text-dark" [routerLink]='["/new-forum-section"]'>New section</a>
-    </li>
-    <li class="nav-item">
-        <span class="nav-link text-dark">Hello {{ userName | async }}</span>
     </li>
     <li class="nav-item">
         <a  class="nav-link text-dark" [routerLink]='["/authentication/logout"]' title="Logout">Logout</a>
     </li>
 </ul>
-<ul class="navbar-nav" *ngIf="!(isAuthenticated | async)">
+<ul class="navbar-nav ml-auto" *ngIf="!(isAuthenticated | async)">
   <li class="nav-item">
         <a class="nav-link text-dark" [routerLink]='["/authentication/register"]'>Register</a>
     </li>
