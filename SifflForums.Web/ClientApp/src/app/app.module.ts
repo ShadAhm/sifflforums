@@ -10,6 +10,8 @@ import { HomeComponent } from './components/home/home.component';
 import { SubmissionCreateComponent } from './components/submission-create/submission-create.component';
 import { SubmissionComponent } from './components/submission/submission.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { MarkdownPipe } from './pipes/markdown.pipe';
+import { MarkdownPlainPipe } from './pipes/markdown-plain.pipe';
 import { CommentListItemComponent } from './components/comment-list-item/comment-list-item.component';
 import { SubmissionListItemComponent } from './components/submission-list-item/submission-list-item.component';
 import { ForumsectionListItemComponent } from './components/forumsection-list-item/forumsection-list-item.component';
@@ -26,6 +28,8 @@ import { AuthorizeInterceptor } from '../api-authorization/authorize.interceptor
     SubmissionCreateComponent,
     HeaderComponent,
     DateAgoPipe,
+    MarkdownPipe,
+    MarkdownPlainPipe,
     CommentListItemComponent,
     SubmissionListItemComponent,
     ForumsectionListItemComponent,

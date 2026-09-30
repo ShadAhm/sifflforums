@@ -18,5 +18,5 @@
       </div>
     </div>
   </div>
-  <div class="comment-content" [innerHTML]="model.text"></div>
+  <div class="comment-content markdown-body" [innerHTML]="model.text | markdown"></div>
 </div>
