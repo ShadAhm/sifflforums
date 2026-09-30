@@ -11,7 +11,7 @@
     <small class="text-light">Posted by {{submission.username}} {{submission.createdAtUtc|dateAgo}}</small>
   </div>
   <div class="submission-text-container">
-    <p>{{submission.text}}</p>
+    <div class="markdown-body" [innerHTML]="submission.text | markdown"></div>
   </div>
 
   <h6>Comments</h6>
@@ -24,7 +24,10 @@
   </div>
 
   <div class="mt-4">
-    <div class="form-group"><textarea class="form-control" [(ngModel)]="commentInput" rows="6" placeholder="Comment"></textarea></div>
+    <div class="form-group">
+      <textarea class="form-control" [(ngModel)]="commentInput" rows="6" placeholder="Comment"></textarea>
+      <small class="form-text text-muted">Supports Markdown: **bold**, *italic*, ~~strike~~, [link](url), `code`, &gt; quote</small>
+    </div>
     <button class="btn btn-primary" (click)="postComment()" [attr.disabled]="disableSubmitButton == true ? true : null">Submit</button>
   </div>
 </ng-container>
