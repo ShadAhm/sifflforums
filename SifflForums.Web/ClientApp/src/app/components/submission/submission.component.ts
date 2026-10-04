@@ -109,6 +109,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   onCommentQuoted(comment: CommentPost): void {
-    this.commentInput = `> ${comment.text}`;
+    const quotedText = (comment.text ?? '').split('\n').map(line => `> ${line}`).join('\n');
+    this.commentInput = `${quotedText}\n\n`;
   }
 }
